@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Annual — Golf Trip Record Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Karla:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --board:#10352A; --board-dk:#0A241C; --board-lt:#17493A;
+  --paper:#EFE8D8; --paper-dk:#DFD5BF;
+  --ink:#17201C; --ink-soft:#55605A;
+  --red:#C2342A; --brass:#C9A227; --chalk:#F5F2E9; --slat:#0D2C23;
+  --rule:rgba(23,32,28,.14);
+  --golf:#CFE3CD; --golf-b:#7FA97C; --fnb:#F6D5DC; --fnb-b:#D08FA0;
+  --move:#FBEBC4; --move-b:#D4AF52; --misc:#E2DCEF; --misc-b:#9B8FBF;
+  --air:#C9E4F2; --air-b:#6EA8C4;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:'Karla',system-ui,sans-serif;
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* masthead */
+.mast{background:repeating-linear-gradient(180deg,rgba(255,255,255,.022) 0 2px,transparent 2px 5px),var(--board);
+  border-bottom:3px solid var(--brass);padding:26px 0 0}
+.mtop{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap}
+.eyebrow{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.26em;
+  font-size:11px;font-weight:600;color:var(--brass)}
+h1{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(40px,7vw,74px);
+  line-height:.88;letter-spacing:-.015em;text-transform:uppercase;color:var(--chalk);margin:5px 0 2px}
+.mast-sub{font-size:13.5px;color:rgba(245,242,233,.6);max-width:46ch}
+.mast-meta{margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:rgba(245,242,233,.5);line-height:1.9}
+.mast-meta b{color:var(--brass);font-weight:700}
+.mastcol{margin-top:23px}
+@media(max-width:820px){.mastcol{margin-top:0}}
+.mastmap{flex:0 1 470px;min-width:300px;margin-bottom:-29px}
+.mastmap svg{width:100%;height:auto;display:block}
+@media(max-width:820px){.mastmap{flex:1 1 100%;max-width:460px}}
+.ribbon{display:flex;margin-top:24px;overflow-x:auto}
+.rib{flex:1 0 128px;background:var(--slat);border-right:1px solid rgba(0,0,0,.4);padding:11px 13px 13px;
+  cursor:pointer;transition:background .15s}
+.rib:hover{background:#123528}
+.rib:last-child{border-right:none}
+.rib.future{opacity:.5}
+.rib .yr{font-family:'Barlow Condensed',sans-serif;font-size:27px;font-weight:700;color:var(--chalk);line-height:1}
+.rib .place{font-size:10.5px;color:rgba(245,242,233,.55);text-transform:uppercase;letter-spacing:.1em;
+  font-family:'Barlow Condensed',sans-serif;font-weight:500;margin-top:2px}
+.rib .won{font-size:11.5px;color:var(--brass);margin-top:6px;font-weight:700;line-height:1.25}
+.rib .score{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(245,242,233,.45)}
+.tabs{display:flex;margin-top:22px;flex-wrap:wrap}
+.tab{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.14em;
+  font-size:14px;font-weight:600;color:rgba(245,242,233,.55);background:none;border:none;
+  border-bottom:3px solid transparent;padding:11px 17px;cursor:pointer}
+.tab:hover{color:var(--chalk)}
+.tab[aria-selected="true"]{color:var(--board);background:var(--paper);border-bottom-color:var(--paper)}
+.tab:focus-visible{outline:2px solid var(--brass);outline-offset:-2px}
+
+main{background:var(--paper);min-height:60vh;padding:36px 0 70px}
+.panel{display:none}
+.panel.on{display:block;animation:fade .26s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+h2{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;font-size:25px;font-weight:700;letter-spacing:.04em}
+h3{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;font-size:16px;font-weight:600;
+  letter-spacing:.1em;color:var(--ink-soft);margin:0 0 12px;padding-bottom:6px;border-bottom:1px solid var(--rule)}
+.lede{color:var(--ink-soft);font-size:14px;margin:2px 0 22px}
+.card{background:#fff;border:1px solid var(--rule);padding:18px 20px;border-radius:2px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.note{background:#FBF3D8;border-left:3px solid var(--brass);padding:11px 15px;font-size:13px;color:#5C4A12;margin-top:16px}
+section{padding:34px 0 6px;scroll-margin-top:14px}
+
+/* board */
+.board{background:var(--board);padding:5px}
+.board-hd,.board-row{display:grid;grid-template-columns:30px minmax(104px,1.6fr) repeat(3,32px) 48px 52px 40px 46px;align-items:center}
+.board-row{cursor:pointer}
+.board-row:hover{background:#123528}
+.bioPanel{background:#0F2F25;margin:-2px 0 2px;padding:14px 18px;display:none}
+.bioPanel.on{display:block}
+.bioPanel p{font-size:13.5px;color:rgba(245,242,233,.8);margin-bottom:11px;max-width:76ch}
+.bioPanel table{width:100%;font-size:12.5px}
+.bioPanel th{color:var(--brass);border-bottom:1px solid rgba(245,242,233,.18);font-size:10px;padding:4px 6px}
+.bioPanel td{color:rgba(245,242,233,.85);border-bottom:1px dotted rgba(245,242,233,.1);padding:4px 6px}
+.bioPanel .cupmark{color:var(--brass)}
+.board-hd{padding:9px 12px;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;
+  letter-spacing:.12em;font-size:11px;font-weight:600;color:var(--brass)}
+.board-hd span:not(:nth-child(2)):not(:first-child){text-align:center}
+.board-row{background:var(--slat);margin-bottom:2px;padding:9px 12px;animation:slat .4s cubic-bezier(.2,.8,.3,1) both}
+@keyframes slat{from{opacity:0;transform:perspective(600px) rotateX(-58deg);transform-origin:top}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.board-row,.panel{animation:none!important}}
+.board-row.alum{opacity:.5}
+.board-row .pos{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(245,242,233,.4)}
+.board-row .nm{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:600;color:var(--chalk);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:8px}
+.board-row .st{font-family:'JetBrains Mono',monospace;font-size:13px;text-align:center;color:rgba(245,242,233,.78)}
+.board-row .st.w{color:var(--chalk);font-weight:700}
+.board-row .st.l{color:var(--red)}
+.board-row .pts{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;text-align:center;color:var(--brass)}
+.board-row .pct{font-family:'JetBrains Mono',monospace;font-size:12px;text-align:center;color:rgba(245,242,233,.6)}
+.cups{text-align:center;font-size:12px;letter-spacing:-1px;color:var(--brass);white-space:nowrap}
+.cups .none{color:rgba(245,242,233,.22);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0}
+.kv{display:flex;justify-content:space-between;gap:14px;padding:6px 0;border-bottom:1px dotted var(--rule);font-size:13.5px}
+.kv:last-child{border-bottom:none}
+.kv dt{color:var(--ink-soft)}
+.kv dd{text-align:right;font-weight:500}
+.album{display:flex;gap:18px;align-items:center;flex-wrap:wrap;background:#fff;border:1px solid var(--rule);
+  padding:18px 22px;border-radius:2px}
+.album .ph{width:76px;height:76px;background:var(--paper-dk);border-radius:2px;display:flex;align-items:center;
+  justify-content:center;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ink-soft);text-align:center}
+.btn{display:inline-block;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.12em;
+  font-size:14px;font-weight:600;background:var(--board);color:var(--chalk);border:none;padding:10px 22px;
+  border-radius:2px;cursor:pointer;text-decoration:none}
+.btn.ghost{background:none;color:var(--ink-soft);border:1px solid var(--rule)}
+.btn.ghost:hover{background:var(--paper-dk);color:var(--ink)}
+
+/* year page */
+.yrbar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:22px}
+.yb{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:600;letter-spacing:.06em;
+  padding:6px 15px;border:1px solid var(--ink);background:none;color:var(--ink);cursor:pointer;border-radius:2px}
+.yb:hover{background:var(--paper-dk)}
+.yb[aria-pressed="true"]{background:var(--board);color:var(--chalk);border-color:var(--board)}
+.yhead{padding-bottom:16px;margin-bottom:22px;border-bottom:2px solid var(--ink)}
+.yhead .t{font-family:'Barlow Condensed',sans-serif;font-size:clamp(30px,4.6vw,46px);font-weight:700;
+  text-transform:uppercase;line-height:.96}
+.yhead .s{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-soft);margin-top:7px}
+.purse{display:flex;background:var(--board);margin-bottom:10px;flex-wrap:wrap}
+.purse div{flex:1 1 130px;padding:12px 18px;border-right:1px solid rgba(245,242,233,.1)}
+.purse div:last-child{border-right:none}
+.purse .l{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.16em;
+  font-size:10px;color:var(--brass);font-weight:600}
+.purse .v{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:700;color:var(--chalk);line-height:1.1}
+.purse .v.void{color:rgba(245,242,233,.4);text-decoration:line-through}
+.purse .n{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:rgba(245,242,233,.45)}
+.teams{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.tcol{background:var(--slat);padding:16px 18px;border-top:4px solid rgba(245,242,233,.14)}
+.tcol.win{border-top-color:var(--brass)}
+.tcol .tn{font-family:'Barlow Condensed',sans-serif;font-size:clamp(21px,3.2vw,31px);font-weight:700;
+  color:var(--chalk);text-transform:uppercase;line-height:1.02}
+.tcol .tsc{font-family:'Barlow Condensed',sans-serif;font-size:40px;font-weight:700;color:var(--brass);line-height:1}
+.tcol .thd{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-bottom:11px;
+  margin-bottom:10px;border-bottom:1px solid rgba(245,242,233,.13)}
+.tcol ul{list-style:none}
+.tcol li{display:grid;grid-template-columns:1fr 46px 1fr;align-items:baseline;gap:6px;padding:4px 0;font-size:14px;
+  color:rgba(245,242,233,.88);border-bottom:1px dotted rgba(245,242,233,.09)}
+.tcol li:last-child{border-bottom:none}
+.tcol li span{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:rgba(245,242,233,.5);text-align:right}
+.tcol li em{font-style:normal;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(245,242,233,.5);text-align:center;justify-self:center}
+.tcol li.mvp span{color:var(--brass);font-weight:700}
+.tcol li.mvp::after{content:"MVP";font-family:'Barlow Condensed',sans-serif;font-size:9px;
+  letter-spacing:.14em;color:var(--brass);align-self:center}
+.poster{background:var(--board);padding:6px}
+.prd{background:var(--slat);margin-bottom:3px;padding:11px 16px}
+.prd.void{opacity:.5}
+.prd-hd{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:baseline;padding-bottom:9px;
+  margin-bottom:9px;border-bottom:1px solid rgba(245,242,233,.11)}
+.prd-hd .c{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:600;color:var(--chalk);
+  text-transform:uppercase;letter-spacing:.04em}
+.prd-hd .c em{font-style:normal;color:var(--brass);font-size:11px;font-family:'JetBrains Mono',monospace;margin-left:8px}
+.prd-hd .meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(245,242,233,.45);text-align:right}
+.prd-hd .meta b{color:var(--chalk);font-size:13px}
+.match{display:grid;grid-template-columns:1fr 116px 1fr;align-items:center;padding:6px 0;gap:8px}
+.match+.match{border-top:1px dotted rgba(245,242,233,.1)}
+.match .side{font-size:13px;color:rgba(245,242,233,.55);line-height:1.35}
+.match .side.r{text-align:right}
+.match .side.w{color:var(--chalk);font-weight:700}
+.match .res{text-align:center;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--brass);letter-spacing:-.02em}
+.match .res.halved{color:rgba(245,242,233,.5)}
+.match.bonus{border-top:1px solid rgba(245,242,233,.18);margin-top:4px}
+.match.bonus .side{font-style:italic;font-size:12px}
+.prd-tot{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;
+  margin-top:9px;padding-top:9px;border-top:1px solid rgba(245,242,233,.22)}
+.prd-tot .tn{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.06em;
+  font-size:12px;font-weight:600;color:rgba(245,242,233,.6)}
+.prd-tot .tn.r{text-align:right}
+.prd-tot .sc{font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:700;color:#FFFFFF;
+  text-align:center;white-space:nowrap}
+.prd-tot .sc small{display:block;font-size:8.5px;font-weight:400;color:rgba(245,242,233,.5);
+  letter-spacing:.14em;text-transform:uppercase}
+.prd-run{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin-top:6px;
+  padding:6px 0 0;border-top:1px dotted rgba(245,242,233,.14)}
+.prd-run .sc{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--brass);text-align:center;white-space:nowrap}
+.prd-run .sc small{display:block;font-size:8.5px;color:rgba(245,242,233,.45);letter-spacing:.14em;text-transform:uppercase}
+.cancel{padding:10px 0 2px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:rgba(245,242,233,.5)}
+.final{background:var(--brass);color:#3A2E05;padding:15px 20px;display:flex;justify-content:space-between;
+  align-items:center;gap:16px;flex-wrap:wrap;margin-top:3px}
+.final .l{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.18em;
+  font-size:10.5px;font-weight:600;opacity:.75}
+.final .w{font-family:'Barlow Condensed',sans-serif;font-size:29px;font-weight:700;line-height:1;text-transform:uppercase}
+.mvp{background:var(--slat);color:var(--chalk);padding:13px 20px;display:flex;justify-content:space-between;
+  align-items:center;gap:16px;flex-wrap:wrap;margin-top:3px;border-left:4px solid var(--brass)}
+.mvp .l{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.18em;
+  font-size:10.5px;font-weight:600;color:var(--brass)}
+.mvp .w{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;line-height:1;text-transform:uppercase}
+.mvp .r{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--brass);font-weight:700}
+.final .s{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700}
+.narr{background:#fff;border-left:4px solid var(--board);padding:18px 22px;font-size:14.5px;line-height:1.72;margin-top:24px}
+.narr .sig{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-soft);margin-top:12px;
+  text-transform:uppercase;letter-spacing:.1em}
+.mapbox{background:#fff;border:1px solid var(--rule);padding:10px}
+.mapbox svg{width:100%;height:auto;display:block}
+.attrib{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-soft);text-align:right;padding:4px 6px 0}
+.itin-scroll{overflow-x:auto;background:#fff;border:1px solid var(--rule)}
+.itin{display:grid;grid-template-columns:64px repeat(4,minmax(150px,1fr));min-width:680px}
+.ihd{background:var(--board);color:var(--chalk);font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;
+  letter-spacing:.14em;font-size:13px;font-weight:600;text-align:center;padding:8px 0}
+.tcolm{position:relative}
+.tcolm .tk{height:30px;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--ink-soft);
+  text-align:right;padding-right:8px;border-top:1px solid var(--rule);line-height:30px}
+.tcolm .tk.hr{color:var(--ink);font-weight:700}
+.daycol{position:relative;border-left:1px solid var(--rule);
+  background:repeating-linear-gradient(180deg,transparent 0 29px,rgba(23,32,28,.07) 29px 30px)}
+.blk{position:absolute;border-radius:2px;padding:3px 6px;overflow:hidden;font-size:11px;line-height:1.22;border-left:3px solid}
+.blk b{display:block;font-family:'Barlow Condensed',sans-serif;font-size:12.5px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.03em}
+.blk span{font-family:'JetBrains Mono',monospace;font-size:9px;opacity:.75;display:block}
+.blk.sm{display:flex;align-items:center;gap:5px;padding:0 6px;white-space:nowrap;overflow:hidden}
+.blk.sm span{display:inline;font-size:8.5px;opacity:.7}
+.blk.sm b{font-size:11.5px;line-height:1.05;letter-spacing:0}
+.blk.md b{font-size:12px}
+.blk.md span{font-size:8.5px}
+.b-golf{background:var(--golf);border-color:var(--golf-b);color:#1F3D1D}
+.b-fnb{background:var(--fnb);border-color:var(--fnb-b);color:#6B2233}
+.b-move{background:var(--move);border-color:var(--move-b);color:#5C4310}
+.b-misc{background:var(--misc);border-color:var(--misc-b);color:#3A2F5C}
+.b-air{background:var(--air);border-color:var(--air-b);color:#154457}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--ink-soft)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:11px;
+  font-weight:600;color:var(--ink-soft);text-align:left;padding:7px 9px;border-bottom:1.5px solid var(--ink)}
+td{padding:6px 9px;border-bottom:1px solid var(--rule);vertical-align:top}
+tbody tr:hover{background:rgba(16,53,42,.04)}
+.num{font-family:'JetBrains Mono',monospace;text-align:right;white-space:nowrap}
+.key td:first-child{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.06em;
+  font-weight:600;font-size:12.5px;white-space:nowrap;width:170px}
+.under{color:var(--board);font-weight:700}
+.over{color:var(--red);font-weight:700}
+
+/* bios */
+.bio{background:#fff;border:1px solid var(--rule);padding:16px 18px;border-radius:2px}
+.bio .bn{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;text-transform:uppercase;line-height:1}
+.bio .bs{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-soft);margin:3px 0 10px}
+.bio .brec{display:flex;gap:14px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--rule)}
+.bio .brec div{text-align:center}
+.bio .brec .n{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;line-height:1}
+.bio .brec .k{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-soft)}
+.bio p{font-size:13px;color:var(--ink-soft);line-height:1.55}
+.bio .bn{cursor:pointer;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.bio .bn .tog{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-soft);font-weight:400}
+.bio.open .bn .tog{color:var(--board)}
+.yrtab{display:none;margin-top:12px;border-top:1px solid var(--rule);padding-top:10px}
+.bio.open .yrtab{display:block}
+.yrtab table{font-size:12.5px}
+.yrtab td,.yrtab th{padding:4px 6px}
+.yrtab .cupmark{color:var(--brass)}
+.spark{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:10px}
+.spark .col{text-align:center}
+.spark .col .yl{font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--ink-soft);margin-top:3px}
+.spark .col .wn{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;line-height:1}
+.spark i{flex:1;height:22px;background:var(--paper-dk);border-radius:1px;position:relative}
+.spark i b{position:absolute;bottom:0;left:0;right:0;background:var(--board);display:block;border-radius:1px}
+.spark i.cup b{background:var(--brass)}
+
+/* rules */
+.amend{background:#FBF3D8;border-left:3px solid var(--brass);padding:14px 18px;margin-bottom:16px}
+.amend h4{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;font-size:14px;
+  letter-spacing:.08em;color:#7A5F12;margin-bottom:6px}
+.amend li{margin-left:18px;font-size:13.5px;padding:2px 0;color:#5C4A12}
+.fmtcard{border:1px solid var(--rule);background:#fff;padding:14px 16px;border-radius:2px}
+.fmtcard h4{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;font-size:15px;letter-spacing:.06em}
+.fmtcard .rd{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--ink-soft);margin-bottom:8px}
+.fmtcard p{font-size:13px;line-height:1.6}
+.fmtcard li{margin-left:16px;font-size:13px;padding:2px 0}
+.empty{background:#fff;border:1px dashed var(--rule);padding:30px 24px;text-align:center;color:var(--ink-soft);border-radius:2px}
+.empty .h{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;font-size:19px;
+  letter-spacing:.08em;color:var(--ink);margin-bottom:6px}
+.empty p{font-size:13.5px;max-width:62ch;margin:0 auto}
+
+/* ---- data golf ---- */
+.dg-scroll{overflow-x:auto;background:#fff;border:1px solid var(--rule);border-radius:2px}
+table.h2h{border-collapse:separate;border-spacing:0;font-size:11px;min-width:640px}
+table.h2h th{position:sticky;top:0;background:#fff;z-index:2;padding:6px 4px;text-align:center;
+  font-size:9.5px;letter-spacing:.06em;border-bottom:1.5px solid var(--ink)}
+table.h2h th.nm{text-align:left;left:0;z-index:3;min-width:128px;padding-left:12px}
+table.h2h td{padding:5px 4px;text-align:center;border-bottom:1px solid var(--rule);
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;white-space:nowrap}
+table.h2h td.nm{position:sticky;left:0;background:#fff;text-align:left;font-family:'Karla',sans-serif;
+  font-size:12.5px;font-weight:500;padding-left:12px;z-index:1}
+table.h2h td.self{background:var(--paper-dk)}
+table.h2h td.up{background:rgba(16,53,42,.11);color:var(--board);font-weight:700}
+table.h2h td.dn{background:rgba(194,52,42,.09);color:var(--red)}
+table.h2h td.none{color:rgba(23,32,28,.2)}
+table.h2h tbody tr:hover td{background:rgba(201,162,39,.14)}
+table.h2h tbody tr:hover td.nm{background:rgba(201,162,39,.2)}
+.dg-note{font-size:12px;color:var(--ink-soft);margin-top:9px;font-style:italic}
+.pick{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+.pick select{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:600;letter-spacing:.04em;
+  padding:7px 14px;border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:2px;
+  text-transform:uppercase;cursor:pointer}
+.pick label{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.14em;
+  font-size:11px;color:var(--ink-soft);font-weight:600}
+.fmtbar{display:grid;grid-template-columns:98px 1fr 74px;align-items:center;gap:10px;padding:5px 0;font-size:13px}
+.fmtbar .lb{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.fmtbar .tr{height:16px;background:var(--paper-dk);border-radius:2px;overflow:hidden;display:flex}
+.fmtbar .tr i{display:block;height:100%}
+.fmtbar .tr i.w{background:var(--board)}
+.fmtbar .tr i.h{background:var(--brass)}
+.fmtbar .tr i.l{background:rgba(194,52,42,.32)}
+.fmtbar .vv{font-family:'JetBrains Mono',monospace;font-size:11.5px;text-align:right;color:var(--ink-soft)}
+
+/* ---- player modal ---- */
+.modal{position:fixed;inset:0;background:rgba(10,36,28,.74);display:none;align-items:flex-start;
+  justify-content:center;z-index:60;padding:5vh 18px;overflow-y:auto}
+.modal.on{display:flex;animation:fade .18s ease both}
+.modal-box{background:var(--paper);width:100%;max-width:780px;border-radius:2px;
+  box-shadow:0 24px 70px rgba(10,36,28,.5);overflow:hidden}
+.modal-hd{background:var(--board);padding:20px 26px;display:flex;justify-content:space-between;
+  align-items:flex-start;gap:16px;position:sticky;top:0}
+.modal-hd .nm{font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:700;
+  text-transform:uppercase;line-height:.98;color:var(--chalk)}
+.modal-hd .sub{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:rgba(245,242,233,.55);margin-top:5px}
+.modal-x{background:none;border:1px solid rgba(245,242,233,.3);color:var(--chalk);font-size:20px;
+  line-height:1;width:34px;height:34px;border-radius:2px;cursor:pointer;flex:0 0 auto}
+.modal-x:hover{background:rgba(245,242,233,.12)}
+.modal-bd{padding:22px 26px 26px}
+.modal-bd p.bio{font-size:14px;color:var(--ink-soft);line-height:1.62;margin-bottom:18px;max-width:70ch}
+.statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:10px;margin-bottom:20px}
+.statrow div{background:#fff;border:1px solid var(--rule);padding:10px 12px;border-radius:2px;text-align:center}
+.statrow .n{font-family:'Barlow Condensed',sans-serif;font-size:25px;font-weight:700;line-height:1}
+.statrow .k{font-family:'Barlow Condensed',sans-serif;font-size:9.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-soft);margin-top:2px}
+footer{background:var(--board-dk);color:rgba(245,242,233,.4);font-size:12px;padding:22px 0;font-family:'JetBrains Mono',monospace}
+@media(max-width:760px){
+  .teams{grid-template-columns:1fr}
+  .match{grid-template-columns:1fr 78px 1fr;font-size:12px}
+  .board-hd,.board-row{grid-template-columns:26px minmax(84px,1.4fr) repeat(3,26px) 42px 44px 38px}
+  .board-row .nm{font-size:16px}
+  .mast-meta{text-align:left}
+}
+</style>
+</head>
+<body>
+<style>.mono{font-family:'JetBrains Mono',monospace}
+.match .res.tbd{color:rgba(245,242,233,.3)}
+.prd-hd .meta b{color:var(--brass)}</style>
+<header class="mast">
+<div class="wrap">
+  <div class="mtop">
+    <div class="mastcol">
+      <div class="eyebrow">Established 2020 · Twelve men, one cup</div>
+      <h1>The Annual</h1>
+      <p class="mast-sub">Six trips, thirty-four courses, and every match ever played.</p>
+      <div class="mast-meta" id="mastMeta"></div>
+    </div>
+    <div class="mastmap"><div id="usMap"></div></div>
+  </div>
+  <div class="ribbon" id="ribbon"></div>
+  <nav class="tabs" role="tablist" id="tabs"></nav>
+</div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <section class="panel on" id="p-board" role="tabpanel">
+    <h2>The Board</h2>
+    <p class="lede">Every match any man has played since 2020, ranked by win percentage. Halves count half a point. Click any name for his year-by-year record.</p>
+    <div class="board">
+      <div class="board-hd"><span></span><span>Player</span><span>W</span><span>L</span><span>H</span>
+        <span>Pts</span><span>Win&nbsp;%</span><span>Trips</span><span>Cups</span></div>
+      <div id="boardRows"></div>
+    </div>
+    <div class="grid2" style="margin-top:30px">
+      <div class="card"><h3>Cup holders</h3><table><tbody id="cupTable"></tbody></table></div>
+      <div class="card"><h3>Notes on the record</h3><dl id="recordFacts"></dl></div>
+    </div>
+    <h3 style="margin-top:34px">Photos</h3>
+    <div class="album">
+      <div class="ph">no album<br>linked</div>
+      <div style="flex:1 1 240px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:600;text-transform:uppercase">Shared album</div>
+        <p style="font-size:13px;color:var(--ink-soft);margin-top:3px">One Google Photos album for the whole trip, one folder per year. Anyone can add straight from their camera roll.</p>
+      </div>
+      <a class="btn ghost" href="#" onclick="return false">Add album link</a>
+    </div>
+  </section>
+
+  <section class="panel" id="p-years" role="tabpanel">
+    <h2>History</h2>
+    <p class="lede">Scoreboard, itinerary and budget for every trip. 2026 is on the tee.</p>
+    <div class="yrbar" id="yrbar"></div>
+    <div id="yearDetail"></div>
+  </section>
+
+  <section class="panel" id="p-rules" role="tabpanel">
+    <h2>Rules</h2>
+    <p class="lede">The rules as they stand, taken from the arrival packet.</p>
+    <h3>Formats</h3>
+    <div class="grid2" id="formats"></div>
+    <h3 style="margin-top:30px">Standing rules</h3>
+    <div class="grid2" id="standing"></div>
+    <h3 style="margin-top:30px">Relief for out of bounds and lost balls</h3>
+    <div class="mapbox"><div id="reliefDiagram"></div></div>
+  </section>
+
+
+
+  <section class="panel" id="p-data" role="tabpanel">
+    <h2>Data Golf</h2>
+    <p class="lede">Ninety-seven matches across six years, every one of them accounted for.</p>
+    <div id="dataGolf"></div>
+  </section>
+
+
+
+</div>
+</main>
+<div class="modal" id="pModal"><div class="modal-box">
+  <div class="modal-hd"><div><div class="nm" id="pmName"></div><div class="sub" id="pmSub"></div></div>
+   <button class="modal-x" id="pmClose" aria-label="Close">&times;</button></div>
+  <div class="modal-bd" id="pmBody"></div></div></div>
+
+<footer><div class="wrap" id="footNote"></div></footer>
+<script>
+/* ================= PLAYERS ================= */
+const P={
+ "R. Aberdale":{f:"Ryan Aberdale",sen:5,ghin:"2832417"},"C. Bradford":{f:"C.J. Bradford",sen:5,ghin:"10453279"},
+ "S. Subilia":{f:"Sam Subilia",sen:5,ghin:"10507248"},"I. Maxwell":{f:"Ian Maxwell",sen:5,ghin:"10576138"},
+ "D. Johnson":{f:"Devon Johnson",sen:5,ghin:"10646453"},"N. Currie":{f:"Nick Currie",sen:5,ghin:"10469385"},
+ "M. Caruso":{f:"Mike Caruso",sen:4,ghin:"10209373"},"N. Morse":{f:"Nate Morse",sen:4,ghin:"11032551"},
+ "J. Ryan":{f:"John Ryan",sen:3,ghin:"1504687"},"C. Michael":{f:"Chris Michael",sen:3,ghin:"11389876"},
+ "M. Tommila":{f:"Mike Tommila",sen:3,ghin:"2933543"},"R. Carr":{f:"Ryan Carr",sen:2,ghin:"2672275"},
+ "T. Brown":{f:"Trevor Brown",sen:3,ghin:"11135365"},"E. Chen":{f:"Evan Chen",sen:2,ghin:"—"},
+ "B. Quinn":{f:"Brendan Quinn",sen:1,ghin:"1133437"},"D. Wong":{f:"Dylan Wong",sen:1,ghin:"—"}};
+const ROSTER=["R. Aberdale","C. Bradford","S. Subilia","I. Maxwell","D. Johnson","N. Currie",
+ "M. Caruso","N. Morse","J. Ryan","C. Michael","M. Tommila","R. Carr"];
+
+/* per-year [W,L,H,cup] — Caruso/Michael corrected for 2022 & 2025 */
+const REC={
+"C. Bradford":{2020:[1,2,1,0],2021:[3,2,0,0],2022:[4,1,0,1],2023:[2,2,1,0],2024:[4,1,1,1],2025:[3,1,0,1]},
+"N. Morse":{2020:[0,0,0,0],2021:[3,2,0,1],2022:[3,2,0,1],2023:[3,1,1,1],2024:[2,3,1,1],2025:[2,1,1,1]},
+"N. Currie":{2020:[0,3,1,0],2021:[3,2,0,1],2022:[3,2,0,1],2023:[4,1,0,1],2024:[6,0,0,1],2025:[0,3,1,1]},
+"R. Aberdale":{2020:[3,0,1,1],2021:[3,1,1,1],2022:[2,2,1,0],2023:[3,1,1,1],2024:[1,5,0,0],2025:[4,0,0,0]},
+"I. Maxwell":{2020:[4,0,0,1],2021:[0,5,0,0],2022:[3,2,0,0],2023:[2,3,0,0],2024:[4,1,1,1],2025:[1,2,1,0]},
+"D. Johnson":{2020:[0,4,0,0],2021:[4,0,1,1],2022:[2,2,1,1],2023:[5,0,0,1],2024:[1,4,1,0],2025:[2,1,1,0]},
+"M. Caruso":{2020:[0,0,0,0],2021:[2,2,1,0],2022:[3,2,0,1],2023:[2,2,1,0],2024:[2,3,1,0],2025:[1,2,1,0]},
+"C. Michael":{2020:[0,0,0,0],2021:[0,0,0,0],2022:[3,1,1,0],2023:[0,4,1,0],2024:[4,2,0,1],2025:[0,3,1,0]},
+"J. Ryan":{2020:[0,0,0,0],2021:[0,0,0,0],2022:[2,2,1,1],2023:[1,3,1,1],2024:[3,2,1,0],2025:[2,2,0,1]},
+"S. Subilia":{2020:[3,1,0,1],2021:[2,3,0,1],2022:[0,5,0,0],2023:[2,3,0,0],2024:[1,4,1,0],2025:[2,1,1,1]},
+"R. Carr":{2020:[0,0,0,0],2021:[1,3,1,0],2022:[0,0,0,0],2023:[0,0,0,0],2024:[3,2,1,1],2025:[1,2,1,1]},
+"T. Brown":{2020:[0,0,0,0],2021:[1,3,1,0],2022:[2,3,0,0],2023:[2,3,0,1],2024:[0,0,0,0],2025:[0,0,0,0]},
+"M. Tommila":{2020:[0,4,0,0],2021:[2,1,2,1],2022:[0,0,0,0],2023:[1,4,0,0],2024:[0,0,0,0],2025:[2,2,0,0]},
+"E. Chen":{2020:[3,0,1,1],2021:[0,0,0,0],2022:[0,0,0,0],2023:[0,0,0,0],2024:[1,5,0,0],2025:[0,0,0,0]},
+"D. Wong":{2020:[0,0,0,0],2021:[2,2,1,0],2022:[0,0,0,0],2023:[0,0,0,0],2024:[0,0,0,0],2025:[0,0,0,0]},
+"B. Quinn":{2020:[0,0,0,0],2021:[0,0,0,0],2022:[1,4,0,0],2023:[0,0,0,0],2024:[0,0,0,0],2025:[0,0,0,0]}};
+
+const BIO={
+ "R. Aberdale":"Organiser, and the only man to play all six trips. Went 4–0 at Myrtle without taking the cup.",
+ "C. Bradford":"Top of the board on win percentage. Books the lodging and keeps the deposits.",
+ "N. Currie":"Went 6–0 at Bandon — the only unbeaten week on record. Tied for most cups.",
+ "N. Morse":"Five cups from five trips. Has never been on a losing side.",
+ "D. Johnson":"Went 5–0 in Wisconsin, where he also served as local tour guide.",
+ "I. Maxwell":"Perfect 4–0 in year one at Pinehurst, then 0–5 the next.",
+ "S. Subilia":"Most matches lost of anyone, three cups anyway. Complains about the driving.",
+ "M. Caruso":"Record corrected in 2026 — the Stats Sheet had him and Michael transposed. Showed up to Pinehurst 2021 with a snapped wrist.",
+ "J. Ryan":"Three cups from four trips despite a losing personal record.",
+ "C. Michael":"Record corrected in 2026 — see Caruso. The 2024 cup at Bandon is his.",
+ "M. Tommila":"Played the first two years, skipped two, returned at Myrtle. Standing prize for walking a round.",
+ "R. Carr":"Two trips, two cups. Best cup rate of anyone who has played more than once.",
+ "T. Brown":"Three trips between 2021 and 2023. Took the cup in Wisconsin.",
+ "E. Chen":"Cup in year one, then returned for Bandon and went 1–5.",
+ "B. Quinn":"One trip, Northern Michigan 2022.","D. Wong":"One trip, Pinehurst 2021."};
+
+/* ================= YEARS ================= */
+const Y={};
+
+Y[2020]={y:2020,n:1,title:"The 2020 Ryder Cup",dest:"Pinehurst, NC",short:"Pinehurst",
+ dates:"Oct 8–11, 2020",base:"140 Magnolia Road, Pinehurst",
+ teams:{1:{name:"Take Me Low, Tobacco Road",men:["R. Aberdale","I. Maxwell","E. Chen","S. Subilia"]},
+        2:{name:"Three and Half Men",men:["C. Bradford","N. Currie","D. Johnson","M. Tommila"]}},
+ winner:1,score:"8.5 – 1.5",
+ hcp:{"R. Aberdale":"6.5","C. Bradford":"19.4","E. Chen":"14.1","N. Currie":"17.1","D. Johnson":"13.9","I. Maxwell":"14.5","S. Subilia":"20.5","M. Tommila":"6.1"},
+ blurb:`I think we can all agree that 2020 has been like piping a drive down the middle, all over the center of the club face, only to get up to the fairway to find that your ball has been devoured by a lawnmower and your opponent is serious about that whole "play it as it lies" thing. We may be in the Year From Hell but we're at least still able to go to Pinehurst! As most know, this was originally slated as a 12-man trip but due to the situation at hand we're down to 8. No problem though, 8 is a great number for foursomes and Ryder Cup teams. We think we have a damn good trip planned where we'll hit most of the Pinehurst area gems while playing some cool formats. As an added plus, it even looks like we may come in under budget given where flight prices are at. Now that I type it all out, maybe global pandemics aren't all that bad? In all seriousness, it is a fantastic group of dudes going down — and that is what really makes or breaks these trips. If you have any questions ask CJ or Ryan. If you have any complaints on the itinerary you can send us an email at maybeyoushouldntcome@stayhome.net.`,
+ rounds:[
+  {n:1,course:"Tobacco Road",fmt:"Fourball",tees:"Disc",times:"7:30 / 7:40",caddie:"Double bag",pts:2,
+   pairs:[["R. Aberdale","N. Currie"],["I. Maxwell","M. Tommila"],
+          ["E. Chen","D. Johnson"],["S. Subilia","C. Bradford"]],
+   results:[1,1],by:["W","W"]},
+  {n:2,course:"Hyland Golf Club",fmt:"Fourball",tees:"White",times:"1:54 / 2:03",caddie:"Riding",pts:2,
+   pairs:[["R. Aberdale","N. Currie"],["E. Chen","C. Bradford"],
+          ["S. Subilia","M. Tommila"],["I. Maxwell","D. Johnson"]],
+   results:[0,1],by:["AS","W"]},
+  {n:3,course:"Pinehurst No. 2",fmt:"Fourball",tees:"White",times:"12:20 / 12:30",caddie:"Double bag",pts:2,
+   pairs:[["R. Aberdale","M. Tommila"],["S. Subilia","C. Bradford"],
+          ["I. Maxwell","D. Johnson"],["E. Chen","N. Currie"]],
+   results:[1,1],by:["3 &amp; 2","W"]},
+  {n:"Pre",course:"The Cradle",fmt:"—",tees:"Nine holes",times:"5:36 / 5:48"},
+  {n:4,course:"Pinehurst No. 4",fmt:"Singles",tees:"White",times:"9:20 / 9:30",caddie:"Double bag",pts:4,singles:true,
+   pairs:[["I. Maxwell","N. Currie"],["S. Subilia","C. Bradford"],
+          ["R. Aberdale","M. Tommila"],["E. Chen","D. Johnson"]],
+   results:[1,2,1,1],by:["W","5 &amp; 3","5 &amp; 4","W"]}],
+ budget:[["Travel","RT to RDU + van",525,493.68],
+  ["Lodging","AirBnB on Magnolia Rd + the Carolina",850,1091.03],
+  ["Golf","Four rounds + The Cradle",1225,1059],
+  ["Food &amp; beverage","InstaCart, lunches, dinners",400,152.97],
+  ["Other","Tournament fee",150,150]],
+ start:"5:30",end:"23:30",days:["Thu","Fri","Sat","Sun"],
+ blocks:[
+  [0,"15:15","17:15","Arrival","RDU, NC","air"],[0,"18:00","19:30","Van pickup / travel","15-person van","move"],
+  [0,"20:00","21:00","Dinner","Pizza · check in 4pm","fnb"],[0,"20:30","21:00","Instacart","Delivery","misc"],
+  [0,"21:00","23:30","Opening Ceremony","140 Magnolia Road","misc"],
+  [1,"5:30","6:00","Breakfast","AirBnB · coffee","fnb"],[1,"6:00","6:30","Travel to Tobacco Road","","move"],
+  [1,"6:30","7:30","Warm up","Range + pro shop","golf"],
+  [1,"7:30","12:00","Round 1","Tobacco Road · 7:30","golf"],
+  [1,"12:15","13:15","Travel to Hyland","Lunch on the go","move"],
+  [1,"13:54","18:30","Round 2","Hyland · 1:54","golf"],
+  [1,"18:30","19:00","Travel to AirBnB","Boot and rally","move"],
+  [1,"20:00","23:00","Dinner","Take out","fnb"],[1,"23:00","23:30","Chillin","","misc"],
+  [2,"9:00","10:00","Breakfast","Villager Deli","fnb"],[2,"10:00","10:15","Travel to Pinehurst","","move"],
+  [2,"10:15","10:30","Check in to PH","Everyone checks in","misc"],
+  [2,"12:20","17:30","Round 3","Pinehurst No. 2 · 12:20","golf"],
+  [2,"17:36","19:00","The Cradle","5:36 / 5:48","golf"],
+  [2,"19:30","19:40","Travel to AirBnB","Boot and rally","move"],
+  [2,"20:30","23:00","Dinner","Take out","fnb"],[2,"23:00","23:30","Chillin","","misc"],
+  [3,"7:45","8:00","Travel to Pinehurst","Bags in the van","move"],
+  [3,"8:00","8:20","Breakfast","Carolina Dining Room","fnb"],
+  [3,"9:20","14:00","Round 4","Pinehurst No. 4 · 9:20","golf"],
+  [3,"14:15","15:00","Late lunch","The Tavern / The Deuce","fnb"],
+  [3,"15:00","16:30","Travel to RDU","Hour and a half","move"],
+  [3,"18:15","20:10","Departure","BOS, MA · cry","air"]],
+ map:[["1","Tobacco Road",35.3975,-79.2137,"golf","Round 1"],
+  ["2","Hyland Golf Club",35.2047,-79.3439,"golf","Round 2"],
+  ["3","Pinehurst Resort",35.1957,-79.4738,"golf","No. 2, No. 4 &amp; The Cradle"],
+  ["H","140 Magnolia Road",35.1957,-79.4690,"house","The house"],
+  ["A","Raleigh–Durham (RDU)",35.8801,-78.7880,"air","Fly in"]]};
+
+Y[2021]={y:2021,n:2,title:"The 2021 Ryder Cup",dest:"Pinehurst, NC",short:"Pinehurst",
+ dates:"Oct 7–10, 2021",base:"The Carolina Hotel + Scituate House",
+ teams:{1:{name:"Cheetahs Dig the Long Ball",men:["R. Aberdale","N. Morse","M. Tommila","D. Johnson","N. Currie","S. Subilia"]},
+        2:{name:"Donny Doesn’t Know",men:["R. Carr","D. Wong","M. Caruso","I. Maxwell","T. Brown","C. Bradford"]}},
+ winner:1,score:"13 – 6",
+ hcp:{"R. Aberdale":"4.4","N. Morse":"5.1","M. Tommila":"5.8","D. Johnson":"14.6","N. Currie":"17.4","S. Subilia":"19.2",
+  "R. Carr":"4.4","D. Wong":"5.7","M. Caruso":"7.5","I. Maxwell":"10","T. Brown":"16.2","C. Bradford":"18.4"},
+ blurb:`Well, here we are in August of 2021 and I have still yet to come down from last year's trip. Even though we battled a tropical storm on Saturday and Sunday, we played fantastic courses and curated an incredible vibe. I've already let my parents, fiancee, and attorney know that when I take the long nap I want to be buried underneath the Cradle as I think its been the pinnacle of my life up to this point. The weekend truly was the perfect mix of golf, hanging, and dudes — my three favorite things. Now, we're gearing up to head down again, but gaining another foursome and a round, and adding the two best courses that we didn't play last year while again playing a few of the hits that we grew to love. What a life. Plus, we'll have much of the same from last year (same house, two-team format, I'm sure Ian will provide an accurate prognostication of his play the night before, etc.) while optimizing a few minor changes here and there. Fairways and greens, boys!`,
+ purse:[["Winning team","$1,350"],["Net birdies 1st","$400"],["Net birdies 2nd","$50"],["Total pot","$1,800"]],
+ rounds:[
+  {n:1,course:"Tobacco Road",fmt:"Quota",tees:"Disc · 6,297",times:"12:30–12:50",caddie:"Riding",pts:4,
+   pairs:[["R. Aberdale","C. Bradford"],["N. Morse","T. Brown"],["S. Subilia","R. Carr"],
+          ["M. Tommila","D. Wong"],["N. Currie","I. Maxwell"],["D. Johnson","M. Caruso"]],
+   results:[1,1,1],quota:[["+3","+2"],["+16","−11"],["+8","−1"]],
+   bonus:{qa:"+27",qb:"−10",res:1}},
+  {n:2,course:"Pine Needles",fmt:"Fourball",tees:"Ross · 6,436",times:"7:30–7:50",caddie:"Double bag",
+   pairs:[["S. Subilia","M. Caruso"],["N. Morse","T. Brown"],["M. Tommila","R. Carr"],
+          ["N. Currie","C. Bradford"],["R. Aberdale","D. Wong"],["D. Johnson","I. Maxwell"]],
+   results:[2,2,1],by:["5 &amp; 3","2 &amp; 1","3 &amp; 1"]},
+  {n:3,course:"Hyland",fmt:"Modified Alt Shot",tees:"White · 6,273",times:"1:36–1:54",caddie:"Riding",
+   pairs:[["D. Johnson","D. Wong"],["M. Tommila","T. Brown"],["N. Morse","R. Carr"],
+          ["N. Currie","I. Maxwell"],["R. Aberdale","C. Bradford"],["S. Subilia","M. Caruso"]],
+   results:[0,1,2],by:["AS","4 &amp; 2","2 &amp; 1"]},
+  {n:4,course:"Pinehurst No. 2",fmt:"Fourball",tees:"White · 6,307",times:"9:20–9:40",caddie:"Double bag",
+   pairs:[["R. Aberdale","R. Carr"],["M. Tommila","M. Caruso"],["N. Currie","C. Bradford"],
+          ["S. Subilia","D. Wong"],["D. Johnson","I. Maxwell"],["N. Morse","T. Brown"]],
+   results:[0,2,1],by:["AS","4 &amp; 2","2 &amp; 1"]},
+  {n:4.5,course:"The Cradle",fmt:"—",tees:"Cradle tees",times:"3:57 / 4:15 / 4:24"},
+  {n:5,course:"Mid Pines",fmt:"Singles",tees:"White · 6,163",times:"9:15–9:35",caddie:"Double bag",singles:true,
+   pairs:[["R. Aberdale","R. Carr"],["N. Currie","T. Brown"],["S. Subilia","C. Bradford"],
+          ["D. Johnson","I. Maxwell"],["N. Morse","D. Wong"],["M. Tommila","M. Caruso"]],
+   results:[1,1,1,1,2,1],by:["5 &amp; 3","5 &amp; 4","2 &amp; 1","2 &amp; 1","2 &amp; 1","1 up"]}],
+ budget:[["Travel","RT to RDU + car rental",548.53,590.72],["Lodging","Carolina Hotel + Scituate House",910.54,910.54],
+  ["Golf","Five rounds, caddies, tips, The Cradle",1252.57,1127.57],
+  ["Food &amp; beverage","InstaCart, lunches, dinners",327.50,0],["Other","Tournament fee, poster",191.43,0]],
+ start:"6:00",end:"22:00",days:["Thu","Fri","Sat","Sun"],
+ blocks:[[0,"9:00","11:30","Travel","Flights to RDU","air"],[0,"11:30","12:00","Deplane / bags","","move"],
+  [0,"12:00","12:30","Drive to Tobacco Road","","move"],[0,"12:30","18:00","Round 1","Tobacco Road · 12:30","golf"],
+  [0,"18:00","19:00","Drive to Pinehurst","","move"],[0,"19:00","21:00","Dinner","Pizza","fnb"],
+  [1,"6:30","7:30","Warm up","Pine Needles","golf"],[1,"7:30","12:30","Round 2","Pine Needles · 7:30","golf"],
+  [1,"12:30","13:30","Lunch","","fnb"],[1,"13:30","18:30","Round 3","Hyland · 1:36","golf"],
+  [1,"18:30","21:00","Dinner","Drum &amp; Quill","fnb"],
+  [2,"8:30","9:20","Warm up","","golf"],[2,"9:20","14:30","Round 4","Pinehurst No. 2 · 9:20","golf"],
+  [2,"14:30","15:45","Lunch","","fnb"],[2,"15:45","17:30","Round 4.5","The Cradle · 3:57","golf"],
+  [2,"18:30","21:00","Dinner","Ironwood Cafe","fnb"],
+  [3,"8:15","9:15","Warm up","","golf"],[3,"9:15","14:30","Round 5","Mid Pines · 9:15","golf"],
+  [3,"14:30","15:30","Lunch","","fnb"],[3,"15:30","16:30","Drive to RDU","","move"],
+  [3,"16:30","21:00","Flights home","","air"]],
+ map:[["1","Tobacco Road",35.3975,-79.2137,"golf","Round 1 · Quota"],
+  ["2","Pine Needles",35.1971,-79.3923,"golf","Round 2 · Fourball"],
+  ["3","Hyland",35.2047,-79.3439,"golf","Round 3 · Alt shot"],
+  ["4","Pinehurst Resort",35.1957,-79.4738,"golf","Round 4 · No. 2 &amp; The Cradle"],
+  ["5","Mid Pines",35.1933,-79.3922,"golf","Round 5 · Singles"],
+  ["H","The Carolina Hotel",35.1957,-79.4738,"house","Lodging"],
+  ["A","Raleigh–Durham (RDU)",35.8801,-78.7880,"air","Fly in and out"]]};
+
+Y[2022]={y:2022,n:3,title:"Michigan Madness",dest:"Northern Michigan",short:"N. Michigan",
+ dates:"Sep 1–4, 2022",base:"Dunes Cottage + Villa, Forest Dunes",
+ teams:{1:{name:"Scary Motherfuckers",men:["R. Aberdale","B. Quinn","I. Maxwell","T. Brown","C. Michael","S. Subilia"]},
+        2:{name:"Pit Spitters GC",men:["N. Morse","M. Caruso","J. Ryan","D. Johnson","N. Currie","C. Bradford"]}},
+ winner:2,score:"8.5 – 10.5",
+ hcp:{"R. Aberdale":"4.6","C. Bradford":"18.5","T. Brown":"12.9","M. Caruso":"6.3","N. Currie":"13.5",
+  "D. Johnson":"13.3","I. Maxwell":"8.6","C. Michael":"16.9","N. Morse":"6.4","J. Ryan":"14.2",
+  "S. Subilia":"17.5","B. Quinn":"10.4"},
+ blurb:`Well, here we are again gents, as we head into our third year, safe to say we have successfully created a tradition that our girlfriends, fiancés and wives can no longer push back against! The last two years at Pinehurst have been epic but now we take our talents to Forrest Dunes and the deep woods of Northern Michigan. We will have some familiar faces and some new faces on the trip, looking forward to seeing if anyone can match Caruso’s performance last year...showing up with a snapped wrist and passing out at the dinner table one night is a high bar. Fairways and greens, boys!`,
+ purse:[["Winning team","$1,800"],["Quota 1st","$450"],["Quota 2nd","$100"],["Overhead","$50"],["Total pot","$2,400"]],
+ rounds:[
+  {n:1,course:"Belvedere",fmt:"Fourball",tees:"Blue · 6,613",times:"2:10–2:30",caddie:"Walk or ride",pts:3,
+   pairs:[["T. Brown","N. Currie"],["S. Subilia","D. Johnson"],["R. Aberdale","J. Ryan"],
+          ["B. Quinn","M. Caruso"],["I. Maxwell","N. Morse"],["C. Michael","C. Bradford"]],
+   results:[2,2,1],by:["1 up","3 &amp; 1","1 up"]},
+  {n:2,course:"The Loop (Red)",fmt:"2-Man Scramble",tees:"Middle · 6,064",times:"9:20–9:42",caddie:"Riding",pts:3,
+   pairs:[["I. Maxwell","C. Bradford"],["T. Brown","M. Caruso"],["R. Aberdale","J. Ryan"],
+          ["C. Michael","D. Johnson"],["B. Quinn","N. Morse"],["S. Subilia","N. Currie"]],
+   results:[2,0,2],by:["3 &amp; 1","AS","5 &amp; 4"]},
+  {n:3,course:"Forest Dunes",fmt:"Fourball",tees:"II · 6,550",times:"3:03–3:23",caddie:"Riding",pts:3,
+   pairs:[["R. Aberdale","N. Currie"],["S. Subilia","C. Bradford"],["B. Quinn","N. Morse"],
+          ["I. Maxwell","J. Ryan"],["T. Brown","M. Caruso"],["C. Michael","D. Johnson"]],
+   results:[2,2,1],by:["2 &amp; 1","3 &amp; 2","2 &amp; 1"]},
+  {n:4,course:"The Loop (Black)",fmt:"Quota",tees:"Middle · 6,078",times:"9:20–9:42",caddie:"Walk or ride",pts:4,
+   pairs:[["B. Quinn","D. Johnson"],["T. Brown","C. Bradford"],["R. Aberdale","J. Ryan"],
+          ["I. Maxwell","N. Currie"],["C. Michael","M. Caruso"],["S. Subilia","N. Morse"]],
+   results:[2,1,2],quota:[["−11","−10"],["−11","−13"],["−12","−10"]],
+   bonus:{qa:"−34",qb:"−33",res:2}},
+  {n:4.5,course:"Bootlegger",fmt:"—",tees:"Short course",times:"4:51 / 5:02 / 5:13"},
+  {n:5,course:"Grand Traverse Bear",fmt:"Singles",tees:"Combo · 6,347",times:"10:20–10:40",caddie:"Riding",pts:6,singles:true,
+   pairs:[["R. Aberdale","N. Morse"],["T. Brown","D. Johnson"],["I. Maxwell","J. Ryan"],
+          ["S. Subilia","C. Bradford"],["B. Quinn","M. Caruso"],["C. Michael","N. Currie"]],
+   results:[1,1,1,2,1,1],by:["4 &amp; 3","4 &amp; 3","3 &amp; 1","5 &amp; 3","2 &amp; 1","3 &amp; 1"]}],
+ sessions:[["Belvedere · Fourball",1,2],["Loop Red · Scramble",0.5,2.5],["Forest Dunes · Fourball",1,2],
+  ["Loop Black · Quota",1,3],["Grand Traverse · Singles",5,1]],
+ key:[["Location","Forest Dunes, Roscommon, Michigan."],
+  ["Budget","$3,000–$3,250 depending on your ancillary spending appetite."],
+  ["Fixed budget","Round trip flight $1,000 / lodging + golf $1,500 / transport $110."],
+  ["Flights","Arrive by 11:30am Thursday. Depart after 5:30pm Sunday."],
+  ["Transportation","Two 15-passenger vans."],
+  ["Ground travel","TVC→Belvedere 55 · Belvedere→Forest Dunes 95 · Forest Dunes→Grand Traverse 72 · GT→TVC 15."],
+  ["Housing","Two locations — Dunes Cottage (8) and Villa (4)."],
+  ["Sleeping","12 beds, no bed sharing, limited room sharing."],
+  ["Format","Formats and teams released later. No caddies this year."]],
+ start:"7:00",end:"22:30",days:["Thu","Fri","Sat","Sun"],
+ blocks:[[0,"9:00","11:30","Flight to TVC","","air"],[0,"11:30","12:00","Deplane / bags / rental","","move"],
+  [0,"12:30","13:30","Drive to Belvedere","Fast food lunch","move"],[0,"13:30","14:00","Warm up","","golf"],
+  [0,"14:00","19:30","Round 1","Belvedere · 2:10","golf"],[0,"19:30","20:30","Drive to Forest Dunes","95 min","move"],
+  [0,"21:00","22:30","Dinner","Forest Dunes Pizzeria","fnb"],
+  [1,"7:30","8:30","Breakfast","Clubhouse / cottage","fnb"],[1,"8:30","9:00","Warm up","","golf"],
+  [1,"9:00","14:00","Round 2","The Loop Red · 9:20","golf"],[1,"14:00","14:45","Lunch","Clubhouse","fnb"],
+  [1,"14:45","20:00","Round 3","Forest Dunes · 3:03","golf"],[1,"20:00","20:30","Misc","","misc"],
+  [1,"21:00","22:30","Dinner","Clubhouse","fnb"],
+  [2,"7:30","8:30","Breakfast","Clubhouse / cottage","fnb"],[2,"8:30","9:00","Warm up","","golf"],
+  [2,"9:00","14:30","Round 4","The Loop Black · 9:20","golf"],[2,"14:30","16:30","Lunch","Clubhouse","fnb"],
+  [2,"16:30","18:30","Round 4.5","Bootlegger · 4:51","golf"],[2,"18:30","19:30","Misc","","misc"],
+  [2,"20:00","21:30","Dinner","Clubhouse","fnb"],
+  [3,"7:30","8:30","Breakfast","Clubhouse / cottage","fnb"],[3,"8:30","9:00","Drive to Grand Traverse","72 min","move"],
+  [3,"9:00","9:30","Warm up","","golf"],[3,"9:30","15:30","Round 5","Grand Traverse Bear · 10:20","golf"],
+  [3,"15:30","16:30","Lunch","The Grille or Jack's","fnb"],[3,"16:30","17:00","Drive to TVC","15 min","move"],
+  [3,"17:00","17:30","Bags / rental car","","misc"],[3,"17:30","21:30","Flight home","","air"]],
+ budget:[["Travel","RT to TVC, car rental, gas",1112.33,1112.23],["Lodging","Dunes Cottage + Villa",1132.48,1132.00],
+  ["Golf","Belvedere, Grand Traverse, Bootlegger",224,224.00],
+  ["Food &amp; beverage","Groceries, lunches, dinners",335,426.00],["Other","Tournament fee, poster",203.33,210.00]],
+ map:[["A","Cherry Capital (TVC)",44.7414,-85.5793,"air","Fly in and out"],
+  ["1","Belvedere",45.2901,-85.2682,"golf","Round 1 · 55 min from TVC"],
+  ["H","Forest Dunes",44.5918,-84.5295,"house","Lodging + rounds 2, 3, 4 &amp; Bootlegger"],
+  ["5","Grand Traverse Resort",44.7788,-85.4877,"golf","Round 5 · singles"]]};
+
+Y[2023]={y:2023,n:4,title:"The Consin' Cup",dest:"East Wisconsin",short:"Wisconsin",
+ dates:"Aug 31 – Sep 3, 2023",base:"Erin Hills Lodge + Inn at Woodlake, Kohler",
+ teams:{1:{name:"Kohler Bears",men:["R. Aberdale","N. Morse","N. Currie","D. Johnson","J. Ryan","T. Brown"]},
+        2:{name:"Rizzconsin",men:["M. Caruso","M. Tommila","C. Bradford","I. Maxwell","C. Michael","S. Subilia"]}},
+ winner:1,score:"13 – 6",
+ hcp:{"R. Aberdale":"3.9","C. Bradford":"15.4","T. Brown":"14.8","M. Caruso":"3.7","N. Currie":"12.5","D. Johnson":"13.4","I. Maxwell":"9.1","C. Michael":"16.7","N. Morse":"4.7","J. Ryan":"16.6","S. Subilia":"19.2","M. Tommila":"9.2"},
+ blurb:`August… the sun is setting earlier and earlier, its dead hot, you've been slugging beers and eating ice cream for 4 months straight, and you're beginning to remember that there will come a day very soon where you won't be able to golf because its too cold... yet its the best time of year — because you know the trip is right around the corner. Last year was a big year for the trip. We left Pinehurst behind and made it all the way up to Northern Michigan. We didn't know what to expect, but I think we all may have had the best time yet thanks to putter/wedge alt-shot on the bootlegger and @cougfitness. Now we set our sights on Wisconsin for not one but two major championship courses. Incredible to think this is just our fourth year but its already my favorite annual tradition.`,
+ purse:[["Winning team","$2,000"],["MVP","$400"],["Total pot","$2,400"]],
+ sessions:[["Thursday · Lac La Belle",1.5,1.5],["Friday AM · Erin Hills",2,1],["Friday PM · The Bull",2,1],
+  ["Saturday · Whistling Straits",3,1],["Sunday · River Course",4.5,1.5]],
+ rounds:[
+  {n:1,course:"Lac La Belle",fmt:"Fourball",tees:"Blue · 6,220",times:"2:00–2:24",caddie:"Riding",pts:3,
+   pairs:[["J. Ryan","C. Michael"],["N. Morse","C. Bradford"],["R. Aberdale","M. Tommila"],
+          ["D. Johnson","I. Maxwell"],["T. Brown","M. Caruso"],["N. Currie","S. Subilia"]],
+   results:[0,1,2],by:["AS","5 &amp; 4","4 &amp; 3"]},
+  {n:2,course:"Erin Hills",fmt:"Fourball",tees:"Combo 6,491 / Green 6,792",times:"7:09–7:31",caddie:"Double bag",pts:3,
+   pairs:[["R. Aberdale","M. Caruso"],["N. Morse","M. Tommila"],["J. Ryan","I. Maxwell"],
+          ["T. Brown","C. Bradford"],["D. Johnson","C. Michael"],["N. Currie","S. Subilia"]],
+   results:[1,2,1],by:["2 &amp; 1","4 &amp; 2","5 &amp; 4"]},
+  {n:3,course:"The Bull",fmt:"Modified Alt Shot",tees:"Green · 6,424",times:"2:30–2:50",caddie:"Riding",pts:3,
+   pairs:[["R. Aberdale","C. Bradford"],["N. Currie","S. Subilia"],["D. Johnson","C. Michael"],
+          ["J. Ryan","M. Tommila"],["T. Brown","M. Caruso"],["N. Morse","I. Maxwell"]],
+   results:[1,1,2],by:["1 up","2 up","3 &amp; 1"]},
+  {n:4,course:"Whistling Straits",fmt:"Quota",tees:"White 6,360 / Green 6,663",times:"8:10–8:30",caddie:"Double bag",pts:4,
+   pairs:[["D. Johnson","C. Bradford"],["T. Brown","M. Caruso"],["R. Aberdale","M. Tommila"],
+          ["J. Ryan","S. Subilia"],["N. Morse","I. Maxwell"],["N. Currie","C. Michael"]],
+   results:[1,2,1],quota:[["−11","−24"],["−8","−5"],["−5","−10"]],
+   bonus:{qa:"−24",qb:"−39",res:1}},
+  {n:4.5,course:"The Baths",fmt:"—",tees:"Par 3, walking",times:"2:48 / 3:00 / 3:12"},
+  {n:5,course:"River Course",fmt:"Singles",tees:"Green · 6,465",times:"8:30–8:50",caddie:"Riding",pts:6,singles:true,
+   pairs:[["R. Aberdale","M. Caruso"],["T. Brown","C. Michael"],["J. Ryan","C. Bradford"],
+          ["N. Currie","M. Tommila"],["D. Johnson","S. Subilia"],["N. Morse","I. Maxwell"]],
+   results:[0,1,2,1,1,1],by:["AS","2 up","3 &amp; 2","2 &amp; 1","3 &amp; 1","1 up"]}],
+ key:[["Location","East Wisconsin — Erin Hills then Kohler."],
+  ["Budget","$3,750 depending on your ancillary spending appetite."],
+  ["Fixed budget","Round trip flight $350 / lodging + golf $2,885 / transport $150."],
+  ["Flights","Arrive by 11:00am Thursday. Depart after 5:00pm Sunday."],
+  ["Transportation","Two mini vans, local Wisconsin tour guide Devon Johnson, and the Kohler shuttle."],
+  ["Ground travel","MKE→Lac La Belle 50 · LAC→Erin Hills 20 · EH→The Bull 62 · Bull→Kohler 15 · Kohler→MKE 58."],
+  ["Housing","Erin Hills: The Lodge — singles (6), attic (4), double (2). Kohler: Inn at Woodlake — suite (8) and two doubles (4)."],
+  ["Sleeping","Yes room sharing, no bed sharing."],
+  ["Check in / out","Erin Hills 3pm / 10am. Kohler 4pm / 12pm."],
+  ["Caddies","Double bag on Round 2 (suggested $75) and Round 4 ($60)."]],
+ start:"5:30",end:"22:00",days:["Thu","Fri","Sat","Sun"],
+ blocks:[[0,"6:00","10:00","Flight to MKE","","air"],[0,"10:00","10:30","Deplane / bags / rental","","move"],
+  [0,"10:30","13:00","Drive to Lac La Belle","50 min · fast food lunch","move"],[0,"13:00","14:00","Warm up","","golf"],
+  [0,"14:00","19:00","Round 1","Lac La Belle · 2:00","golf"],[0,"19:00","19:30","Drive to Erin Hills","20 min","move"],
+  [0,"19:30","20:30","Dinner","EH clubhouse","fnb"],[0,"20:30","21:00","Check in","The Lodge","misc"],
+  [0,"21:00","22:00","Drumlin putting course","","golf"],
+  [1,"6:00","6:45","Breakfast","EH clubhouse","fnb"],[1,"6:45","7:09","Warm up","","golf"],
+  [1,"7:09","12:30","Round 2","Erin Hills · 7:09","golf"],[1,"12:30","13:15","Lunch","EH clubhouse","fnb"],
+  [1,"13:15","14:30","Drive to The Bull","62 min","move"],[1,"14:30","19:30","Round 3","The Bull · 2:30","golf"],
+  [1,"19:30","19:45","Drive to Kohler","15 min","move"],[1,"19:45","21:30","Dinner","Pizza","fnb"],
+  [2,"6:30","7:30","Breakfast","Cottage","fnb"],[2,"7:30","8:00","Shuttle to Straits","","move"],
+  [2,"8:00","13:30","Round 4","Whistling Straits · 8:10","golf"],[2,"13:30","14:30","Lunch","Clubhouse","fnb"],
+  [2,"14:30","14:45","Shuttle to Baths","","move"],[2,"14:45","17:30","Round 4.5","The Baths · 2:48","golf"],
+  [2,"18:00","20:00","Dinner","Horse &amp; Plow","fnb"],[2,"20:00","21:30","Misc","","misc"],
+  [3,"7:00","8:00","Breakfast","Cottage","fnb"],[3,"8:00","8:30","Warm up","","golf"],
+  [3,"8:30","14:00","Round 5","River Course · 8:30","golf"],[3,"14:00","15:00","Lunch","Clubhouse","fnb"],
+  [3,"15:00","16:00","Drive to MKE","58 min","move"],[3,"16:00","16:30","Bags / rental car","","misc"],
+  [3,"16:30","22:00","Flight out of MKE","","air"]],
+ budget:[["Travel","RT to WI, three cars, gas, shuttle",545.83,446.51],
+  ["Lodging","Erin Hills Lodge + Inn at Woodlake",747.66,809.07],
+  ["Golf","Five rounds, caddies, The Baths",2169.67,2214.34],
+  ["Food &amp; beverage","Groceries, lunches, dinners",310,372.26],
+  ["Other","Tournament fee, Golf Genius",213.19,213.19]],
+ map:[["A","Milwaukee (MKE)",42.9439,-87.9008,"air","Fly in and out"],
+  ["1","Lac La Belle",43.1471,-88.5188,"golf","Round 1 · 50 min from MKE"],
+  ["2","Erin Hills",43.2455,-88.3947,"golf","Round 2 + first two nights"],
+  ["3","The Bull",43.7134,-87.8130,"golf","Round 3 · 62 min north"],
+  ["4","Whistling Straits",43.8510,-87.7354,"golf","Round 4 · quota"],
+  ["5","Blackwolf Run",43.7269,-87.7759,"golf","Round 5 River Course + The Baths"]]};
+
+Y[2024]={y:2024,n:5,title:"The Bandon Boondoggle",dest:"Bandon Dunes, OR",short:"Bandon",
+ dates:"Aug 28 – Sep 1, 2024",base:"Grove Cottage Suite + Chrome Lake Doubles",
+ teams:{1:{name:"Dune Dawgs",men:["M. Caruso","R. Aberdale","E. Chen","D. Johnson","J. Ryan","S. Subilia"]},
+        2:{name:"Pacific Goons",men:["R. Carr","N. Morse","I. Maxwell","N. Currie","C. Bradford","C. Michael"]}},
+ winner:2,score:"7 – 15",
+ hcp:{"R. Aberdale":"4.9","C. Bradford":"15.8","R. Carr":"3.8","M. Caruso":"3.5","E. Chen":"10.4","N. Currie":"12.4","D. Johnson":"11.8","I. Maxwell":"11.6","C. Michael":"16.3","N. Morse":"6.1","J. Ryan":"15.8","S. Subilia":"17.2"},
+ blurb:`This year marks the 5 year anniversary of the trip which now officially makes it a tradition ("but hun, its a tradition!"). This year will be bigger and better than ever. The travel to/from will be treacherous, but once we're on site we won't leave the 2.3 square mile property that boasts 5 courses (all of which are top 100 in the US), 2 short courses, and top amenities. No more jumping back in the van after a morning 18 to race 25 minutes down the road, cram down some shitty clubhouse burger before shoot 999 in the afternoon round. "Bandon? Isn't that hard to get to? Isn't it expensive? They don't have any carts, right? Couldn't it just rain the whole time?" We've all heard these questions, and the answer to all of them is "yes". But for those who've done their research and truly understand what it means to love the game of golf, you don't worry about such trivial questions. The other question you hear — and the only one worth answering — is "you've been to Bandon?" The folks who ask that seem to understand the important parts of a trip to the holy land. Soon our answer will be "yes"!`,
+ purse:[["Winning team","$2,000"],["MVP","$400"],["Total pot","$2,400"]],
+ sessions:[["R1 Old Macdonald · Fourball",2,1],["R2 Bandon Dunes · 9/18 Fourball",0,3],["R3 Pacific Dunes · Quota",1,3],
+  ["R4 Bandon Trails · Score by Par",1,2],["R5 Bandon Dunes · Greensomes",0,3],["R6 Sheep Ranch · Singles",3,3]],
+ rounds:[
+  {n:"Pre",course:"Bandon Preserve",fmt:"Fewest Putts",tees:"Short course",times:"5:15 / 5:30 / 5:45",caddie:"Walking",
+   note:"Room Game for the two solo rooms in the Grove Cottage Suite. Evan Chen and Mike Caruso had the fewest putts \u2014 Caruso opted out, so the second room went to Ian Maxwell in third."},
+  {n:1,course:"Old Macdonald",fmt:"Fourball",tees:"6,944 / 6,320",times:"8:00–8:20",caddie:"Double bag",pts:3,
+   pairs:[["R. Aberdale","N. Currie"],["S. Subilia","C. Bradford"],["E. Chen","N. Morse"],
+          ["J. Ryan","I. Maxwell"],["M. Caruso","R. Carr"],["D. Johnson","C. Michael"]],
+   results:[2,1,1],by:["1 up","2 &amp; 1","4 &amp; 2"]},
+  {n:2,course:"Bandon Dunes",fmt:"Mod. Fourball 9/18",tees:"6,732 / 6,221",times:"2:20–2:50",caddie:"Double bag",pts:3,
+   pairs:[["M. Caruso","R. Carr"],["J. Ryan","N. Currie"],["R. Aberdale","N. Morse"],
+          ["D. Johnson","C. Bradford"],["E. Chen","C. Michael"],["S. Subilia","I. Maxwell"]],
+   results:[2,2,2],by:["2 up","2 up","4 &amp; 2"]},
+  {n:3,course:"Pacific Dunes",fmt:"Quota",tees:"6,633 / 6,142",times:"10:10–10:30",caddie:"Double bag",pts:4,
+   pairs:[["J. Ryan","N. Morse"],["S. Subilia","C. Michael"],["R. Aberdale","I. Maxwell"],
+          ["M. Caruso","N. Currie"],["D. Johnson","R. Carr"],["E. Chen","C. Bradford"]],
+   results:[1,2,2],quota:[["+12","+9"],["−1","+15"],["−9","−3"]],
+   bonus:{qa:"+2",qb:"+21",res:2}},
+  {n:"Pre",course:"Shorty's",fmt:"—",tees:"Short course",times:"4:30 / 4:45 / 5:30"},
+  {n:4,course:"Bandon Trails",fmt:"Score by Par",tees:"6,788 / 6,249",times:"8:00–8:20",caddie:"Double bag",pts:3,
+   pairs:[["D. Johnson","I. Maxwell"],["J. Ryan","C. Bradford"],["R. Aberdale","N. Currie"],
+          ["E. Chen","C. Michael"],["M. Caruso","R. Carr"],["S. Subilia","N. Morse"]],
+   results:[0,2,0],by:["AS","4 &amp; 3","AS"]},
+  {n:5,course:"Bandon Dunes",fmt:"Greensomes",tees:"6,732 / 6,221",times:"2:00–2:20",caddie:"Riding",pts:3,
+   pairs:[["S. Subilia","N. Morse"],["D. Johnson","N. Currie"],["M. Caruso","C. Bradford"],
+          ["E. Chen","C. Michael"],["R. Aberdale","R. Carr"],["J. Ryan","I. Maxwell"]],
+   results:[2,2,2],by:["2 &amp; 1","4 &amp; 3","2 up"]},
+  {n:6,course:"Sheep Ranch",fmt:"Singles",tees:"6,636 / 6,245",times:"9:30–9:50",caddie:"Double bag",pts:6,singles:true,
+   pairs:[["R. Aberdale","R. Carr"],["S. Subilia","C. Michael"],["M. Caruso","N. Morse"],
+          ["J. Ryan","C. Bradford"],["E. Chen","I. Maxwell"],["D. Johnson","N. Currie"]],
+   results:[1,2,1,1,2,2],by:["3 &amp; 2","5 &amp; 3","1 up","2 up","5 &amp; 4","6 &amp; 5"]}],
+ key:[["Location","Bandon Dunes Golf Resort, Oregon."],
+  ["Budget","~$6,000 total — $2,750 golf, $825 travel, $1,350 lodging, $1,000 F&amp;B."],
+  ["Flights","Arrive by 1pm Wednesday. Depart after 7pm Sunday."],
+  ["Transportation","Private shuttle to and from EUG. Resort shuttles on property."],
+  ["Ground travel","EUG is 2.5 hours from Bandon. Every course and restaurant is under 10 minutes from lodging."],
+  ["Caddies","Walking only. Five rounds at $125+ per bag, one forecaddie round at $40+ per player. No caddies on the short courses."],
+  ["Housing","One 4-bedroom Grove Cottage Suite (4) plus four Chrome Lake Doubles (8)."],
+  ["Sleeping","Room sharing yes, bed sharing no. The two solo rooms in the suite were played for on the Preserve."],
+  ["Range","One central practice centre for everything except Sheep Ranch, which has its own."],
+  ["Dress code","Golf casual. Most evenings you won't return to the room before dinner, so pack for the day — golf shoes aren't allowed at dinner."]],
+ start:"6:00",end:"22:30",days:["Wed","Thu","Fri","Sat","Sun"],
+ blocks:[[0,"6:00","13:00","Flights to EUG","3 hour time change","air"],[0,"13:00","13:30","Deplane / bags","","move"],
+  [0,"14:00","16:00","Private shuttle to Bandon","2.5 hrs","move"],[0,"16:00","16:30","Check in","","misc"],
+  [0,"16:30","17:15","Warm up","Charlotte's","golf"],[0,"17:15","19:45","Round 1","Bandon Preserve · 5:15","golf"],
+  [0,"20:00","21:30","Dinner","McKee's Pub","fnb"],[0,"21:30","22:30","Misc","","misc"],
+  [1,"6:00","7:00","Breakfast / pro shop","","fnb"],[1,"7:00","7:30","Shuttle to course","","move"],
+  [1,"7:30","8:00","Warm up","","golf"],[1,"8:00","13:00","Round 2","Old Macdonald · 8:00","golf"],
+  [1,"13:00","14:00","Lunch","The Gallery","fnb"],[1,"14:00","14:20","Shuttle to course","","move"],
+  [1,"14:20","19:30","Round 3","Bandon Dunes · 2:20","golf"],[1,"19:30","20:00","Shuttle to dinner","","move"],
+  [1,"20:00","21:30","Dinner","Ghost Tree Grill · 8:00pm","fnb"],[1,"21:30","22:30","Misc","","misc"],
+  [2,"6:30","8:00","Breakfast / pro shop","","fnb"],[2,"8:00","9:00","Shuttle to course","","move"],
+  [2,"9:00","10:00","Warm up","","golf"],[2,"10:00","15:00","Round 4","Pacific Dunes · 10:10","golf"],
+  [2,"15:00","15:30","Lunch","Pacific Grill","fnb"],[2,"15:30","16:00","Shuttle to course","","move"],
+  [2,"16:00","19:00","Round 5","Shorty's · 4:30","golf"],[2,"19:00","20:00","Shower / change","","misc"],
+  [2,"20:00","21:30","Dinner","The Gallery · 8:15pm","fnb"],[2,"21:30","22:30","Misc","","misc"],
+  [3,"6:00","7:00","Breakfast / pro shop","","fnb"],[3,"7:00","7:30","Shuttle to course","","move"],
+  [3,"7:30","8:00","Warm up","","golf"],[3,"8:00","13:00","Round 6","Bandon Trails · 8:00","golf"],
+  [3,"13:00","13:30","Lunch","Trails End","fnb"],[3,"13:30","14:00","Shuttle to course","","move"],
+  [3,"14:00","19:00","Round 7","Bandon Dunes · 2:00","golf"],[3,"19:30","20:00","Shuttle to dinner","","move"],
+  [3,"20:00","21:30","Dinner","Ghost Tree Grill · 8:00pm","fnb"],[3,"21:30","22:30","Misc","","misc"],
+  [4,"7:00","8:00","Breakfast / pro shop","","fnb"],[4,"8:00","8:30","Shuttle to course","","move"],
+  [4,"8:30","9:15","Warm up","","golf"],[4,"9:15","14:30","Round 8","Sheep Ranch · 9:30","golf"],
+  [4,"14:30","15:00","Bags / panic","","fnb"],[4,"15:30","18:30","Private shuttle to EUG","","move"],
+  [4,"18:30","22:30","Flights home","","air"]],
+ budget:[["Travel","RT to EUG + private shuttle",883.33,879.17],["Lodging","Grove Cottage + Chrome Lake",1340,1440.08],
+  ["Golf","Eight rounds + caddies",2665,2665],["Food &amp; beverage","Breakfasts, lunches, dinners",845.83,634.35],
+  ["Other","Tournament fee, Golf Genius, Shorty's bet",216.67,233.17]],
+ map:[["1","Bandon Preserve",43.1770,-124.3930,"golf","Round 1 · fewest putts"],
+  ["2","Old Macdonald",43.2022,-124.3835,"golf","Round 2 · fourball"],
+  ["H","The Lodge",43.1879,-124.3903,"house","Grove Cottage + Chrome Lake"],
+  ["3","Bandon Dunes",43.1900,-124.3960,"golf","Rounds 3 &amp; 7"],
+  ["4","Pacific Dunes",43.1936,-124.3899,"golf","Round 4 · quota"],
+  ["6","Bandon Trails",43.1846,-124.3911,"golf","Round 6 · score by par"],
+  ["8","Sheep Ranch",43.2210,-124.3888,"golf","Round 8 · singles"]],
+ mapNote:"Eugene airport sits 2.5 hours north and is off this frame. Everything here is inside the resort's 2.3 square miles."};
+
+Y[2025]={y:2025,n:6,title:"The Turds &amp; Kankles Tussle",dest:"Myrtle Beach, SC",short:"Myrtle Beach",
+ dates:"Oct 9–12, 2025",base:"2349 S Waccamaw Dr, Murrells Inlet",
+ teams:{1:{name:"Strantzer Things",men:["R. Aberdale","I. Maxwell","M. Caruso","M. Tommila","D. Johnson","C. Michael"]},
+        2:{name:"DyeNasty Boys",men:["C. Bradford","N. Currie","N. Morse","J. Ryan","R. Carr","S. Subilia"]}},
+ winner:2,score:"6 – 7",
+ hcp:{"R. Aberdale":"3.7","C. Bradford":"12.5","R. Carr":"4.1","M. Caruso":"2.8","N. Currie":"10",
+  "D. Johnson":"11.9","I. Maxwell":"10.1","C. Michael":"13","N. Morse":"6","J. Ryan":"13.1",
+  "S. Subilia":"20.5","M. Tommila":"10.5"},
+ blurb:`Year 6 and we are rolling. Bit of a different vibe this year with Myrtle vs. a true golf resort. But in a way we're going back to our roots — all the fellas in one big AirBnb, Sam complaining about driving, etc. It was a bit of a surprise when planning this that Myrtle is more difficult to get to than Bandon, but that won't matter come Thursday 10/9 at 2:02pm when the vibes are high, the beers are cold, and we still all stink at golf. This year also marks our return to the school of Mike Strantz design. Out of 6 years, we'll have played a Strantz course in half of those years, and there's only 7 in the world. Outside of the golf and competition, we're going to be in the south at a pretty sweet house on an October Saturday afternoon with nothing on the itinerary but watching football — sign me up.`,
+ purse:[["Winning team","$2,000","returned"],["MVP","$400","returned"],["Total pot","$2,400","returned"]],
+ purseVoid:true,
+ rounds:[
+  {n:1,course:"Pawleys Plantation",fmt:"Fourball",tees:"Green Winged Teal · 6,592",times:"2:02–2:20",caddie:"Riding",pts:3,
+   pairs:[["D. Johnson","R. Carr"],["M. Caruso","N. Morse"],["R. Aberdale","N. Currie"],
+          ["M. Tommila","J. Ryan"],["I. Maxwell","C. Bradford"],["C. Michael","S. Subilia"]],
+   results:[1,1,2],by:["4 &amp; 3","6 &amp; 5","2 &amp; 1"]},
+  {n:2,course:"True Blue",fmt:"Modified Fourball",tees:"White · 6,812",times:"7:30–7:46",caddie:"Riding",pts:3,
+   pairs:[["M. Caruso","R. Carr"],["C. Michael","J. Ryan"],["R. Aberdale","N. Currie"],
+          ["I. Maxwell","S. Subilia"],["D. Johnson","C. Bradford"],["M. Tommila","N. Morse"]],
+   results:[2,1,2],by:["1 up","2 up","2 &amp; 1"]},
+  {n:3,course:"Caledonia",fmt:"Greensomes",tees:"Pintail Black · 6,526",times:"1:33–1:49",caddie:"Riding",pts:3,
+   pairs:[["D. Johnson","R. Carr"],["C. Michael","S. Subilia"],["R. Aberdale","C. Bradford"],
+          ["M. Tommila","J. Ryan"],["M. Caruso","N. Currie"],["I. Maxwell","N. Morse"]],
+   results:[0,1,0],by:["AS","4 &amp; 3","AS"]},
+  {n:4,course:"The Dye Club at Barefoot",fmt:"Team Quota",tees:"Black · 6,644",times:"9:06–9:23",caddie:"Riding",pts:4,
+   pairs:[["M. Caruso","C. Bradford"],["M. Tommila","S. Subilia"],["I. Maxwell","J. Ryan"],
+          ["C. Michael","N. Morse"],["R. Aberdale","R. Carr"],["D. Johnson","N. Currie"]],
+   results:[2,2,1],quota:[["−9","+3"],["−13","−9"],["−8","−11"]],
+   bonus:{qa:"−30",qb:"−17",res:2}},
+  {n:5,course:"Caledonia",fmt:"Sunday Singles",tees:"Pintail Black · 6,526",times:"8:24–8:40",caddie:"Riding",pts:6,
+   cancelled:"Washed out — six points never played"}],
+ key:[["Location","Myrtle Beach, SC. AirBnB at 2349 South Waccamaw Drive, Murrells Inlet."],
+  ["Budget","~$3,500 total — $1,250 golf, $1,000 travel, $700 F&amp;B, $550 lodging."],
+  ["Flights","Arrive by Thursday 10/9 by noon. Depart after Sunday 10/12 at 4:30pm."],
+  ["Transportation","Three mini vans. Two obtained in ILM by the Tidewater crew, one in MYR for the Thursday gentlemen. Currie meets the group at Pawleys Plantation."],
+  ["Ground travel","MYR→PP 55 · PP→AirBnB 45 · AirBnB→TB 40 · Caledonia→AirBnB 40 · AirBnB→Dye 55 · Caledonia→MYR 45."],
+  ["Housing","Everyone in the same place, think Pinehurst. Check in 4pm, check out 10am."],
+  ["Sleeping","13 beds, no one shares. 9 single kings plus a bunk room — three men in the bunk room based on Thursday's Room Game."],
+  ["Food &amp; beverage","House groceries. Murrells Inlet bars: Hot Fish Club, Drunken Jack's, Dead Dog Saloon. Pizza: Fox's Pizza Den or Danny's."],
+  ["Format","No caddies this year. Handicaps will not lock."]],
+ start:"6:00",end:"22:30",days:["Thu","Fri","Sat","Sun"],
+ blocks:[[0,"7:00","10:00","Travel","Flights in","air"],[0,"8:30","11:30","Tidewater","Early crew round","golf"],
+  [0,"10:30","11:00","Deplane / bags","","move"],[0,"11:00","12:30","Drive to Pawleys","MYR crew · 55 min","move"],
+  [0,"12:30","13:30","Drive to Pawleys","Tidewater crew","move"],[0,"13:00","13:30","Warm up","Clubhouse","golf"],
+  [0,"13:30","19:00","Round 1","Pawleys Plantation · 2:02","golf"],[0,"19:00","19:45","Drive to house","45 min","move"],
+  [0,"19:45","21:00","Pizza pickup","Fox's or Danny's","fnb"],[0,"21:00","22:30","Misc","Room Game results","misc"],
+  [1,"6:00","6:30","Groceries","House","fnb"],[1,"6:30","7:00","Drive to course","40 min","move"],
+  [1,"7:00","7:30","Warm up","","golf"],[1,"7:30","12:15","Round 2","True Blue · 7:30","golf"],
+  [1,"12:15","13:00","Lunch","True Blue Grillroom","fnb"],[1,"13:00","13:30","Drive to Caledonia","","move"],
+  [1,"13:30","19:00","Round 3","Caledonia · 1:33","golf"],[1,"19:00","19:15","Drive to dinner","","move"],
+  [1,"19:15","21:30","Dinner","Rustic Table · 7:15pm","fnb"],[1,"21:30","22:00","Drive to house","","move"],
+  [1,"22:00","22:30","Misc","","misc"],
+  [2,"6:30","7:00","Groceries","House","fnb"],[2,"7:00","8:00","Drive to course","Barefoot · 55 min","move"],
+  [2,"8:00","8:45","Warm up","","golf"],[2,"8:45","14:00","Round 4","Barefoot Dye · 9:06","golf"],
+  [2,"14:00","15:15","Lunch","Resort clubhouse","fnb"],[2,"15:15","16:15","Drive to house","","move"],
+  [2,"16:15","20:00","Football","SC-LSU · UF-A&amp;M · OU-UT","misc"],[2,"20:00","21:30","Dinner","Murrells Inlet","fnb"],
+  [2,"21:30","22:30","Misc","","misc"],
+  [3,"6:00","6:30","Groceries","House","fnb"],[3,"6:30","7:15","Drive to course","40 min","move"],
+  [3,"7:15","7:45","Warm up","","golf"],[3,"7:45","13:00","Round 5","Caledonia · cancelled","golf"],
+  [3,"13:00","15:45","Misc","Pack up","misc"],[3,"15:45","16:30","Drive to MYR","45 min","move"],
+  [3,"16:30","17:15","Bags / panic","","fnb"],[3,"17:15","22:30","Flights home","","air"]],
+ budget:[["Travel","Airfare, van rentals, gas",750,813.43],["Lodging","AirBnB, Murrells Inlet",1000,568.31],
+  ["Golf","Green fees, caddies, Golf Genius, entry fee",1144.55,941.07],
+  ["Food &amp; beverage","Groceries, lunches, dinners",551.97,384.94],["Other","Nothing this year",0,0]],
+ hasCustomMap:true,
+ note:"Weather took Sunday singles, so both the cup and MVP were awarded on Saturday's standings and the $2,400 purse went back to the group."};
+
+const YEARS=[2026,2025,2024,2023,2022,2021,2020];
+Y[2026]={y:2026,n:7,title:"Streamsong",dest:"Streamsong, FL",short:"Streamsong",
+ dates:"Oct 8\u201311, 2026",base:"Streamsong Resort",upcoming:true,
+ teams:{1:{name:"To be drafted",men:[]},2:{name:"To be drafted",men:[]}},winner:1,score:"",
+ blurb:"Six rounds across Blue, Red and Black, with the Chain as a Saturday extra. Double-bag caddies on four of the six. Booked, with $5,000 on deposit.",
+ rounds:[{n:1,course:"Blue",fmt:"Fourball",tees:"Par 72 \u00b7 6,692 / 6,381",times:"1:35",caddie:"Caddies",pts:3},
+  {n:2,course:"Red",fmt:"Modified Fourball",tees:"Par 72 \u00b7 6,537",times:"7:30",caddie:"Caddies",pts:3},
+  {n:3,course:"Blue",fmt:"Modified Alt Shot",tees:"Par 72 \u00b7 6,692 / 6,381",times:"1:35",caddie:"Riding",pts:3},
+  {n:4,course:"Black",fmt:"Quota",tees:"Par 73 \u00b7 6,747 / 6,476",times:"9:43",caddie:"Caddies",pts:4},
+  {n:"Pre",course:"The Chain",fmt:"\u2014",tees:"Short course",times:"\u2014"},
+  {n:5,course:"Red",fmt:"Singles",tees:"Par 72 \u00b7 6,537 / 6,264",times:"8:00",caddie:"Caddies",pts:6}],
+ budget:[["Travel","Flights + ground",null,null],["Lodging","Streamsong Resort",null,null],
+  ["Golf","Six rounds + caddies",null,null],["Food &amp; beverage","",null,null],["Other","",null,null]],
+ budgetNote:"Budgeted at $4,500 per man. As scoped the plan runs to about $4,897 \u2014 109% of budget.",
+ note:"Not played yet. Teams, formats and the full itinerary get released closer to the trip."};
+
+const UPCOMING=[
+{y:2026,dest:"Streamsong, FL",dates:"Oct 8–11, 2026",budget:4500,planned:4897,status:"Booked · $5,000 on deposit",
+ blurb:"Six rounds across Blue, Red and Black, with the Chain as a Saturday extra. Double-bag caddies on four of the six.",
+ rounds:[["1","Blue","Fourball","Par 72 · 6,692 / 6,381 · caddies · 1:35"],["2","Red","Mod. Fourball","Par 72 · 6,537 · caddies · 7:30"],
+  ["3","Blue","Mod. Alt Shot","Par 72 · 6,692 / 6,381 · riding · 1:35"],["4","Black","Quota","Par 73 · 6,747 / 6,476 · caddies · 9:43"],
+  ["—","The Chain","—","Short course"],["5","Red","Singles","Par 72 · 6,537 / 6,264 · caddies · 8:00"]]},];
+
+const FORMATS=[
+ {t:"Fourball",r:"The staple",d:"Paired with a teammate against a twosome from the other side. Play your own ball; the best net score from your twosome counts. Strokes given off the low player in the foursome."},
+ {t:"Modified Fourball",r:"Variant",d:"Standard fourball, except both partners' scores count on selected holes — at Myrtle that was 9, 16, 17 and 18; at Bandon it was 9 and 18. Lower combined net wins those."},
+ {t:"Greensomes",r:"Modified alternate shot",d:"Both hit a drive and pick the best one. Whoever's drive you didn't use hits the second; the other plays the third, alternating until holed. Played as it lies. Strokes combined at 60% low / 40% high."},
+ {t:"Team Quota",r:"Points against handicap",d:"Quota is 36 minus your course handicap. Gross scores only: eagle 6, birdie 4, par 2, bogey 1, double or worse 0. Scored as a twosome, plus a bonus point for the better combined team quota."},
+ {t:"Score by Par",r:"Bandon 2024 only",d:"Worst ball counts on the par 3s, best ball on the par 5s."},
+ {t:"Singles",r:"Sunday",d:"Six matches, six points. Everything on the line."}];
+const STANDING=[
+ {t:"Scoring",items:[
+  "Each match win is worth one point for your team. Matches tied after 18 holes are worth half a point.",
+  "Nineteen points across five rounds is the standard structure. Bandon ran 22 across eight.",
+  "In quota rounds a further point goes to whichever team is better against combined quota across all six players."]},
+ {t:"Side game \u2014 MVP",items:[
+  "The side game revolves around winning your matches, and the winner is MVP of the trip.",
+  "Most match points after the rounds takes it: a win is 1, a tie is 0.5, a loss is nothing. Maximum 5 in a five-round year.",
+  "Tiebreak 1: member of the winning cup team.",
+  "Tiebreak 2: combined gross across the #1 handicap hole for all rounds, excluding alternate shot. Then #2, and so on.",
+  "The MVP takes $400."]},
+ {t:"Gimmes",items:[
+  "For all matches it is up to the opposing team what putts they give.",
+  "If you are given a putt you must pick up your ball. Putting it anyway before the hole is settled loses your team the hole.",
+  "Once the hole is settled you are welcome to putt it out."]},
+ {t:"Play it as it lies",items:[
+  "All USGA match play rules govern. Check the back of the card for local rules specific to each course.",
+  "Unless otherwise noted the ball is played down in all rounds \u2014 the golden rule."]},
+ {t:"Out of bounds and lost balls",items:[
+  "White staked or in the water: re-hit with penalty, or take the local rule below.",
+  "Red staked: you may drop where the ball entered, taking one stroke \u2014 tee ball in, drop up there hitting your third.",
+  "Yellow staked: drop behind the hazard to play your third.",
+  "Local rule: rather than re-teeing on a lost ball, drop at the nearest fairway edge and play your fourth. Not limited to tee shots."]},
+ {t:"Golf Genius",items:[
+  "Golf Genius is the system of record for all strokes given and match scoring, including individual scores.",
+  "Handicaps no longer lock \u2014 they update overnight to include the previous day\u2019s scores.",
+  "GG posts to GHIN on your behalf overnight, so do not post your own scores.",
+  "Each match has its own GGID. View-only code KANKLES, or turdsnkankles.golfgenius.com."]}];
+
+
+const $=s=>document.querySelector(s);
+const el=(t,c,h)=>{const n=document.createElement(t);if(c)n.className=c;if(h!==undefined)n.innerHTML=h;return n;};
+const nm=k=>(P[k]||{}).f||k;
+const money=n=>"$"+Math.round(n).toLocaleString();
+function career(k){let w=0,l=0,h=0,c=0,y=0;const r=REC[k];
+ for(const yr in r){const[a,b,d,e]=r[yr];w+=a;l+=b;h+=d;c+=e;if(a+b+d>0)y++;}
+ const g=w+l+h;return{w,l,h,cups:c,years:y,games:g,pts:w+h/2,pct:g?w/g:0};}
+
+/* ============ BOARD ============ */
+function renderBoard(){
+ renderUSMap();
+ const yrsAll=[2020,2021,2022,2023,2024,2025];
+ const rows=Object.keys(REC).map(k=>({k,...career(k)})).filter(p=>p.games>0)
+  .sort((a,b)=>b.pct-a.pct||b.pts-a.pts);
+ $("#boardRows").innerHTML=rows.map((p,i)=>{
+  return `<div class="board-row${ROSTER.includes(p.k)?"":" alum"}" data-k="${p.k}" style="animation-delay:${i*24}ms">
+   <span class="pos">${String(i+1).padStart(2,"0")}</span><span class="nm">${nm(p.k)}</span>
+   <span class="st w">${p.w}</span><span class="st l">${p.l}</span><span class="st">${p.h}</span>
+   <span class="pts">${p.pts%1?p.pts.toFixed(1):p.pts}</span>
+   <span class="pct">${(p.pct*100).toFixed(1)}</span>
+   <span class="pct">${p.years}</span>
+   <span class="cups">${p.cups?"\u2605".repeat(p.cups):'<i class="none">\u2014</i>'}</span></div>`;
+ }).join("");
+ document.querySelectorAll(".board-row").forEach(r=>{
+  r.onclick=()=>openPlayer(r.dataset.k);
+  r.title=nm(r.dataset.k)+" \u2014 click for his full record";});
+
+ $("#cupTable").innerHTML=`<tr><th>Yr</th><th>Cup</th><th>Where</th><th class="num">Result</th></tr>`+
+  YEARS.filter(y=>!Y[y].upcoming).map(y=>{const t=Y[y];return `<tr><td class="mono">${y}</td>
+   <td><strong>${t.teams[t.winner].name}</strong></td><td style="color:var(--ink-soft)">${t.short}</td>
+   <td class="num">${t.score?winFirst(t.score):"\u2014"}</td></tr>`;}).join("");
+
+ const all=Object.keys(REC).map(k=>({k,...career(k)})).filter(p=>p.games>0);
+ const tied=(arr,f)=>{const m=Math.max(...arr.map(f));return arr.filter(x=>f(x)===m);};
+ const mostCups=tied(all,x=>x.cups), mostGames=tied(all,x=>x.games), mostTrips=tied(all,x=>x.years);
+ const unbeaten=[],perfect=[];
+ Object.keys(REC).forEach(k=>yrsAll.forEach(y=>{const[w,l,h]=REC[k][y];
+  if(w+l+h>0&&l===0){
+   if(h===0) perfect.push([y,`${nm(k)} ${w}\u20130 (${y})`]);
+   else unbeaten.push([y,`${nm(k)} ${w}\u2013${l}\u2013${h} (${y})`]);}}));
+ const byYear=a=>a.sort((x,z)=>z[0]-x[0]).map(x=>x[1]).join(" \u00b7 ");
+ const list=a=>a.map(x=>nm(x.k)).join(" &amp; ");
+ $("#recordFacts").innerHTML=[
+  ["Men who have played","16"],
+  ["Most cups",list(mostCups)+" \u2014 "+mostCups[0].cups],
+  ["OG Crew",list(mostTrips)+" \u2014 "+mostTrips[0].years+" trips"],
+  ["Perfect Games",byYear(perfect)],
+  ["No Hitters",byYear(unbeaten)]
+ ].map(([a,b])=>`<div class="kv"><dt>${a}</dt><dd style="max-width:34ch">${b}</dd></div>`).join("");
+
+}
+function winFirst(sc){const p=sc.split(" \u2013 ").map(Number);
+ return p[0]>=p[1]?sc:p[1]+" \u2013 "+p[0];}
+function renderRibbon(){
+ const r=$("#ribbon");
+ YEARS.forEach(y=>{const t=Y[y];
+  const d=el("div","rib"+(t.upcoming?" future":""),`<div class="yr">${y}</div><div class="place">${t.short}</div>
+   <div class="won">${t.upcoming?"On the tee":t.teams[t.winner].name}</div><div class="score">${t.upcoming?t.dates:(t.score?winFirst(t.score):"cup taken")}</div>`);
+  d.onclick=()=>{selectTab("years");activeYear=y;renderYearBar();renderYear();}; r.appendChild(d);});
+ const games=Object.keys(REC).reduce((s,k)=>s+career(k).games,0);
+ const rounds=YEARS.reduce((s,y)=>s+Y[y].rounds.length,0);
+ $("#mastMeta").innerHTML=`<div>TRIPS <b>6</b> &nbsp; ROUNDS <b>${rounds}</b></div>
+  <div>PLAYERS <b>16</b> &nbsp; MATCHES <b>${games}</b></div><div>NEXT <b>STREAMSONG 2026</b></div>`;
+
+}
+
+
+let DGCACHE=null;
+function dgCached(){ if(!DGCACHE) DGCACHE=dgStats(); return DGCACHE; }
+function openPlayer(k){
+ const c=career(k), fmt=dgCached().fmt;
+ $("#pmName").innerHTML=nm(k);
+ $("#pmSub").innerHTML=`SENIORITY ${P[k].sen} \u00b7 GHIN ${P[k].ghin} \u00b7 ${c.years} TRIP${c.years===1?"":"S"}`+
+   (ROSTER.indexOf(k)>=0?"":" \u00b7 ALUMNI");
+ const bars=FMT_ORDER.filter(F=>fmt[k]&&fmt[k][F]).map(F=>{const v=fmt[k][F],n=v[0]+v[1]+v[2];
+  return `<div class="fmtbar"><span class="lb">${F}</span>
+   <span class="tr"><i class="w" style="width:${v[0]/n*100}%"></i><i class="h" style="width:${v[2]/n*100}%"></i><i class="l" style="width:${v[1]/n*100}%"></i></span>
+   <span class="vv">${v[0]}\u2013${v[1]}\u2013${v[2]}</span></div>`;}).join("");
+ const yl=[2020,2021,2022,2023,2024,2025].filter(y=>{const a=REC[k][y];return a[0]+a[1]+a[2]>0;})
+  .reverse().map(y=>{const a=REC[k][y],t=Y[y];let tm="\u2014";
+   for(const tn of[1,2]) if(t.teams[tn].men.indexOf(k)>=0) tm=t.teams[tn].name;
+   return `<tr><td class="mono">${y}</td><td style="font-size:12px">${tm}</td>
+    <td class="num">${t.hcp&&t.hcp[k]?t.hcp[k]:"\u2014"}</td>
+    <td class="num">${a[0]}\u2013${a[1]}\u2013${a[2]}</td>
+    <td class="num">${(a[0]+a[2]/2).toFixed(1).replace(".0","")}</td>
+    <td class="num" style="color:var(--brass)">${a[3]?"\u2605":""}</td></tr>`;}).join("");
+ $("#pmBody").innerHTML=`<p class="bio">${BIO[k]}</p>
+  <div class="statrow">
+   <div><div class="n">${c.w}\u2013${c.l}\u2013${c.h}</div><div class="k">Record</div></div>
+   <div><div class="n">${(c.pct*100).toFixed(0)}%</div><div class="k">Win rate</div></div>
+   <div><div class="n">${c.games}</div><div class="k">Matches</div></div>
+   <div><div class="n">${c.years}</div><div class="k">Trips</div></div>
+   <div><div class="n" style="color:var(--brass)">${c.cups}</div><div class="k">Cups</div></div></div>
+  <h3>Year by year</h3>
+  <table style="margin-bottom:20px"><tr><th>Yr</th><th>Team</th><th class="num">Hcp</th>
+   <th class="num">W\u2013L\u2013H</th><th class="num">Pts</th><th class="num">Cup</th></tr>${yl}</table>
+  <h3>By format</h3>${bars||'<p class="dg-note">No format data.</p>'}`;
+ $("#pModal").classList.add("on");
+ document.body.style.overflow="hidden";
+}
+function closePlayer(){ $("#pModal").classList.remove("on"); document.body.style.overflow=""; }
+
+/* ============ YEAR ============ */
+let activeYear=2025;
+function renderYearBar(){
+ const b=$("#yrbar");b.innerHTML="";
+ YEARS.forEach(y=>{const btn=el("button","yb",String(y));
+  btn.setAttribute("aria-pressed",y===activeYear);
+  btn.onclick=()=>{activeYear=y;renderYearBar();renderYear();};b.appendChild(btn);});
+}
+function renderYear(){
+ const t=Y[activeYear];
+ let h=`<div class="yhead"><div class="t">${t.title}</div>
+  <div class="s">${t.dest.toUpperCase()} &nbsp;·&nbsp; ${t.dates.toUpperCase()} &nbsp;·&nbsp; YEAR ${t.n} &nbsp;·&nbsp; ${t.base.toUpperCase()}</div></div>`;
+
+ if(!t.upcoming){
+  h+=`<div class="final"><div><div class="l">Cup winner</div><div class="w">${t.teams[t.winner].name}</div></div>
+   <div style="text-align:right"><div class="l">Final</div><div class="s">${t.score?winFirst(t.score):"not logged"}</div></div></div>`;
+  const cand=[...t.teams[1].men.map(k=>[k,1]),...t.teams[2].men.map(k=>[k,2])]
+   .map(([k,tn])=>{const[w,l,hh]=REC[k][t.y];return{k,tn,p:w+hh/2,rec:w+"\u2013"+l+"\u2013"+hh,g:w+l+hh};})
+   .filter(x=>x.g>0);
+  if(cand.length){
+   const top=Math.max(...cand.map(x=>x.p));
+   let win=cand.filter(x=>x.p===top);
+   if(win.length>1&&win.some(x=>x.tn===t.winner)) win=win.filter(x=>x.tn===t.winner);
+   h+=`<div class="mvp" style="margin-bottom:14px"><div><div class="l">MVP \u00b7 best record of the week</div>
+    <div class="w">${win.map(x=>nm(x.k)).join(" &amp; ")}</div></div>
+    <div style="text-align:right"><div class="l">Record</div><div class="r">${win[0].rec}</div></div></div>`;
+  }
+ }
+
+ if(t.purse){
+  h+=`<div class="purse">`+t.purse.map(p=>`<div><div class="l">${p[0]}</div>
+   <div class="v${t.purseVoid?" void":""}">${p[1]}</div><div class="n">${p[2]||""}</div></div>`).join("")+`</div>`;
+ }
+
+ /* teams */
+ const rec=y=>REC;
+ h+=`<div class="teams">`+[1,2].map(tn=>{
+  const won=t.winner===tn;
+  return `<div class="tcol${won?" win":""}">
+   <div class="thd"><div class="tn">${t.teams[tn].name}</div>
+   ${t.score?`<div class="tsc">${t.score.split(" – ")[tn-1]}</div>`:""}</div>
+   <ul>${t.teams[tn].men.map(k=>{const r=REC[k][t.y];
+     return `<li>${nm(k)}<em>${t.hcp&&t.hcp[k]?t.hcp[k]:""}</em><span>${r[0]}–${r[1]}–${r[2]}</span></li>`;}).join("")}</ul></div>`;
+ }).join("")+`</div>`;
+
+ /* rounds */
+ const run=[0,0];
+ h+=`<div class="poster">`+t.rounds.filter(rd=>rd.n!=="Pre"&&rd.n!==4.5&&rd.n!==3.5).map(rd=>{
+  const head=`<div class="prd-hd"><div class="c">${typeof rd.n==="number"?"R"+rd.n:rd.n} · ${rd.course}${rd.fmt&&rd.fmt!=="—"?`<em>${rd.fmt.toUpperCase()}</em>`:""}</div>
+   <div class="meta">${rd.tees||"—"}${rd.caddie?" · "+rd.caddie:""}<br>${rd.times||""}${rd.pts?` &nbsp; <b>${rd.pts} pts</b>`:""}</div></div>`;
+  if(rd.cancelled) return `<div class="prd void">${head}<div class="cancel">${rd.cancelled}</div></div>`;
+  if(rd.singlesOnly){
+   const rows=rd.singlesOnly.map(x=>`<div style="display:flex;justify-content:space-between;padding:4px 0;
+    border-bottom:1px dotted rgba(245,242,233,.1);font-size:13px;color:rgba(245,242,233,.85)">
+    <span>${nm(x[0])}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;
+    color:${x[1]===1?"var(--brass)":"rgba(245,242,233,.4)"}">${x[1]===1?"WON":"LOST"}</span></div>`).join("");
+   return `<div class="prd">${head}${rows}<div class="cancel">${rd.note}</div></div>`;}
+  if(!rd.pairs) return `<div class="prd">${head}${rd.note?`<div class="cancel">${rd.note}</div>`:""}</div>`;
+  let body="";
+  if(rd.singles||rd.pairs.length===6&&rd.results&&rd.results.length===6){
+   body=rd.pairs.map((p,i)=>{
+    const res=rd.results?rd.results[i]:null, by=rd.by?rd.by[i]:"vs";
+    return mrow(nm(p[0]),nm(p[1]),res,by);}).join("");
+  } else {
+   for(let i=0;i<rd.pairs.length;i+=2){
+    const mi=i/2;
+    const a=nm(rd.pairs[i][0])+" + "+nm(rd.pairs[i+1][0]);
+    const b=nm(rd.pairs[i][1])+" + "+nm(rd.pairs[i+1][1]);
+    const res=rd.results?rd.results[mi]:null;
+    let by=rd.by?rd.by[mi]:"vs";
+    if(rd.quota) by=`${rd.quota[mi][0]}<span style="opacity:.4;margin:0 5px">/</span>${rd.quota[mi][1]}`;
+    body+=mrow(a,b,res,by);
+   }
+  }
+  if(rd.bonus) body+=mrow("Combined team quota","Combined team quota",rd.bonus.res,
+    `${rd.bonus.qa}<span style="opacity:.4;margin:0 5px">/</span>${rd.bonus.qb}`,true);
+  if(rd.note) body+=`<div class="cancel">${rd.note}</div>`;
+  if(rd.results){
+   let ra=0,rb=0;
+   rd.results.forEach(r=>{if(r===1)ra++;else if(r===2)rb++;else if(r===0){ra+=.5;rb+=.5;}});
+   if(rd.bonus) rd.bonus.res===1?ra++:rb++;
+   run[0]+=ra; run[1]+=rb;
+   body+=`<div class="prd-tot"><div class="tn">${t.teams[1].name}</div>
+     <div class="sc">${run[0]} \u2013 ${run[1]}<small>running total</small></div>
+     <div class="tn r">${t.teams[2].name}</div></div>`;
+  }
+  return `<div class="prd">${head}${body}</div>`;
+ }).join("")+`</div>`;
+
+ if(t.note) h+=`<div class="note">${t.note}</div>`;
+ if(!t.rounds.some(r=>r.results)&&t.rounds.some(r=>r.pairs))
+  h+=`<div class="note">Pairings survive for every round, but no individual results were recorded — only each man's season total. Filling these in would complete the head-to-head record.</div>`;
+ h+=`<div class="narr">${t.blurb}${t.y>=2022?`<div class="sig">From the ${t.y} one-pager</div>`:""}</div>`;
+
+ if(t.blocks){
+  h+=`<section><h2>Itinerary</h2>
+   <div class="itin-scroll"><div class="itin" id="itin" style="grid-template-columns:64px repeat(${t.days.length},minmax(150px,1fr))"></div></div>
+   <div class="legend"><span><i style="background:var(--golf)"></i>Golf</span>
+   <span><i style="background:var(--fnb)"></i>Food &amp; drink</span><span><i style="background:var(--move)"></i>Travel</span>
+   <span><i style="background:var(--misc)"></i>Downtime</span><span><i style="background:var(--air)"></i>Flights</span></div></section>`;
+ }
+ if(t.key){
+  h+=`<section><h2>Key items</h2><div class="card"><table class="key"><tbody>`+
+   t.key.map(k=>`<tr><td>${k[0]}</td><td>${k[1]}</td></tr>`).join("")+`</tbody></table></div></section>`;
+ }
+ if(t.budget){
+  let tb=0,ta=0,anyActual=t.budget.some(b=>b[3]!==null);
+  const rows=t.budget.map(([c,ds,b,a])=>{if(b!==null)tb+=b;if(a!==null)ta+=a;const d=(a===null||b===null)?null:a-b;
+   return `<tr><td><strong style="font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;
+    letter-spacing:.06em;font-size:15px">${c}</strong></td>
+    <td style="color:var(--ink-soft);font-size:12.5px">${ds}</td>
+    <td class="num">${b===null?'<span style="color:var(--ink-soft)">\u2014</span>':money(b)}</td>
+    <td class="num">${a===null?'<span style="color:var(--ink-soft)">—</span>':money(a)}</td>
+    <td class="num ${d===null?"":d>0?"over":d<0?"under":""}">${d===null?"—":d===0?"—":(d>0?"+":"−")+money(Math.abs(d))}</td></tr>`;}).join("");
+  h+=`<section><h2>Budget</h2><p class="lede">Per person.</p><div class="card"><table>
+   <thead><tr><th>Category</th><th>What's in it</th><th class="num">Budget</th><th class="num">Actual</th><th class="num">Δ</th></tr></thead>
+   <tbody>${rows}<tr style="border-top:2px solid var(--ink)"><td><strong>Total</strong></td>
+   <td style="color:var(--ink-soft);font-size:12.5px">Per man</td>
+   <td class="num"><strong>${tb?money(tb):"\u2014"}</strong></td>
+   <td class="num"><strong>${anyActual?money(ta):"—"}</strong></td>
+   <td class="num ${anyActual&&ta>tb?"over":"under"}"><strong>${anyActual?(ta>tb?"+":"−")+money(Math.abs(tb-ta)):"—"}</strong></td></tr>
+   </tbody></table></div>${t.budgetNote?`<div class="note">${t.budgetNote}</div>`:""}</section>`;
+ }
+ $("#yearDetail").innerHTML=h;
+ if(t.blocks) renderItin(t);
+}
+function mrow(a,b,res,by,bonus){
+ return `<div class="match${bonus?" bonus":""}">
+  <div class="side ${res===1?"w":""}">${a}</div>
+  <div class="res ${res===null?"tbd":""}"${by==="W"?` style="text-align:${res===1?"left":"right"}"`:""}>${by}</div>
+  <div class="side r ${res===2?"w":""}">${b}</div></div>`;
+}
+
+
+
+const COURSES=[
+ ["Pinehurst, NC",35.20,-79.45,"2020 \u00b7 2021",7,"Tobacco Road, Hyland, No. 2, No. 4, The Cradle, Pine Needles, Mid Pines","r","l"],
+ ["Northern Michigan",44.85,-85.00,"2022",6,"Belvedere, Forest Dunes, The Loop Red &amp; Black, Bootlegger, Grand Traverse Bear","r","r"],
+ ["Eastern Wisconsin",43.50,-88.10,"2023",6,"Lac La Belle, Erin Hills, The Bull, Whistling Straits, River Course, The Baths","l","l"],
+ ["Bandon Dunes, OR",43.19,-124.36,"2024",7,"Preserve, Old Macdonald, Bandon Dunes, Pacific Dunes, Shorty\u2019s, Trails, Sheep Ranch","r","r"],
+ ["Myrtle Beach, SC",33.62,-79.05,"2025",4,"Pawleys Plantation, True Blue, Caledonia, The Dye Club","r","l"],
+ ["Streamsong, FL",27.66,-81.87,"2026",4,"Blue, Red, Black, The Chain","r","r"]];
+const US_STATE_GEO={"Maine":[[[43.06,-70.704],[43.127,-70.827],[43.225,-70.81],[43.39,-70.988],[43.551,-70.951],[45.305,-71.084],[45.335,-70.951],[45.229,-70.857],[45.427,-70.798],[45.384,-70.635],[45.513,-70.723],[45.667,-70.558],[45.72,-70.4],[45.795,-70.418],[45.891,-70.259],[45.944,-70.24],[45.963,-70.317],[45.995,-70.285],[46.019,-70.318],[46.147,-70.238],[46.192,-70.293],[46.348,-70.191],[46.416,-70.056],[46.695,-69.997],[47.46,-69.224],[47.427,-69.043],[47.257,-69.05],[47.179,-68.901],[47.288,-68.579],[47.288,-68.379],[47.357,-68.355],[47.325,-68.155],[47.066,-67.79],[45.918,-67.75],[45.883,-67.804],[45.824,-67.755],[45.795,-67.807],[45.731,-67.782],[45.694,-67.818],[45.688,-67.728],[45.614,-67.646],[45.584,-67.43],[45.502,-67.416],[45.489,-67.504],[45.377,-67.419],[45.281,-67.489],[45.126,-67.346],[45.192,-67.284],[45.161,-67.158],[44.815,-66.951],[44.599,-67.293],[44.707,-67.309],[44.682,-67.377],[44.594,-67.405],[44.622,-67.551],[44.531,-67.568],[44.537,-67.686],[44.496,-67.734],[44.544,-67.754],[44.521,-67.797],[44.559,-67.84],[44.419,-67.855],[44.407,-68.011],[44.331,-68.049],[44.475,-68.118],[44.484,-68.262],[44.438,-68.299],[44.433,-68.247],[44.328,-68.174],[44.284,-68.289],[44.225,-68.318],[44.299,-68.431],[44.392,-68.358],[44.43,-68.379],[44.397,-68.428],[44.447,-68.455],[44.377,-68.466],[44.434,-68.485],[44.399,-68.565],[44.228,-68.525],[44.328,-68.733],[44.312,-68.827],[44.474,-68.784],[44.426,-68.982],[44.324,-68.954],[44.105,-69.101],[44.063,-69.049],[43.915,-69.261],[43.957,-69.28],[43.977,-69.416],[43.838,-69.503],[43.882,-69.544],[43.818,-69.589],[43.859,-69.595],[43.836,-69.65],[43.791,-69.653],[43.823,-69.706],[43.705,-69.839],[43.778,-69.884],[43.738,-70.041],[43.859,-70.01],[43.772,-70.19],[43.677,-70.254],[43.565,-70.197],[43.529,-70.361],[43.47,-70.383],[43.442,-70.338],[43.354,-70.427],[43.322,-70.554],[43.165,-70.591],[43.06,-70.704]]],"Massachusetts":[[[42.746,-73.265],[42.697,-71.294],[42.859,-71.031],[42.872,-70.817],[42.694,-70.779],[42.653,-70.689],[42.693,-70.63],[42.64,-70.591],[42.582,-70.655],[42.546,-70.871],[42.49,-70.836],[42.458,-70.935],[42.416,-70.906],[42.456,-70.947],[42.424,-70.983],[42.344,-70.953],[42.347,-71.007],[42.283,-71.005],[42.263,-70.925],[42.309,-70.883],[42.208,-70.722],[42.005,-70.598],[41.994,-70.639],[42.011,-70.611],[42.046,-70.651],[42.0,-70.71],[41.93,-70.553],[41.816,-70.541],[41.744,-70.412],[41.714,-70.259],[41.801,-70.008],[41.887,-70.0],[41.93,-70.045],[41.878,-70.068],[42.033,-70.096],[42.062,-70.155],[42.02,-70.191],[42.064,-70.245],[42.055,-70.083],[41.912,-69.969],[41.67,-69.933],[41.544,-69.998],[41.647,-69.973],[41.672,-70.007],[41.609,-70.265],[41.635,-70.352],[41.409,-70.948],[41.543,-70.659],[41.713,-70.627],[41.733,-70.726],[41.685,-70.72],[41.656,-70.813],[41.587,-70.853],[41.633,-70.889],[41.609,-70.93],[41.515,-70.953],[41.497,-71.121],[41.66,-71.133],[41.798,-71.341],[42.019,-71.381],[42.036,-72.756],[41.998,-72.817],[42.036,-72.814],[42.05,-73.497],[42.746,-73.265]]],"Michigan":[[[43.006,-82.416],[42.967,-82.417],[42.887,-82.47],[42.809,-82.482],[42.762,-82.467],[42.607,-82.523],[42.551,-82.59],[42.555,-82.641],[42.519,-82.686],[42.546,-82.664],[42.598,-82.713],[42.609,-82.683],[42.627,-82.69],[42.642,-82.631],[42.673,-82.631],[42.69,-82.701],[42.641,-82.814],[42.616,-82.819],[42.593,-82.77],[42.589,-82.789],[42.565,-82.782],[42.568,-82.834],[42.524,-82.874],[42.472,-82.884],[42.451,-82.87],[42.389,-82.894],[42.352,-82.924],[42.318,-83.064],[42.29,-83.097],[42.239,-83.128],[42.088,-83.134],[42.066,-83.189],[42.015,-83.171],[41.972,-83.249],[41.929,-83.265],[41.944,-83.287],[41.936,-83.316],[41.88,-83.342],[41.871,-83.382],[41.813,-83.44],[41.737,-83.434],[41.696,-84.806],[41.76,-84.806],[41.76,-86.825],[41.894,-86.619],[42.118,-86.485],[42.254,-86.356],[42.444,-86.262],[42.595,-86.226],[42.719,-86.207],[43.016,-86.233],[43.136,-86.281],[43.338,-86.408],[43.633,-86.541],[43.678,-86.529],[43.747,-86.462],[43.816,-86.431],[43.971,-86.463],[44.058,-86.515],[44.129,-86.421],[44.345,-86.269],[44.567,-86.221],[44.692,-86.255],[44.741,-86.089],[44.822,-86.066],[44.906,-86.067],[44.916,-86.038],[44.9,-85.993],[44.969,-85.932],[44.939,-85.87],[44.95,-85.807],[45.051,-85.746],[45.076,-85.696],[45.187,-85.619],[45.18,-85.586],[45.211,-85.551],[45.189,-85.527],[45.159,-85.562],[45.133,-85.558],[45.155,-85.574],[45.128,-85.614],[45.044,-85.566],[45.041,-85.597],[45.005,-85.622],[44.991,-85.604],[44.927,-85.602],[44.921,-85.625],[44.884,-85.645],[44.832,-85.651],[44.776,-85.641],[44.769,-85.594],[44.873,-85.533],[44.89,-85.531],[44.895,-85.565],[44.974,-85.52],[44.991,-85.475],[44.961,-85.465],[44.954,-85.486],[44.856,-85.502],[44.818,-85.556],[44.76,-85.577],[44.747,-85.538],[44.768,-85.505],[44.804,-85.5],[44.825,-85.463],[44.931,-85.396],[45.069,-85.366],[45.235,-85.389],[45.271,-85.372],[45.361,-85.197],[45.361,-85.033],[45.393,-84.916],[45.422,-84.922],[45.437,-85.041],[45.522,-85.109],[45.586,-85.112],[45.722,-84.941],[45.752,-84.982],[45.766,-85.077],[45.746,-84.807],[45.761,-84.781],[45.78,-84.793],[45.787,-84.78],[45.787,-84.726],[45.766,-84.716],[45.652,-84.462],[45.669,-84.427],[45.664,-84.33],[45.635,-84.215],[45.562,-84.129],[45.497,-84.096],[45.493,-83.939],[45.419,-83.807],[45.413,-83.722],[45.353,-83.599],[45.356,-83.489],[45.274,-83.385],[45.239,-83.412],[45.166,-83.364],[45.142,-83.316],[45.027,-83.266],[45.07,-83.399],[45.032,-83.454],[45.008,-83.431],[44.99,-83.45],[44.933,-83.433],[44.886,-83.353],[44.884,-83.313],[44.853,-83.321],[44.808,-83.291],[44.746,-83.297],[44.714,-83.273],[44.609,-83.315],[44.34,-83.333],[44.328,-83.374],[44.253,-83.445],[44.246,-83.465],[44.273,-83.446],[44.28,-83.48],[44.248,-83.538],[44.079,-83.591],[44.057,-83.584],[44.036,-83.68],[43.994,-83.68],[43.989,-83.829],[43.959,-83.878],[43.899,-83.917],[43.777,-83.929],[43.759,-83.956],[43.715,-83.939],[43.664,-83.897],[43.591,-83.666],[43.709,-83.54],[43.723,-83.47],[43.808,-83.411],[43.818,-83.428],[43.792,-83.481],[43.862,-83.448],[43.841,-83.404],[43.881,-83.332],[43.905,-83.341],[43.916,-83.401],[43.922,-83.306],[43.974,-83.262],[44.003,-83.066],[44.045,-83.025],[44.066,-82.967],[44.071,-82.916],[44.023,-82.793],[43.99,-82.739],[43.831,-82.634],[43.59,-82.598],[43.438,-82.54],[43.225,-82.523],[43.102,-82.486],[43.006,-82.416]],[[45.095,-87.59],[45.108,-87.66],[45.144,-87.684],[45.173,-87.737],[45.232,-87.725],[45.339,-87.648],[45.369,-87.657],[45.39,-87.694],[45.349,-87.754],[45.34,-87.85],[45.36,-87.867],[45.355,-87.888],[45.404,-87.849],[45.434,-87.862],[45.464,-87.813],[45.5,-87.793],[45.538,-87.803],[45.563,-87.834],[45.563,-87.792],[45.588,-87.777],[45.615,-87.781],[45.653,-87.825],[45.683,-87.782],[45.754,-87.876],[45.758,-87.963],[45.772,-87.99],[45.795,-87.991],[45.78,-88.072],[45.809,-88.129],[45.822,-88.135],[45.872,-88.073],[45.884,-88.102],[45.922,-88.103],[45.964,-88.249],[45.955,-88.327],[45.992,-88.38],[45.975,-88.417],[45.999,-88.459],[45.992,-88.492],[46.02,-88.515],[46.005,-88.589],[46.018,-88.601],[45.988,-88.616],[45.989,-88.663],[46.014,-88.679],[46.027,-88.731],[46.022,-88.816],[46.139,-89.092],[46.337,-90.12],[46.359,-90.119],[46.502,-90.217],[46.503,-90.263],[46.524,-90.277],[46.517,-90.317],[46.539,-90.311],[46.553,-90.332],[46.533,-90.393],[46.566,-90.418],[46.608,-90.328],[46.674,-90.028],[46.818,-89.791],[46.844,-89.415],[46.913,-89.228],[46.993,-89.129],[47.002,-88.973],[47.101,-88.889],[47.219,-88.672],[47.246,-88.574],[47.371,-88.419],[47.449,-88.218],[47.476,-88.04],[47.473,-87.801],[47.44,-87.716],[47.401,-87.712],[47.387,-87.957],[47.369,-87.966],[47.336,-87.943],[47.296,-88.06],[47.216,-88.163],[47.199,-88.229],[47.146,-88.232],[47.138,-88.282],[47.099,-88.298],[47.076,-88.35],[47.019,-88.368],[46.978,-88.411],[46.972,-88.444],[46.832,-88.484],[46.787,-88.462],[46.787,-88.438],[46.838,-88.381],[46.848,-88.404],[46.867,-88.39],[46.857,-88.352],[46.93,-88.244],[46.967,-88.144],[46.919,-88.188],[46.905,-88.175],[46.92,-88.082],[46.91,-87.9],[46.865,-87.741],[46.828,-87.727],[46.842,-87.681],[46.82,-87.672],[46.783,-87.595],[46.731,-87.583],[46.688,-87.523],[46.647,-87.503],[46.636,-87.468],[46.606,-87.451],[46.593,-87.384],[46.571,-87.393],[46.547,-87.376],[46.533,-87.394],[46.501,-87.351],[46.494,-87.127],[46.533,-87.009],[46.517,-86.965],[46.472,-86.947],[46.434,-86.85],[46.438,-86.816],[46.467,-86.804],[46.479,-86.769],[46.475,-86.736],[46.439,-86.698],[46.498,-86.684],[46.544,-86.709],[46.561,-86.678],[46.534,-86.627],[46.486,-86.646],[46.493,-86.609],[46.47,-86.609],[46.463,-86.586],[46.551,-86.469],[46.578,-86.35],[46.669,-86.162],[46.655,-86.1],[46.691,-85.878],[46.676,-85.51],[46.753,-85.257],[46.771,-84.954],[46.697,-85.028],[46.546,-85.025],[46.527,-85.056],[46.48,-85.015],[46.489,-84.937],[46.444,-84.829],[46.488,-84.678],[46.485,-84.631],[46.419,-84.551],[46.434,-84.472],[46.467,-84.463],[46.501,-84.42],[46.493,-84.276],[46.534,-84.226],[46.53,-84.129],[46.504,-84.111],[46.419,-84.146],[46.322,-84.106],[46.268,-84.116],[46.257,-84.098],[46.224,-84.147],[46.232,-84.219],[46.206,-84.249],[46.176,-84.251],[46.163,-84.221],[46.184,-84.177],[46.18,-84.125],[46.148,-84.096],[46.132,-84.027],[46.092,-84.072],[46.033,-83.99],[46.011,-83.909],[45.989,-83.896],[45.955,-83.916],[45.967,-83.985],[45.948,-84.0],[45.979,-84.111],[45.956,-84.33],[45.932,-84.376],[45.988,-84.484],[45.969,-84.532],[46.023,-84.544],[46.026,-84.609],[46.053,-84.657],[46.027,-84.693],[45.973,-84.685],[45.946,-84.739],[45.92,-84.714],[45.907,-84.734],[45.853,-84.701],[45.836,-84.747],[45.872,-84.831],[45.898,-84.842],[45.931,-84.917],[46.011,-85.014],[46.05,-85.141],[46.045,-85.198],[46.093,-85.336],[46.097,-85.5],[46.03,-85.604],[45.967,-85.664],[45.96,-85.697],[45.98,-85.81],[45.967,-85.893],[45.948,-85.923],[45.919,-85.914],[45.965,-86.072],[45.963,-86.208],[45.942,-86.278],[45.906,-86.324],[45.798,-86.352],[45.794,-86.416],[45.761,-86.44],[45.747,-86.486],[45.752,-86.515],[45.708,-86.537],[45.712,-86.581],[45.666,-86.588],[45.659,-86.628],[45.6,-86.614],[45.649,-86.708],[45.677,-86.718],[45.702,-86.666],[45.721,-86.671],[45.748,-86.633],[45.782,-86.631],[45.778,-86.583],[45.808,-86.557],[45.857,-86.528],[45.89,-86.541],[45.899,-86.583],[45.834,-86.646],[45.845,-86.721],[45.868,-86.75],[45.86,-86.782],[45.811,-86.773],[45.77,-86.822],[45.722,-86.839],[45.696,-86.944],[45.673,-86.964],[45.706,-86.985],[45.811,-86.988],[45.837,-87.031],[45.812,-87.057],[45.708,-87.06],[45.636,-87.197],[45.447,-87.333],[45.425,-87.328],[45.369,-87.392],[45.293,-87.439],[45.147,-87.601],[45.123,-87.612],[45.095,-87.59]],[[48.116,-88.684],[48.175,-88.547],[48.18,-88.418],[48.011,-88.67],[47.924,-88.963],[47.902,-88.969],[47.902,-88.9],[47.891,-88.912],[47.824,-89.158],[47.876,-89.255],[47.935,-89.179],[48.063,-88.788],[48.116,-88.684]]],"Montana":[[[44.997,-104.058],[45.001,-111.055],[44.474,-111.049],[44.5,-111.131],[44.755,-111.385],[44.705,-111.489],[44.605,-111.526],[44.541,-111.472],[44.56,-111.704],[44.509,-111.821],[44.564,-111.871],[44.521,-112.107],[44.568,-112.286],[44.536,-112.354],[44.448,-112.387],[44.485,-112.781],[44.36,-112.855],[44.451,-113.004],[44.773,-113.131],[44.823,-113.247],[44.785,-113.342],[44.865,-113.455],[44.942,-113.499],[44.96,-113.444],[45.059,-113.452],[45.128,-113.575],[45.33,-113.739],[45.521,-113.766],[45.521,-113.835],[45.602,-113.807],[45.622,-113.905],[45.705,-113.987],[45.591,-114.087],[45.546,-114.248],[45.459,-114.333],[45.561,-114.461],[45.566,-114.559],[45.637,-114.564],[45.703,-114.495],[45.774,-114.566],[45.846,-114.509],[45.882,-114.388],[45.936,-114.431],[45.967,-114.404],[46.037,-114.493],[46.097,-114.46],[46.146,-114.527],[46.174,-114.446],[46.267,-114.47],[46.288,-114.426],[46.443,-114.376],[46.499,-114.403],[46.52,-114.342],[46.647,-114.321],[46.633,-114.593],[46.673,-114.643],[46.707,-114.621],[46.741,-114.697],[46.697,-114.767],[46.758,-114.765],[46.828,-114.92],[46.92,-114.93],[46.971,-115.05],[47.256,-115.327],[47.295,-115.512],[47.429,-115.729],[47.476,-115.653],[47.543,-115.747],[47.595,-115.689],[47.697,-115.724],[47.977,-116.049],[49.001,-116.049],[49.0,-104.049],[44.997,-104.058]]],"Nevada":[[[37.0,-114.051],[36.194,-114.047],[36.028,-114.148],[36.02,-114.253],[36.147,-114.405],[36.142,-114.632],[36.087,-114.756],[35.875,-114.677],[35.806,-114.712],[35.611,-114.653],[35.49,-114.678],[35.183,-114.569],[35.129,-114.579],[35.102,-114.647],[35.069,-114.603],[35.002,-114.633],[37.22,-117.5],[39.0,-120.001],[41.995,-119.999],[41.994,-114.042],[37.0,-114.051]]],"New Jersey":[[[39.656,-75.527],[39.84,-75.354],[39.884,-75.145],[39.961,-75.127],[40.15,-74.723],[40.397,-74.966],[40.418,-75.059],[40.542,-75.069],[40.567,-75.183],[40.617,-75.202],[40.752,-75.197],[40.866,-75.051],[40.991,-75.131],[41.088,-74.968],[41.32,-74.795],[41.357,-74.695],[40.997,-73.894],[40.709,-74.025],[40.644,-74.189],[40.488,-74.273],[40.435,-74.207],[40.411,-73.999],[40.476,-74.014],[40.44,-73.978],[39.763,-74.097],[39.432,-74.335],[39.245,-74.614],[38.992,-74.793],[38.933,-74.967],[39.159,-74.887],[39.215,-75.036],[39.18,-75.139],[39.3,-75.252],[39.461,-75.536],[39.578,-75.513],[39.63,-75.559],[39.656,-75.527]]],"New York":[[[40.985,-73.657],[40.847,-73.813],[40.795,-73.781],[40.867,-73.73],[40.946,-73.485],[40.905,-73.229],[40.978,-73.118],[40.998,-72.585],[41.159,-72.279],[41.156,-72.238],[41.132,-72.327],[41.089,-72.317],[41.042,-72.261],[41.052,-72.154],[40.992,-72.102],[41.071,-71.96],[41.071,-71.856],[40.666,-73.055],[40.543,-73.941],[40.625,-74.042],[40.997,-73.894],[41.357,-74.696],[41.431,-74.738],[41.481,-74.983],[41.606,-75.075],[41.753,-75.053],[41.774,-75.105],[41.814,-75.072],[41.872,-75.171],[41.864,-75.261],[41.999,-75.36],[41.999,-79.761],[42.27,-79.762],[42.554,-79.149],[42.689,-79.049],[42.784,-78.853],[42.947,-78.919],[42.995,-79.02],[43.064,-79.011],[43.078,-79.074],[43.144,-79.042],[43.262,-79.07],[43.375,-78.489],[43.341,-77.76],[43.235,-77.534],[43.31,-76.795],[43.521,-76.418],[43.545,-76.218],[43.754,-76.213],[43.854,-76.296],[43.893,-76.133],[43.941,-76.139],[43.985,-76.064],[43.968,-76.2],[44.031,-76.121],[44.072,-76.208],[44.031,-76.277],[44.026,-76.2],[43.96,-76.281],[44.057,-76.301],[44.1,-76.367],[44.199,-76.313],[44.368,-75.913],[44.849,-75.283],[45.016,-74.827],[45.011,-73.343],[44.845,-73.381],[44.789,-73.333],[44.618,-73.39],[44.441,-73.294],[44.364,-73.335],[44.265,-73.313],[44.191,-73.391],[44.045,-73.438],[43.772,-73.351],[43.588,-73.431],[43.628,-73.306],[43.535,-73.242],[42.746,-73.265],[42.086,-73.508],[41.295,-73.551],[41.213,-73.483],[41.101,-73.728],[40.985,-73.657]]],"North Carolina":[[[36.04,-82.603],[35.967,-82.611],[35.954,-82.558],[36.008,-82.461],[36.083,-82.409],[36.116,-82.355],[36.131,-82.248],[36.159,-82.214],[36.15,-82.148],[36.104,-82.127],[36.12,-82.033],[36.302,-81.908],[36.358,-81.801],[36.335,-81.707],[36.407,-81.74],[36.468,-81.695],[36.536,-81.708],[36.588,-81.678],[36.543,-80.122],[36.551,-75.867],[36.229,-75.773],[35.787,-75.533],[35.78,-75.543],[35.889,-75.619],[35.925,-75.62],[35.966,-75.649],[36.003,-75.724],[36.154,-75.756],[36.244,-75.812],[36.285,-75.814],[36.306,-75.845],[36.346,-75.832],[36.416,-75.851],[36.442,-75.888],[36.486,-75.907],[36.506,-76.004],[36.482,-76.032],[36.447,-76.012],[36.417,-75.962],[36.426,-75.924],[36.362,-75.923],[36.285,-75.882],[36.281,-75.861],[36.236,-75.864],[36.072,-75.794],[36.127,-75.868],[36.159,-75.864],[36.244,-75.922],[36.254,-75.965],[36.222,-75.945],[36.198,-75.956],[36.164,-75.905],[36.186,-76.017],[36.288,-76.132],[36.298,-76.185],[36.281,-76.189],[36.199,-76.08],[36.144,-76.064],[36.123,-76.179],[36.189,-76.274],[36.107,-76.192],[36.095,-76.217],[36.138,-76.374],[36.193,-76.448],[36.184,-76.456],[36.12,-76.376],[36.093,-76.304],[36.078,-76.411],[36.024,-76.459],[36.006,-76.514],[36.007,-76.581],[36.033,-76.604],[36.035,-76.653],[36.061,-76.689],[36.148,-76.721],[36.215,-76.714],[36.267,-76.675],[36.278,-76.693],[36.213,-76.744],[36.147,-76.752],[35.992,-76.68],[35.965,-76.7],[35.945,-76.692],[35.944,-76.529],[35.984,-76.398],[35.942,-76.363],[35.943,-76.34],[35.988,-76.214],[35.993,-76.062],[35.957,-76.014],[35.921,-76.014],[35.853,-76.063],[35.69,-76.036],[35.659,-76.046],[35.649,-76.03],[35.768,-75.987],[35.888,-75.987],[35.932,-75.927],[35.96,-75.947],[35.976,-75.85],[35.936,-75.782],[35.823,-75.727],[35.771,-75.739],[35.698,-75.713],[35.672,-75.742],[35.626,-75.73],[35.579,-75.775],[35.573,-75.895],[35.475,-75.996],[35.411,-76.021],[35.41,-76.06],[35.371,-76.069],[35.349,-76.133],[35.326,-76.15],[35.35,-76.235],[35.35,-76.408],[35.384,-76.449],[35.371,-76.486],[35.411,-76.54],[35.432,-76.533],[35.449,-76.565],[35.459,-76.55],[35.509,-76.586],[35.512,-76.477],[35.551,-76.456],[35.557,-76.471],[35.534,-76.494],[35.539,-76.6],[35.51,-76.634],[35.481,-76.596],[35.388,-76.572],[35.459,-76.906],[35.515,-77.025],[35.491,-77.027],[35.473,-76.986],[35.438,-76.967],[35.449,-76.924],[35.346,-76.664],[35.322,-76.5],[35.314,-76.482],[35.261,-76.468],[35.175,-76.536],[35.123,-76.546],[35.068,-76.6],[34.964,-76.801],[35.061,-76.983],[35.132,-77.049],[35.005,-76.977],[34.957,-76.894],[34.92,-76.763],[34.989,-76.635],[35.007,-76.503],[35.076,-76.463],[35.058,-76.436],[35.001,-76.425],[34.975,-76.396],[34.976,-76.326],[35.035,-76.364],[34.999,-76.242],[34.882,-76.334],[34.855,-76.4],[34.682,-76.525],[34.699,-76.586],[34.76,-76.584],[34.784,-76.621],[34.704,-76.616],[34.698,-76.675],[34.638,-76.519],[34.861,-76.323],[35.076,-76.07],[35.059,-76.036],[34.785,-76.387],[34.589,-76.536],[34.616,-76.555],[34.646,-76.549],[34.693,-76.676],[34.67,-76.99],[34.605,-77.209],[34.417,-77.557],[34.273,-77.74],[34.163,-77.829],[33.912,-77.947],[33.84,-77.96],[33.859,-78.007],[33.888,-78.019],[33.914,-78.178],[33.902,-78.384],[33.851,-78.541],[34.805,-79.675],[34.82,-80.798],[34.936,-80.782],[35.107,-80.935],[35.045,-81.041],[35.073,-81.058],[35.108,-81.033],[35.15,-81.044],[35.2,-82.275],[35.181,-82.371],[35.215,-82.393],[35.166,-82.44],[35.178,-82.46],[35.118,-82.662],[35.126,-82.684],[35.098,-82.695],[35.068,-82.758],[35.064,-82.777],[35.085,-82.788],[35.001,-83.109],[34.988,-84.322],[35.226,-84.29],[35.269,-84.224],[35.24,-84.188],[35.247,-84.098],[35.27,-84.053],[35.301,-84.021],[35.348,-84.038],[35.372,-84.008],[35.41,-84.021],[35.464,-83.961],[35.476,-83.912],[35.519,-83.88],[35.524,-83.826],[35.562,-83.772],[35.579,-83.609],[35.563,-83.586],[35.568,-83.486],[35.612,-83.446],[35.623,-83.397],[35.66,-83.352],[35.658,-83.297],[35.72,-83.251],[35.73,-83.186],[35.765,-83.159],[35.789,-83.079],[35.773,-82.996],[35.79,-82.964],[35.875,-82.9],[35.922,-82.912],[35.945,-82.899],[35.949,-82.853],[35.927,-82.805],[36.0,-82.776],[36.066,-82.637],[36.04,-82.603]]],"Ohio":[[[38.971,-82.093],[38.84,-82.145],[38.787,-82.222],[38.604,-82.177],[38.579,-82.291],[38.444,-82.33],[38.403,-82.55],[38.544,-82.7],[38.591,-82.844],[38.756,-82.889],[38.597,-83.294],[38.703,-83.521],[38.63,-83.679],[38.762,-83.873],[38.806,-84.213],[39.006,-84.305],[39.053,-84.426],[39.12,-84.455],[39.073,-84.608],[39.147,-84.744],[39.105,-84.82],[41.696,-84.806],[41.733,-83.454],[41.514,-82.934],[41.588,-82.834],[41.381,-82.481],[41.516,-82.012],[41.489,-81.739],[41.76,-81.287],[41.978,-80.519],[40.639,-80.519],[40.582,-80.668],[40.475,-80.595],[40.39,-80.634],[40.318,-80.6],[40.076,-80.739],[39.914,-80.756],[39.917,-80.806],[39.867,-80.791],[39.766,-80.869],[39.706,-80.832],[39.621,-80.88],[39.388,-81.217],[39.342,-81.376],[39.409,-81.456],[39.339,-81.558],[39.268,-81.57],[39.266,-81.689],[39.181,-81.756],[39.098,-81.745],[39.079,-81.814],[38.924,-81.763],[38.946,-81.827],[38.878,-81.909],[38.967,-81.918],[39.03,-82.007],[38.971,-82.093]]],"Pennsylvania":[[[39.802,-75.415],[39.834,-75.617],[39.722,-75.788],[39.721,-80.519],[41.978,-80.519],[42.094,-80.188],[42.166,-80.117],[42.145,-80.061],[42.27,-79.762],[41.999,-79.761],[41.995,-75.347],[41.864,-75.261],[41.872,-75.171],[41.814,-75.072],[41.774,-75.105],[41.753,-75.053],[41.606,-75.075],[41.481,-74.983],[41.431,-74.738],[41.364,-74.69],[41.32,-74.795],[41.088,-74.968],[40.991,-75.131],[40.866,-75.051],[40.752,-75.197],[40.691,-75.204],[40.574,-75.192],[40.542,-75.069],[40.418,-75.059],[40.397,-74.966],[40.154,-74.722],[39.961,-75.127],[39.884,-75.145],[39.802,-75.415]]],"Rhode Island":[[[41.71,-71.225],[41.643,-71.26],[41.65,-71.301],[41.724,-71.315],[41.667,-71.378],[41.687,-71.449],[41.589,-71.404],[41.58,-71.448],[41.478,-71.418],[41.361,-71.48],[41.31,-71.863],[41.41,-71.843],[41.417,-71.798],[42.008,-71.799],[42.019,-71.381],[41.798,-71.341],[41.71,-71.225]]],"Tennessee":[[[36.588,-81.678],[36.407,-81.74],[36.335,-81.707],[36.358,-81.801],[36.302,-81.908],[36.12,-82.033],[36.104,-82.127],[36.159,-82.214],[36.116,-82.355],[35.954,-82.558],[35.967,-82.611],[36.03,-82.595],[36.066,-82.637],[36.0,-82.776],[35.927,-82.805],[35.945,-82.899],[35.875,-82.9],[35.774,-82.992],[35.765,-83.159],[35.563,-83.498],[35.562,-83.772],[35.519,-83.88],[35.41,-84.021],[35.27,-84.053],[35.269,-84.224],[35.226,-84.29],[34.988,-84.322],[34.996,-90.309],[35.042,-90.292],[35.033,-90.2],[35.129,-90.16],[35.138,-90.065],[35.188,-90.117],[35.228,-90.079],[35.279,-90.169],[35.384,-90.075],[35.385,-90.179],[35.479,-90.099],[35.397,-90.042],[35.553,-90.033],[35.521,-89.909],[35.591,-89.957],[35.657,-89.851],[35.66,-89.931],[35.733,-89.956],[35.818,-89.706],[35.865,-89.772],[35.907,-89.741],[35.895,-89.647],[36.001,-89.733],[36.15,-89.592],[36.24,-89.705],[36.253,-89.535],[36.323,-89.62],[36.36,-89.513],[36.498,-89.539],[36.457,-89.472],[36.507,-89.3],[36.497,-88.053],[36.678,-88.071],[36.664,-87.85],[36.633,-87.853],[36.652,-86.508],[36.583,-83.691],[36.612,-81.647],[36.588,-81.678]]],"Texas":[[[29.558,-95.017],[29.497,-94.909],[29.451,-94.931],[29.369,-94.864],[29.213,-95.03],[29.193,-95.149],[29.085,-95.136],[29.353,-94.811],[29.331,-94.723],[28.866,-95.382],[28.387,-96.38],[28.606,-95.986],[28.651,-95.979],[28.581,-96.229],[28.694,-96.191],[28.698,-96.223],[28.57,-96.488],[28.636,-96.5],[28.636,-96.573],[28.723,-96.584],[28.71,-96.649],[28.586,-96.611],[28.442,-96.404],[28.336,-96.673],[28.407,-96.71],[28.428,-96.841],[28.366,-96.795],[28.224,-96.8],[28.123,-96.963],[28.248,-96.942],[28.133,-96.971],[28.186,-97.037],[28.087,-97.214],[28.03,-97.138],[28.108,-97.023],[28.042,-97.026],[27.824,-97.187],[27.882,-97.274],[27.856,-97.48],[27.838,-97.379],[27.742,-97.368],[27.697,-97.254],[27.336,-97.402],[27.284,-97.544],[27.378,-97.493],[27.285,-97.609],[27.369,-97.699],[27.243,-97.629],[27.264,-97.424],[27.093,-97.448],[27.094,-97.496],[26.999,-97.479],[26.99,-97.555],[26.842,-97.563],[26.759,-97.472],[26.554,-97.417],[26.455,-97.441],[26.395,-97.37],[26.332,-97.391],[26.351,-97.33],[26.108,-97.295],[26.077,-97.2],[25.994,-97.217],[26.062,-97.152],[25.971,-97.146],[25.925,-97.35],[25.84,-97.373],[25.84,-97.423],[26.021,-97.649],[26.056,-98.197],[26.22,-98.451],[26.236,-98.669],[26.369,-98.807],[26.399,-99.085],[26.843,-99.269],[27.023,-99.447],[27.25,-99.442],[27.316,-99.538],[27.482,-99.48],[27.499,-99.528],[27.568,-99.512],[27.766,-99.842],[27.981,-99.932],[28.278,-100.293],[28.477,-100.368],[28.499,-100.334],[28.662,-100.5],[28.806,-100.536],[28.914,-100.641],[29.1,-100.675],[29.168,-100.773],[29.247,-100.798],[29.369,-101.011],[29.459,-101.06],[29.52,-101.255],[29.593,-101.242],[29.588,-101.307],[29.757,-101.415],[29.797,-101.547],[29.754,-101.646],[29.802,-101.853],[29.792,-102.116],[29.879,-102.321],[29.767,-102.387],[29.738,-102.677],[29.522,-102.809],[29.358,-102.843],[29.348,-102.884],[29.26,-102.906],[29.225,-102.867],[29.18,-102.995],[28.985,-103.115],[28.982,-103.281],[29.04,-103.335],[29.042,-103.428],[29.155,-103.559],[29.32,-104.038],[29.497,-104.236],[29.64,-104.508],[29.925,-104.68],[30.179,-104.687],[30.39,-104.86],[30.605,-104.925],[30.792,-105.195],[30.853,-105.394],[31.365,-105.954],[31.466,-106.206],[31.732,-106.381],[31.828,-106.605],[31.98,-106.64],[32.001,-103.064],[36.5,-103.042],[36.5,-100.0],[34.561,-100.0],[34.575,-99.923],[34.381,-99.696],[34.375,-99.6],[34.418,-99.57],[34.373,-99.403],[34.456,-99.359],[34.34,-99.213],[34.214,-99.19],[34.221,-98.987],[34.125,-98.757],[34.161,-98.6],[34.063,-98.486],[34.157,-98.364],[34.114,-98.169],[34.154,-98.109],[34.005,-98.088],[33.99,-97.946],[33.882,-97.968],[33.858,-97.834],[33.991,-97.672],[33.954,-97.59],[33.902,-97.587],[33.904,-97.46],[33.819,-97.426],[33.916,-97.211],[33.847,-97.167],[33.801,-97.205],[33.717,-97.126],[33.887,-96.986],[33.956,-96.981],[33.958,-96.916],[33.861,-96.875],[33.869,-96.794],[33.824,-96.762],[33.839,-96.7],[33.917,-96.667],[33.895,-96.588],[33.845,-96.629],[33.776,-96.423],[33.686,-96.348],[33.766,-96.292],[33.761,-96.178],[33.838,-96.148],[33.887,-95.935],[33.844,-95.772],[33.893,-95.756],[33.934,-95.6],[33.88,-95.545],[33.875,-95.288],[33.962,-95.226],[33.861,-94.969],[33.746,-94.869],[33.753,-94.768],[33.617,-94.521],[33.643,-94.449],[33.603,-94.472],[33.583,-94.383],[33.545,-94.386],[33.59,-94.243],[33.557,-94.25],[33.555,-94.196],[33.595,-94.184],[33.552,-94.043],[31.992,-94.042],[31.774,-93.823],[31.586,-93.835],[31.512,-93.727],[31.469,-93.749],[31.393,-93.672],[31.305,-93.687],[31.271,-93.62],[31.176,-93.6],[31.184,-93.533],[31.03,-93.516],[30.988,-93.572],[30.939,-93.526],[30.808,-93.562],[30.54,-93.74],[30.441,-93.698],[30.333,-93.766],[30.281,-93.707],[30.141,-93.688],[30.086,-93.734],[30.059,-93.699],[29.81,-93.928],[29.676,-93.853],[29.646,-94.133],[29.362,-94.761],[29.471,-94.682],[29.546,-94.48],[29.574,-94.554],[29.531,-94.781],[29.694,-94.693],[29.785,-94.735],[29.661,-94.893],[29.7,-94.966],[29.614,-94.941],[29.679,-94.98],[29.558,-95.017]],[[28.065,-96.85],[27.677,-97.167],[27.21,-97.363],[26.872,-97.365],[26.068,-97.161],[26.354,-97.215],[26.821,-97.387],[27.36,-97.362],[27.635,-97.24],[27.789,-97.103],[27.825,-97.134],[27.842,-97.057],[28.131,-96.879],[28.112,-96.827],[28.175,-96.816],[28.382,-96.388],[28.065,-96.85]]],"Utah":[[[37.0,-114.051],[41.994,-114.042],[42.002,-111.047],[40.998,-111.047],[41.001,-109.05],[36.999,-109.045],[37.0,-114.051]]],"Washington":[[[45.995,-116.916],[46.0,-118.987],[45.933,-119.126],[45.92,-119.601],[45.857,-119.67],[45.824,-119.966],[45.726,-120.211],[45.694,-120.482],[45.746,-120.635],[45.643,-120.896],[45.653,-121.064],[45.608,-121.146],[45.671,-121.216],[45.727,-121.533],[45.693,-121.867],[45.544,-122.267],[45.618,-122.675],[45.68,-122.775],[45.961,-122.814],[46.084,-122.904],[46.134,-123.004],[46.189,-123.166],[46.146,-123.371],[46.268,-123.475],[46.267,-123.67],[46.305,-123.701],[46.24,-123.876],[46.313,-124.001],[46.269,-124.082],[46.647,-124.069],[46.463,-124.026],[46.477,-123.944],[46.537,-123.894],[46.636,-123.961],[46.717,-123.846],[46.75,-123.899],[46.702,-124.003],[46.742,-124.092],[46.906,-124.138],[46.861,-124.073],[46.949,-123.86],[47.042,-124.122],[46.944,-124.124],[46.926,-124.18],[47.134,-124.183],[47.287,-124.236],[47.356,-124.319],[47.738,-124.425],[47.964,-124.672],[48.163,-124.733],[48.331,-124.659],[48.381,-124.732],[48.382,-124.597],[48.165,-123.981],[48.113,-123.333],[48.186,-123.101],[48.157,-123.143],[48.081,-123.039],[48.092,-122.918],[47.993,-122.872],[48.047,-122.827],[48.077,-122.89],[48.111,-122.876],[48.143,-122.76],[48.088,-122.801],[48.03,-122.749],[48.102,-122.687],[48.017,-122.67],[48.02,-122.729],[47.988,-122.718],[47.887,-122.61],[47.868,-122.694],[47.68,-122.812],[47.836,-122.82],[47.652,-122.899],[47.615,-122.972],[47.356,-123.156],[47.363,-123.111],[47.586,-122.967],[47.672,-122.754],[47.768,-122.715],[47.858,-122.574],[47.939,-122.617],[47.919,-122.549],[47.757,-122.47],[47.746,-122.554],[47.584,-122.479],[47.556,-122.543],[47.51,-122.495],[47.326,-122.576],[47.285,-122.548],[47.254,-122.586],[47.28,-122.692],[47.376,-122.632],[47.367,-122.671],[47.297,-122.745],[47.221,-122.715],[47.166,-122.759],[47.243,-122.833],[47.363,-122.814],[47.27,-122.864],[47.166,-122.86],[47.104,-122.678],[47.178,-122.591],[47.318,-122.547],[47.267,-122.444],[47.289,-122.409],[47.306,-122.443],[47.349,-122.325],[47.576,-122.421],[47.599,-122.34],[47.659,-122.43],[47.729,-122.373],[47.803,-122.395],[48.017,-122.225],[48.098,-122.343],[48.229,-122.396],[48.233,-122.45],[48.176,-122.479],[48.056,-122.358],[48.134,-122.512],[48.25,-122.531],[48.288,-122.372],[48.383,-122.533],[48.444,-122.557],[48.409,-122.65],[48.473,-122.658],[48.464,-122.712],[48.522,-122.607],[48.471,-122.472],[48.565,-122.504],[48.583,-122.56],[48.559,-122.478],[48.6,-122.425],[48.656,-122.5],[48.751,-122.49],[48.776,-122.536],[48.736,-122.637],[48.694,-122.615],[48.733,-122.673],[48.785,-122.647],[48.786,-122.71],[48.847,-122.717],[48.893,-122.793],[48.931,-122.747],[48.941,-122.822],[49.002,-122.758],[48.999,-117.032],[46.354,-117.063],[46.168,-116.922],[46.089,-116.982],[45.995,-116.916]],[[48.288,-122.52],[48.294,-122.618],[48.229,-122.732],[48.208,-122.606],[48.018,-122.542],[48.097,-122.525],[48.034,-122.376],[47.904,-122.38],[47.988,-122.473],[47.967,-122.547],[48.031,-122.607],[48.152,-122.61],[48.224,-122.77],[48.402,-122.665],[48.41,-122.602],[48.288,-122.52]]],"Wisconsin":[[[42.508,-90.641],[42.544,-90.646],[42.636,-90.709],[42.686,-90.949],[42.738,-91.054],[42.883,-91.101],[42.906,-91.145],[43.129,-91.178],[43.255,-91.058],[43.314,-91.107],[43.366,-91.215],[43.395,-91.198],[43.455,-91.233],[43.512,-91.217],[43.54,-91.243],[43.582,-91.232],[43.615,-91.269],[43.667,-91.273],[43.775,-91.244],[43.937,-91.367],[44.0,-91.437],[44.031,-91.592],[44.104,-91.707],[44.13,-91.722],[44.201,-91.875],[44.275,-91.896],[44.292,-91.925],[44.323,-91.919],[44.362,-91.964],[44.445,-92.232],[44.485,-92.291],[44.554,-92.336],[44.568,-92.548],[44.604,-92.569],[44.615,-92.621],[44.649,-92.632],[44.751,-92.808],[44.837,-92.765],[44.898,-92.775],[44.937,-92.751],[44.972,-92.769],[45.024,-92.762],[45.061,-92.803],[45.116,-92.74],[45.185,-92.767],[45.219,-92.752],[45.287,-92.762],[45.321,-92.71],[45.358,-92.703],[45.399,-92.65],[45.442,-92.647],[45.514,-92.727],[45.541,-92.726],[45.567,-92.77],[45.575,-92.884],[45.718,-92.869],[45.764,-92.785],[45.807,-92.758],[45.83,-92.765],[45.895,-92.708],[45.934,-92.639],[45.952,-92.552],[45.983,-92.527],[45.974,-92.469],[46.024,-92.429],[46.016,-92.352],[46.063,-92.333],[46.074,-92.294],[46.668,-92.291],[46.651,-92.271],[46.652,-92.207],[46.686,-92.176],[46.704,-92.205],[46.716,-92.146],[46.74,-92.138],[46.749,-92.108],[46.683,-91.962],[46.695,-91.79],[46.754,-91.591],[46.794,-91.369],[46.837,-91.257],[46.886,-91.187],[46.859,-91.204],[46.844,-91.178],[46.873,-91.14],[46.858,-91.105],[46.883,-91.091],[46.881,-91.053],[46.944,-90.968],[46.931,-90.922],[46.962,-90.856],[46.888,-90.751],[46.823,-90.799],[46.756,-90.885],[46.693,-90.854],[46.663,-90.911],[46.601,-90.952],[46.588,-90.942],[46.584,-90.906],[46.636,-90.77],[46.692,-90.737],[46.586,-90.558],[46.566,-90.418],[46.533,-90.393],[46.553,-90.332],[46.539,-90.311],[46.517,-90.317],[46.51,-90.23],[46.435,-90.163],[46.337,-90.12],[46.139,-89.092],[46.022,-88.816],[46.027,-88.731],[46.014,-88.679],[45.989,-88.663],[45.988,-88.616],[46.018,-88.601],[46.005,-88.589],[46.02,-88.515],[45.992,-88.492],[45.999,-88.459],[45.975,-88.417],[45.992,-88.38],[45.955,-88.327],[45.964,-88.249],[45.922,-88.103],[45.884,-88.102],[45.872,-88.073],[45.822,-88.135],[45.809,-88.129],[45.78,-88.072],[45.795,-87.991],[45.772,-87.99],[45.758,-87.963],[45.754,-87.876],[45.683,-87.782],[45.653,-87.825],[45.615,-87.781],[45.588,-87.777],[45.563,-87.792],[45.563,-87.834],[45.538,-87.803],[45.5,-87.793],[45.464,-87.813],[45.434,-87.862],[45.404,-87.849],[45.355,-87.888],[45.36,-87.867],[45.34,-87.85],[45.349,-87.754],[45.39,-87.694],[45.369,-87.657],[45.339,-87.648],[45.232,-87.725],[45.173,-87.737],[45.144,-87.684],[45.108,-87.66],[45.089,-87.587],[45.045,-87.626],[44.977,-87.63],[44.965,-87.767],[44.932,-87.839],[44.881,-87.833],[44.827,-87.901],[44.72,-87.983],[44.637,-88.01],[44.609,-87.999],[44.567,-88.042],[44.539,-88.006],[44.536,-87.929],[44.608,-87.867],[44.649,-87.756],[44.693,-87.72],[44.725,-87.721],[44.838,-87.61],[44.87,-87.515],[44.864,-87.478],[44.893,-87.437],[44.862,-87.41],[44.866,-87.385],[44.912,-87.405],[45.034,-87.322],[45.081,-87.265],[45.167,-87.238],[45.163,-87.195],[45.191,-87.12],[45.242,-87.116],[45.266,-87.078],[45.295,-87.069],[45.291,-86.978],[45.216,-86.986],[45.212,-87.041],[45.158,-87.045],[45.146,-87.029],[45.12,-87.054],[45.089,-87.048],[45.059,-87.082],[45.058,-87.121],[45.013,-87.139],[45.005,-87.164],[44.969,-87.189],[44.931,-87.172],[44.907,-87.216],[44.876,-87.205],[44.847,-87.267],[44.794,-87.314],[44.702,-87.354],[44.552,-87.468],[44.321,-87.545],[44.23,-87.508],[44.193,-87.513],[44.144,-87.563],[44.105,-87.647],[43.88,-87.736],[43.767,-87.7],[43.688,-87.703],[43.563,-87.79],[43.493,-87.793],[43.38,-87.873],[43.25,-87.912],[43.171,-87.881],[43.126,-87.9],[43.074,-87.866],[43.016,-87.896],[42.962,-87.845],[42.889,-87.848],[42.835,-87.823],[42.78,-87.756],[42.763,-87.778],[42.616,-87.82],[42.492,-87.8],[42.508,-90.641]]],"Maryland":[[[37.951,-75.67],[37.973,-75.784],[37.925,-75.898],[38.034,-75.873],[38.059,-75.813],[38.075,-75.881],[38.133,-75.828],[38.137,-75.96],[38.187,-75.942],[38.21,-75.846],[38.264,-75.919],[38.351,-75.866],[38.239,-75.946],[38.309,-76.017],[38.333,-75.962],[38.374,-76.002],[38.31,-76.05],[38.217,-76.032],[38.29,-76.166],[38.234,-76.151],[38.318,-76.258],[38.35,-76.239],[38.492,-76.336],[38.524,-76.247],[38.572,-76.308],[38.626,-76.285],[38.637,-76.147],[38.735,-76.239],[38.73,-76.316],[38.671,-76.34],[38.826,-76.301],[38.83,-76.191],[38.943,-76.232],[38.906,-76.336],[38.839,-76.375],[38.939,-76.362],[39.04,-76.302],[38.982,-76.277],[39.0,-76.164],[39.093,-76.145],[39.086,-76.203],[39.015,-76.201],[39.019,-76.232],[39.165,-76.275],[39.332,-76.17],[39.368,-76.002],[39.394,-76.041],[39.445,-75.977],[39.453,-76.012],[39.558,-75.97],[39.537,-76.096],[39.487,-76.114],[39.448,-76.061],[39.353,-76.266],[39.302,-76.282],[39.354,-76.341],[39.314,-76.328],[39.206,-76.425],[39.211,-76.536],[39.132,-76.429],[39.053,-76.439],[39.011,-76.394],[38.973,-76.474],[38.907,-76.459],[38.91,-76.494],[38.745,-76.558],[38.505,-76.506],[38.382,-76.386],[38.259,-76.399],[38.138,-76.32],[38.037,-76.322],[38.139,-76.44],[38.103,-76.473],[38.134,-76.53],[38.214,-76.591],[38.228,-76.779],[38.301,-76.825],[38.254,-76.842],[38.292,-76.921],[38.446,-77.016],[38.36,-77.207],[38.383,-77.25],[38.482,-77.274],[38.552,-77.238],[38.614,-77.129],[38.674,-77.133],[38.714,-77.045],[38.791,-77.039],[38.893,-76.909],[38.995,-77.041],[38.934,-77.12],[39.047,-77.293],[39.075,-77.461],[39.146,-77.527],[39.228,-77.46],[39.306,-77.567],[39.337,-77.76],[39.402,-77.74],[39.437,-77.803],[39.496,-77.766],[39.499,-77.846],[39.529,-77.825],[39.556,-77.889],[39.606,-77.838],[39.619,-77.942],[39.585,-77.946],[39.696,-78.177],[39.619,-78.265],[39.623,-78.43],[39.584,-78.395],[39.587,-78.457],[39.549,-78.419],[39.517,-78.469],[39.519,-78.566],[39.582,-78.76],[39.648,-78.766],[39.44,-78.957],[39.473,-79.097],[39.204,-79.476],[39.721,-79.477],[39.722,-75.788],[38.46,-75.694],[38.451,-75.049],[38.027,-75.242],[37.994,-75.624],[37.951,-75.67]]],"Alabama":[[[31.001,-85.002],[30.997,-87.599],[30.848,-87.627],[30.65,-87.396],[30.51,-87.448],[30.437,-87.367],[30.324,-87.505],[30.3,-87.452],[30.221,-88.028],[30.277,-87.755],[30.409,-87.906],[30.636,-87.919],[30.685,-88.008],[30.645,-88.062],[30.321,-88.136],[30.382,-88.261],[30.369,-88.395],[31.894,-88.473],[34.892,-88.098],[35.008,-88.203],[34.985,-85.605],[32.861,-85.184],[32.424,-84.963],[32.328,-85.007],[32.262,-84.891],[32.134,-85.061],[31.971,-85.066],[31.857,-85.141],[31.695,-85.126],[31.541,-85.041],[31.186,-85.108],[31.001,-85.002]]],"Arizona":[[[36.999,-109.045],[31.333,-109.05],[31.332,-111.075],[32.494,-114.814],[32.617,-114.809],[32.746,-114.702],[32.75,-114.539],[32.845,-114.469],[33.023,-114.511],[33.033,-114.662],[33.088,-114.706],[33.258,-114.672],[33.302,-114.731],[33.352,-114.698],[33.405,-114.725],[33.417,-114.643],[33.552,-114.525],[33.675,-114.532],[33.708,-114.494],[33.935,-114.535],[34.108,-114.416],[34.266,-114.134],[34.349,-114.177],[34.458,-114.387],[34.711,-114.47],[34.875,-114.635],[35.069,-114.603],[35.102,-114.647],[35.129,-114.579],[35.183,-114.569],[35.49,-114.678],[35.611,-114.653],[35.806,-114.712],[35.875,-114.677],[36.087,-114.756],[36.142,-114.632],[36.147,-114.405],[36.02,-114.253],[36.028,-114.148],[36.194,-114.047],[37.0,-114.051],[36.999,-109.045]]],"Arkansas":[[[36.499,-94.559],[36.498,-90.152],[36.414,-90.139],[36.382,-90.065],[36.303,-90.064],[35.996,-90.378],[36.001,-89.733],[35.904,-89.645],[35.907,-89.741],[35.865,-89.772],[35.818,-89.706],[35.733,-89.956],[35.66,-89.931],[35.644,-89.852],[35.591,-89.957],[35.515,-89.915],[35.548,-90.04],[35.393,-90.045],[35.479,-90.085],[35.422,-90.169],[35.375,-90.166],[35.414,-90.13],[35.384,-90.075],[35.279,-90.169],[35.228,-90.079],[35.188,-90.117],[35.138,-90.065],[35.125,-90.165],[35.027,-90.209],[35.04,-90.296],[34.996,-90.309],[34.921,-90.245],[34.846,-90.307],[34.832,-90.415],[34.883,-90.48],[34.74,-90.452],[34.733,-90.518],[34.802,-90.523],[34.725,-90.568],[34.674,-90.466],[34.627,-90.532],[34.695,-90.55],[34.671,-90.588],[34.548,-90.541],[34.491,-90.589],[34.42,-90.571],[34.376,-90.659],[34.313,-90.669],[34.369,-90.683],[34.362,-90.766],[34.302,-90.743],[34.274,-90.828],[34.207,-90.848],[34.245,-90.929],[34.197,-90.916],[34.156,-90.811],[34.138,-90.954],[34.081,-90.871],[34.027,-90.892],[34.019,-90.988],[33.963,-90.968],[34.003,-91.019],[33.975,-91.088],[33.929,-91.01],[33.857,-91.073],[33.785,-90.988],[33.783,-91.132],[33.732,-91.147],[33.678,-91.031],[33.678,-91.229],[33.606,-91.13],[33.561,-91.231],[33.502,-91.183],[33.439,-91.235],[33.444,-91.177],[33.498,-91.167],[33.454,-91.118],[33.402,-91.208],[33.38,-91.141],[33.445,-91.058],[33.349,-91.142],[33.242,-91.106],[33.275,-91.044],[33.14,-91.09],[33.125,-91.202],[33.059,-91.121],[33.004,-91.166],[33.019,-94.043],[33.552,-94.043],[33.595,-94.184],[33.555,-94.196],[33.557,-94.25],[33.59,-94.243],[33.544,-94.382],[33.638,-94.486],[35.394,-94.431],[36.499,-94.618],[36.499,-94.559]]],"California":[[[32.534,-117.125],[32.672,-117.169],[32.669,-117.246],[33.094,-117.315],[33.296,-117.47],[33.753,-118.133],[33.704,-118.259],[33.742,-118.411],[33.841,-118.392],[34.028,-118.52],[34.001,-118.805],[34.1,-119.13],[34.146,-119.216],[34.267,-119.279],[34.413,-119.559],[34.409,-119.874],[34.473,-120.141],[34.448,-120.471],[34.523,-120.511],[34.566,-120.638],[34.705,-120.6],[34.756,-120.637],[34.858,-120.61],[34.904,-120.671],[35.14,-120.644],[35.206,-120.856],[35.248,-120.897],[35.43,-120.885],[35.461,-121.003],[35.635,-121.167],[35.663,-121.285],[36.0,-121.503],[36.306,-121.903],[36.56,-121.933],[36.58,-121.979],[36.637,-121.936],[36.611,-121.861],[36.683,-121.814],[36.804,-121.788],[36.932,-121.862],[36.978,-121.93],[36.956,-122.106],[37.196,-122.405],[37.359,-122.401],[37.521,-122.517],[37.781,-122.514],[37.806,-122.398],[37.73,-122.357],[37.708,-122.393],[37.606,-122.379],[37.508,-122.111],[37.668,-122.163],[37.784,-122.331],[37.897,-122.316],[37.963,-122.43],[38.023,-122.283],[38.074,-122.273],[38.15,-122.396],[38.112,-122.49],[38.019,-122.498],[37.985,-122.448],[37.929,-122.503],[37.881,-122.438],[37.815,-122.529],[38.017,-122.857],[37.995,-123.024],[38.154,-122.949],[38.268,-122.977],[38.302,-123.064],[38.45,-123.129],[38.566,-123.332],[38.917,-123.725],[39.031,-123.69],[39.344,-123.822],[39.553,-123.766],[39.832,-123.852],[40.104,-124.111],[40.261,-124.363],[40.438,-124.41],[41.028,-124.112],[41.13,-124.165],[41.47,-124.066],[41.718,-124.147],[41.783,-124.256],[41.998,-124.212],[41.995,-119.999],[39.0,-120.001],[37.22,-117.5],[35.002,-114.633],[34.873,-114.634],[34.711,-114.47],[34.458,-114.387],[34.349,-114.177],[34.266,-114.134],[34.087,-114.434],[34.023,-114.438],[33.935,-114.535],[33.708,-114.494],[33.675,-114.532],[33.552,-114.525],[33.417,-114.643],[33.405,-114.725],[33.352,-114.698],[33.302,-114.731],[33.258,-114.672],[33.088,-114.706],[33.034,-114.665],[33.03,-114.52],[32.972,-114.469],[32.845,-114.469],[32.757,-114.527],[32.534,-117.125]]],"Colorado":[[[36.993,-102.042],[36.999,-109.045],[41.001,-109.05],[41.002,-102.052],[36.993,-102.042]]],"Connecticut":[[[41.322,-71.86],[41.324,-72.184],[41.285,-72.205],[41.25,-72.547],[41.244,-72.895],[41.282,-72.917],[41.151,-73.111],[41.167,-73.178],[40.985,-73.657],[41.101,-73.728],[41.213,-73.483],[41.295,-73.551],[42.05,-73.487],[42.036,-72.814],[41.998,-72.817],[42.036,-72.756],[42.024,-71.801],[41.417,-71.798],[41.41,-71.843],[41.322,-71.86]]],"Delaware":[[[39.686,-75.51],[39.621,-75.613],[39.562,-75.563],[39.462,-75.59],[39.255,-75.403],[39.067,-75.402],[38.913,-75.304],[38.807,-75.191],[38.797,-75.089],[38.451,-75.049],[38.46,-75.694],[39.722,-75.788],[39.834,-75.617],[39.796,-75.405],[39.686,-75.51]]],"District of Columbia":[[[38.792,-77.039],[38.871,-77.041],[38.934,-77.12],[38.995,-77.041],[38.893,-76.909],[38.792,-77.039]]],"Florida":[[[27.928,-82.478],[27.915,-82.491],[27.821,-82.475],[27.848,-82.554],[27.878,-82.53],[27.967,-82.554],[27.999,-82.641],[27.994,-82.679],[27.972,-82.685],[27.956,-82.721],[27.928,-82.71],[27.91,-82.628],[27.817,-82.587],[27.78,-82.623],[27.704,-82.64],[27.692,-82.719],[27.664,-82.722],[27.639,-82.698],[27.613,-82.733],[27.718,-82.74],[27.822,-82.829],[27.886,-82.851],[27.962,-82.831],[27.909,-82.838],[27.96,-82.805],[28.056,-82.783],[28.128,-82.781],[28.172,-82.805],[28.219,-82.763],[28.484,-82.665],[28.591,-82.654],[28.628,-82.672],[28.696,-82.669],[28.721,-82.712],[28.768,-82.697],[28.85,-82.73],[28.906,-82.689],[28.996,-82.738],[29.0,-82.764],[29.054,-82.76],[29.076,-82.817],[29.147,-82.805],[29.181,-82.992],[29.141,-83.019],[29.131,-83.053],[29.216,-83.088],[29.255,-83.077],[29.29,-83.17],[29.345,-83.176],[29.42,-83.218],[29.438,-83.295],[29.476,-83.312],[29.517,-83.4],[29.668,-83.413],[29.723,-83.538],[29.776,-83.585],[29.812,-83.586],[29.886,-83.638],[29.924,-83.686],[30.039,-83.932],[30.096,-84.001],[30.101,-84.063],[30.071,-84.168],[30.114,-84.206],[30.086,-84.203],[30.104,-84.256],[30.06,-84.277],[30.058,-84.359],[29.988,-84.362],[29.967,-84.342],[29.981,-84.433],[29.962,-84.434],[29.946,-84.339],[29.897,-84.349],[29.903,-84.424],[29.929,-84.452],[29.917,-84.512],[29.722,-84.888],[29.736,-84.902],[29.773,-84.877],[29.786,-84.904],[29.715,-84.993],[29.716,-85.121],[29.681,-85.319],[29.655,-85.345],[29.74,-85.398],[29.853,-85.414],[29.871,-85.392],[29.802,-85.406],[29.685,-85.354],[29.698,-85.311],[29.808,-85.303],[29.938,-85.405],[29.971,-85.509],[30.056,-85.601],[30.238,-85.923],[30.344,-86.223],[30.38,-86.412],[30.392,-86.751],[30.28,-87.518],[30.3,-87.452],[30.307,-87.503],[30.324,-87.505],[30.336,-87.46],[30.406,-87.43],[30.44,-87.367],[30.466,-87.425],[30.51,-87.448],[30.615,-87.395],[30.675,-87.407],[30.743,-87.533],[30.779,-87.545],[30.866,-87.635],[30.951,-87.592],[30.997,-87.599],[31.001,-85.002],[30.935,-84.983],[30.882,-84.935],[30.754,-84.914],[30.712,-84.865],[30.569,-82.215],[30.537,-82.236],[30.485,-82.201],[30.425,-82.21],[30.379,-82.193],[30.358,-82.162],[30.36,-82.06],[30.378,-82.037],[30.563,-82.005],[30.656,-82.05],[30.73,-82.044],[30.763,-82.012],[30.788,-82.023],[30.778,-81.974],[30.827,-81.95],[30.821,-81.896],[30.793,-81.869],[30.79,-81.807],[30.745,-81.72],[30.713,-81.541],[30.726,-81.487],[30.703,-81.433],[30.504,-81.447],[30.482,-81.411],[30.274,-81.386],[29.739,-81.241],[29.148,-80.966],[28.757,-80.71],[28.585,-80.575],[28.459,-80.525],[28.411,-80.588],[28.336,-80.607],[28.096,-80.566],[27.74,-80.384],[27.38,-80.254],[27.019,-80.094],[26.796,-80.031],[26.569,-80.039],[26.087,-80.11],[25.772,-80.128],[25.665,-80.155],[25.685,-80.177],[25.729,-80.166],[25.744,-80.198],[25.724,-80.24],[25.613,-80.301],[25.568,-80.302],[25.499,-80.339],[25.398,-80.326],[25.384,-80.307],[25.339,-80.335],[25.317,-80.374],[25.253,-80.394],[25.225,-80.493],[25.199,-80.495],[25.221,-80.52],[25.197,-80.536],[25.209,-80.554],[25.177,-80.619],[25.198,-80.611],[25.189,-80.646],[25.18,-80.659],[25.177,-80.634],[25.138,-80.669],[25.168,-80.657],[25.173,-80.682],[25.139,-80.704],[25.159,-80.764],[25.135,-80.777],[25.162,-80.791],[25.141,-80.802],[25.182,-80.807],[25.16,-80.827],[25.174,-80.875],[25.162,-80.9],[25.14,-80.901],[25.119,-81.08],[25.164,-81.141],[25.222,-81.172],[25.325,-81.152],[25.355,-81.117],[25.387,-81.151],[25.464,-81.169],[25.505,-81.208],[25.539,-81.204],[25.638,-81.254],[25.688,-81.29],[25.721,-81.346],[25.773,-81.362],[25.787,-81.34],[25.822,-81.353],[25.865,-81.418],[25.902,-81.528],[25.898,-81.645],[25.845,-81.678],[25.853,-81.69],[26.088,-81.802],[26.295,-81.833],[26.379,-81.869],[26.513,-82.025],[26.513,-82.067],[26.493,-82.072],[26.484,-82.106],[26.637,-82.138],[26.682,-82.182],[26.702,-82.174],[26.703,-82.139],[26.666,-82.093],[26.802,-82.055],[26.877,-82.059],[26.907,-82.093],[26.95,-82.063],[26.958,-82.108],[26.917,-82.175],[26.79,-82.147],[26.773,-82.179],[26.784,-82.233],[26.717,-82.26],[26.828,-82.289],[27.061,-82.446],[27.254,-82.54],[27.437,-82.692],[27.531,-82.743],[27.524,-82.708],[27.502,-82.711],[27.496,-82.69],[27.523,-82.651],[27.585,-82.612],[27.609,-82.571],[27.706,-82.514],[27.723,-82.478],[27.743,-82.482],[27.768,-82.432],[27.838,-82.393],[27.883,-82.403],[27.901,-82.414],[27.908,-82.462],[27.938,-82.461],[27.928,-82.478]]],"Georgia":[[[30.71,-81.444],[30.827,-81.95],[30.73,-82.044],[30.563,-82.005],[30.378,-82.037],[30.358,-82.162],[30.425,-82.21],[30.569,-82.215],[30.712,-84.865],[30.752,-84.914],[31.096,-85.03],[31.186,-85.108],[31.541,-85.041],[31.695,-85.126],[31.839,-85.142],[32.014,-85.054],[32.134,-85.061],[32.262,-84.891],[32.328,-85.007],[32.424,-84.963],[32.861,-85.184],[34.985,-85.605],[35.001,-83.109],[34.939,-83.121],[34.79,-83.324],[34.682,-83.339],[34.483,-83.035],[34.475,-82.877],[34.151,-82.718],[33.945,-82.557],[33.82,-82.324],[33.621,-82.186],[33.463,-81.926],[33.345,-81.94],[33.307,-81.847],[33.248,-81.852],[33.217,-81.769],[33.141,-81.744],[33.009,-81.492],[32.935,-81.502],[32.818,-81.418],[32.629,-81.419],[32.464,-81.187],[32.424,-81.205],[32.305,-81.122],[32.244,-81.157],[32.118,-81.117],[32.024,-80.843],[31.969,-80.863],[31.941,-80.972],[31.909,-80.935],[31.858,-80.993],[31.877,-81.065],[31.813,-81.037],[31.769,-81.068],[31.719,-81.204],[31.696,-81.131],[31.623,-81.133],[31.556,-81.173],[31.548,-81.26],[31.517,-81.177],[31.367,-81.279],[31.211,-81.288],[31.134,-81.4],[31.017,-81.42],[30.978,-81.494],[30.958,-81.403],[30.71,-81.444]]],"Idaho":[[[42.002,-111.047],[42.0,-117.026],[43.832,-117.027],[44.021,-116.934],[44.085,-116.977],[44.16,-116.894],[44.243,-116.976],[44.274,-117.198],[44.397,-117.243],[44.727,-117.062],[44.784,-116.935],[44.888,-116.852],[45.023,-116.848],[45.142,-116.73],[45.322,-116.674],[45.616,-116.464],[45.751,-116.547],[45.825,-116.783],[45.907,-116.86],[46.085,-116.982],[46.168,-116.922],[46.353,-117.063],[48.999,-117.032],[49.001,-116.049],[47.977,-116.049],[47.697,-115.724],[47.595,-115.689],[47.543,-115.747],[47.476,-115.653],[47.429,-115.729],[47.295,-115.512],[47.256,-115.327],[46.971,-115.05],[46.92,-114.93],[46.828,-114.92],[46.758,-114.765],[46.697,-114.767],[46.741,-114.697],[46.707,-114.621],[46.673,-114.643],[46.633,-114.593],[46.654,-114.325],[46.52,-114.342],[46.499,-114.403],[46.443,-114.376],[46.288,-114.426],[46.267,-114.47],[46.174,-114.446],[46.146,-114.527],[46.097,-114.46],[46.037,-114.493],[45.967,-114.404],[45.936,-114.431],[45.882,-114.388],[45.846,-114.509],[45.774,-114.566],[45.703,-114.495],[45.637,-114.564],[45.566,-114.559],[45.561,-114.461],[45.459,-114.333],[45.546,-114.248],[45.591,-114.087],[45.705,-113.987],[45.622,-113.905],[45.602,-113.807],[45.521,-113.835],[45.521,-113.766],[45.33,-113.739],[45.128,-113.575],[45.059,-113.452],[44.96,-113.444],[44.942,-113.499],[44.865,-113.455],[44.785,-113.342],[44.823,-113.247],[44.773,-113.131],[44.451,-113.004],[44.36,-112.855],[44.485,-112.781],[44.448,-112.387],[44.536,-112.354],[44.568,-112.286],[44.521,-112.107],[44.564,-111.871],[44.509,-111.821],[44.56,-111.704],[44.541,-111.472],[44.605,-111.526],[44.705,-111.489],[44.755,-111.385],[44.5,-111.131],[44.474,-111.049],[42.002,-111.047]]],"Illinois":[[[39.998,-87.532],[39.348,-87.532],[39.334,-87.589],[39.218,-87.575],[39.145,-87.646],[39.057,-87.573],[38.989,-87.578],[38.954,-87.512],[38.863,-87.553],[38.743,-87.496],[38.639,-87.62],[38.507,-87.657],[38.475,-87.74],[38.294,-87.838],[38.289,-87.939],[38.222,-87.983],[38.148,-87.922],[38.025,-88.03],[37.799,-88.028],[37.658,-88.16],[37.485,-88.064],[37.396,-88.47],[37.284,-88.516],[37.152,-88.424],[37.074,-88.459],[37.23,-88.967],[37.074,-89.168],[36.982,-89.133],[36.974,-89.185],[37.072,-89.255],[37.068,-89.308],[36.989,-89.279],[37.04,-89.378],[37.249,-89.459],[37.285,-89.518],[37.388,-89.421],[37.537,-89.517],[37.593,-89.476],[37.69,-89.514],[37.75,-89.663],[37.8,-89.67],[37.905,-89.843],[37.882,-89.951],[37.927,-89.975],[37.96,-89.925],[38.027,-90.111],[38.225,-90.36],[38.34,-90.368],[38.612,-90.185],[38.721,-90.211],[38.849,-90.113],[38.967,-90.44],[38.874,-90.546],[38.889,-90.625],[39.047,-90.712],[39.101,-90.681],[39.256,-90.73],[39.729,-91.368],[40.036,-91.495],[40.278,-91.493],[40.401,-91.373],[40.555,-91.405],[40.669,-91.124],[40.821,-91.093],[40.954,-90.952],[41.097,-90.947],[41.241,-91.114],[41.414,-91.046],[41.524,-90.461],[41.588,-90.343],[41.742,-90.311],[41.809,-90.181],[42.117,-90.163],[42.225,-90.391],[42.355,-90.444],[42.492,-90.656],[42.492,-87.8],[42.27,-87.829],[42.058,-87.671],[41.724,-87.524],[39.998,-87.532]]],"Indiana":[[[37.799,-88.028],[38.025,-88.03],[38.148,-87.922],[38.228,-87.98],[38.289,-87.939],[38.294,-87.838],[38.475,-87.74],[38.507,-87.657],[38.639,-87.62],[38.743,-87.496],[38.863,-87.553],[38.954,-87.512],[38.989,-87.578],[39.057,-87.573],[39.145,-87.646],[39.218,-87.575],[39.334,-87.589],[39.348,-87.532],[41.708,-87.524],[41.62,-87.278],[41.76,-86.825],[41.76,-84.806],[39.105,-84.82],[39.057,-84.897],[38.969,-84.83],[38.909,-84.877],[38.88,-84.785],[38.786,-84.813],[38.778,-84.99],[38.688,-85.173],[38.741,-85.275],[38.729,-85.434],[38.532,-85.423],[38.439,-85.608],[38.295,-85.684],[38.277,-85.829],[38.161,-85.909],[38.023,-85.925],[37.958,-86.042],[38.053,-86.261],[38.138,-86.272],[38.199,-86.36],[38.139,-86.323],[38.119,-86.463],[38.079,-86.43],[38.038,-86.522],[37.931,-86.507],[37.921,-86.589],[37.843,-86.638],[37.909,-86.647],[37.894,-86.731],[37.999,-86.815],[37.907,-87.033],[37.783,-87.111],[37.936,-87.38],[37.906,-87.511],[37.976,-87.59],[37.832,-87.615],[37.832,-87.676],[37.902,-87.676],[37.877,-87.831],[37.928,-87.898],[37.883,-87.941],[37.808,-87.907],[37.772,-87.953],[37.799,-88.028]]],"Iowa":[[[40.585,-95.766],[40.647,-95.776],[40.732,-95.889],[40.891,-95.809],[41.06,-95.882],[41.155,-95.883],[41.175,-95.841],[41.196,-95.926],[41.298,-95.927],[41.296,-95.871],[41.345,-95.957],[41.456,-95.923],[41.476,-96.012],[41.544,-96.005],[41.507,-96.041],[41.539,-96.094],[41.689,-96.121],[41.705,-96.073],[41.738,-96.106],[41.793,-96.065],[41.902,-96.162],[41.972,-96.13],[42.045,-96.271],[42.114,-96.269],[42.172,-96.35],[42.255,-96.329],[42.351,-96.418],[42.474,-96.386],[42.494,-96.477],[42.63,-96.516],[42.737,-96.64],[42.892,-96.526],[43.042,-96.518],[43.121,-96.437],[43.221,-96.476],[43.224,-96.56],[43.269,-96.585],[43.3,-96.53],[43.386,-96.522],[43.434,-96.594],[43.5,-96.599],[43.501,-91.218],[43.353,-91.207],[43.255,-91.058],[43.135,-91.175],[43.067,-91.179],[42.751,-91.065],[42.634,-90.706],[42.479,-90.654],[42.355,-90.444],[42.225,-90.391],[42.114,-90.162],[41.809,-90.181],[41.742,-90.311],[41.588,-90.343],[41.462,-90.656],[41.414,-91.046],[41.241,-91.114],[41.097,-90.947],[40.954,-90.952],[40.821,-91.093],[40.669,-91.124],[40.555,-91.405],[40.5,-91.364],[40.385,-91.388],[40.382,-91.482],[40.614,-91.729],[40.585,-95.766]]],"Kansas":[[[36.998,-94.618],[36.993,-102.042],[40.003,-102.052],[40.0,-95.308],[39.863,-95.09],[39.898,-94.944],[39.813,-94.876],[39.776,-94.935],[39.743,-94.863],[39.739,-94.965],[39.542,-95.109],[39.389,-94.942],[39.39,-94.885],[39.312,-94.905],[39.216,-94.832],[39.14,-94.59],[36.998,-94.618]]],"Kentucky":[[[36.601,-83.675],[36.633,-87.853],[36.664,-87.85],[36.678,-88.071],[36.497,-88.053],[36.499,-89.417],[36.625,-89.366],[36.567,-89.237],[36.666,-89.159],[36.734,-89.2],[36.76,-89.119],[36.831,-89.179],[36.961,-89.099],[37.046,-89.181],[37.166,-89.087],[37.228,-88.932],[37.07,-88.545],[37.074,-88.459],[37.152,-88.424],[37.284,-88.516],[37.387,-88.477],[37.485,-88.064],[37.662,-88.159],[37.799,-88.028],[37.772,-87.953],[37.808,-87.907],[37.879,-87.941],[37.925,-87.905],[37.877,-87.831],[37.902,-87.676],[37.836,-87.679],[37.827,-87.636],[37.861,-87.589],[37.927,-87.629],[37.975,-87.586],[37.906,-87.511],[37.936,-87.38],[37.783,-87.111],[37.907,-87.033],[37.999,-86.82],[37.894,-86.731],[37.909,-86.647],[37.843,-86.638],[37.921,-86.589],[37.931,-86.507],[38.038,-86.522],[38.079,-86.43],[38.119,-86.463],[38.139,-86.323],[38.199,-86.36],[38.138,-86.272],[38.053,-86.261],[37.959,-86.038],[38.023,-85.925],[38.161,-85.909],[38.277,-85.829],[38.295,-85.684],[38.439,-85.608],[38.532,-85.423],[38.729,-85.434],[38.741,-85.275],[38.688,-85.173],[38.778,-84.99],[38.786,-84.813],[38.88,-84.785],[38.909,-84.877],[38.969,-84.83],[39.057,-84.897],[39.147,-84.751],[39.073,-84.62],[39.118,-84.45],[39.053,-84.426],[39.006,-84.305],[38.806,-84.213],[38.762,-83.873],[38.63,-83.679],[38.703,-83.521],[38.597,-83.294],[38.751,-82.879],[38.591,-82.844],[38.46,-82.604],[38.264,-82.575],[38.165,-82.645],[37.983,-82.464],[37.933,-82.502],[37.764,-82.312],[37.676,-82.304],[37.625,-82.213],[37.648,-82.175],[37.553,-82.133],[37.543,-81.965],[37.267,-82.351],[37.12,-82.722],[37.045,-82.722],[36.978,-82.868],[36.89,-82.879],[36.855,-83.073],[36.743,-83.136],[36.601,-83.675]]],"Louisiana":[[[29.375,-90.031],[29.295,-90.01],[29.241,-90.096],[29.212,-90.043],[29.261,-89.951],[29.105,-90.174],[29.058,-90.349],[29.11,-90.234],[29.175,-90.303],[29.205,-90.271],[29.265,-90.316],[29.274,-90.367],[29.188,-90.433],[29.217,-90.495],[29.266,-90.452],[29.285,-90.565],[29.204,-90.561],[29.209,-90.634],[29.129,-90.647],[29.113,-90.764],[29.064,-90.804],[29.067,-90.637],[29.037,-90.811],[29.181,-90.961],[29.248,-91.279],[29.306,-91.333],[29.372,-91.239],[29.26,-91.123],[29.436,-91.221],[29.545,-91.447],[29.532,-91.531],[29.633,-91.554],[29.634,-91.649],[29.743,-91.633],[29.711,-91.881],[29.8,-91.826],[29.836,-91.889],[29.716,-92.144],[29.763,-92.134],[29.746,-92.201],[29.699,-92.104],[29.622,-92.112],[29.613,-92.0],[29.533,-92.28],[29.588,-92.654],[29.778,-93.227],[29.747,-93.684],[29.691,-93.838],[29.81,-93.928],[30.059,-93.699],[30.086,-93.734],[30.141,-93.688],[30.281,-93.707],[30.333,-93.766],[30.441,-93.698],[30.54,-93.74],[30.808,-93.562],[30.939,-93.526],[30.988,-93.572],[31.03,-93.516],[31.184,-93.533],[31.176,-93.6],[31.271,-93.62],[31.305,-93.687],[31.393,-93.672],[31.469,-93.749],[31.512,-93.727],[31.586,-93.835],[31.774,-93.823],[31.992,-94.042],[33.019,-94.043],[33.004,-91.166],[32.93,-91.214],[32.899,-91.17],[32.984,-91.094],[32.901,-91.064],[32.843,-91.145],[32.751,-91.165],[32.719,-91.055],[32.626,-91.154],[32.585,-91.12],[32.64,-91.014],[32.556,-91.08],[32.494,-90.988],[32.549,-91.094],[32.483,-91.116],[32.439,-90.97],[32.354,-90.994],[32.372,-90.876],[32.299,-90.922],[32.294,-90.979],[32.216,-90.989],[32.242,-91.039],[32.197,-91.164],[32.133,-91.163],[32.124,-91.053],[32.178,-91.05],[32.146,-91.004],[32.048,-91.08],[32.07,-91.16],[32.017,-91.076],[31.966,-91.185],[31.918,-91.181],[31.863,-91.268],[31.813,-91.256],[31.86,-91.293],[31.843,-91.346],[31.762,-91.366],[31.754,-91.263],[31.743,-91.372],[31.62,-91.401],[31.63,-91.515],[31.576,-91.405],[31.522,-91.523],[31.365,-91.479],[31.432,-91.542],[31.41,-91.576],[31.278,-91.516],[31.256,-91.654],[31.189,-91.589],[31.117,-91.626],[31.054,-91.56],[30.999,-91.637],[31.004,-89.73],[30.661,-89.852],[30.452,-89.683],[30.223,-89.616],[30.181,-89.525],[30.139,-89.641],[30.026,-89.716],[30.043,-89.819],[29.956,-89.844],[29.959,-89.728],[29.879,-89.711],[29.872,-89.613],[29.995,-89.581],[30.079,-89.482],[30.055,-89.372],[29.991,-89.433],[29.911,-89.368],[29.994,-89.273],[29.973,-89.218],[29.887,-89.322],[29.877,-89.236],[29.839,-89.384],[29.791,-89.332],[29.808,-89.277],[29.756,-89.271],[29.789,-89.386],[29.698,-89.424],[29.749,-89.651],[29.624,-89.485],[29.673,-89.65],[29.516,-89.701],[29.438,-89.59],[29.455,-89.528],[29.386,-89.509],[29.381,-89.34],[29.35,-89.351],[29.31,-89.241],[29.345,-89.189],[29.206,-89.104],[29.221,-89.029],[29.18,-89.001],[29.158,-89.075],[29.134,-89.024],[29.07,-89.062],[29.109,-89.101],[28.977,-89.143],[29.083,-89.255],[28.925,-89.411],[29.127,-89.32],[29.116,-89.4],[29.215,-89.483],[29.289,-89.672],[29.312,-89.85],[29.394,-89.816],[29.478,-89.85],[29.429,-89.933],[29.463,-90.013],[29.375,-90.031]]],"Minnesota":[[[43.501,-91.372],[43.5,-96.453],[45.298,-96.453],[45.376,-96.522],[45.417,-96.693],[45.606,-96.858],[45.82,-96.583],[46.084,-96.555],[46.33,-96.6],[46.438,-96.718],[46.658,-96.799],[46.926,-96.76],[47.008,-96.835],[47.598,-96.853],[48.145,-97.142],[48.28,-97.117],[48.544,-97.163],[48.685,-97.097],[49.001,-97.229],[48.999,-95.154],[49.384,-95.153],[49.37,-94.957],[49.321,-94.816],[49.0,-94.75],[48.884,-94.683],[48.789,-94.694],[48.744,-94.645],[48.692,-94.452],[48.708,-94.291],[48.65,-94.224],[48.629,-93.841],[48.516,-93.794],[48.546,-93.468],[48.592,-93.464],[48.643,-93.255],[48.631,-92.955],[48.543,-92.635],[48.503,-92.627],[48.463,-92.713],[48.414,-92.456],[48.352,-92.47],[48.22,-92.369],[48.248,-92.27],[48.316,-92.306],[48.355,-92.262],[48.359,-92.055],[48.233,-91.958],[48.199,-91.715],[48.115,-91.712],[48.108,-91.559],[48.044,-91.567],[48.079,-91.266],[48.246,-90.885],[48.24,-90.839],[48.091,-90.752],[48.113,-90.144],[47.988,-89.897],[48.015,-89.489],[47.831,-89.974],[47.624,-90.736],[47.457,-91.046],[47.126,-91.477],[46.788,-92.094],[46.706,-92.015],[46.749,-92.117],[46.704,-92.205],[46.652,-92.207],[46.668,-92.291],[46.074,-92.294],[46.016,-92.352],[46.024,-92.429],[45.895,-92.708],[45.764,-92.785],[45.718,-92.869],[45.575,-92.884],[45.567,-92.77],[45.442,-92.647],[45.287,-92.762],[45.116,-92.74],[45.061,-92.803],[44.937,-92.751],[44.75,-92.807],[44.568,-92.548],[44.554,-92.336],[44.445,-92.232],[44.366,-91.97],[44.201,-91.875],[44.031,-91.592],[43.997,-91.433],[43.775,-91.244],[43.615,-91.269],[43.501,-91.218],[43.501,-91.372]]],"Mississippi":[[[30.369,-88.395],[30.318,-88.48],[30.343,-88.729],[30.41,-88.841],[30.36,-88.818],[30.391,-88.971],[30.303,-89.286],[30.35,-89.28],[30.374,-89.336],[30.352,-89.366],[30.315,-89.323],[30.185,-89.448],[30.18,-89.57],[30.452,-89.683],[30.663,-89.852],[31.004,-89.73],[30.999,-91.637],[31.054,-91.56],[31.117,-91.626],[31.189,-91.589],[31.256,-91.654],[31.278,-91.516],[31.41,-91.576],[31.432,-91.542],[31.365,-91.479],[31.522,-91.523],[31.576,-91.405],[31.63,-91.515],[31.62,-91.401],[31.743,-91.372],[31.754,-91.263],[31.762,-91.366],[31.843,-91.346],[31.86,-91.293],[31.813,-91.256],[31.863,-91.268],[31.918,-91.181],[31.966,-91.185],[32.017,-91.076],[32.07,-91.16],[32.048,-91.08],[32.146,-91.004],[32.178,-91.05],[32.124,-91.053],[32.133,-91.163],[32.197,-91.164],[32.242,-91.039],[32.216,-90.989],[32.294,-90.979],[32.299,-90.922],[32.372,-90.876],[32.354,-90.994],[32.439,-90.97],[32.483,-91.116],[32.549,-91.094],[32.494,-90.988],[32.556,-91.08],[32.64,-91.014],[32.585,-91.12],[32.626,-91.154],[32.719,-91.055],[32.751,-91.165],[32.843,-91.145],[32.901,-91.064],[32.976,-91.087],[32.98,-91.136],[32.902,-91.152],[32.927,-91.214],[33.056,-91.12],[33.125,-91.202],[33.14,-91.09],[33.265,-91.045],[33.242,-91.106],[33.328,-91.144],[33.445,-91.058],[33.379,-91.154],[33.409,-91.209],[33.473,-91.125],[33.498,-91.167],[33.444,-91.177],[33.439,-91.235],[33.502,-91.183],[33.561,-91.231],[33.606,-91.13],[33.683,-91.228],[33.673,-91.035],[33.732,-91.147],[33.783,-91.132],[33.785,-90.988],[33.857,-91.073],[33.929,-91.01],[33.975,-91.088],[34.003,-91.019],[33.963,-90.968],[34.019,-90.988],[34.027,-90.892],[34.081,-90.871],[34.138,-90.954],[34.156,-90.811],[34.197,-90.916],[34.245,-90.929],[34.207,-90.848],[34.274,-90.828],[34.302,-90.743],[34.362,-90.766],[34.369,-90.683],[34.313,-90.669],[34.376,-90.659],[34.42,-90.571],[34.491,-90.589],[34.548,-90.541],[34.671,-90.588],[34.695,-90.55],[34.629,-90.524],[34.688,-90.463],[34.721,-90.566],[34.785,-90.548],[34.802,-90.515],[34.73,-90.515],[34.736,-90.455],[34.891,-90.466],[34.834,-90.422],[34.846,-90.307],[34.938,-90.244],[34.996,-90.309],[34.996,-88.2],[34.892,-88.098],[31.894,-88.473],[30.369,-88.395]]],"Missouri":[[[36.498,-89.539],[36.36,-89.513],[36.323,-89.62],[36.253,-89.535],[36.243,-89.704],[36.144,-89.592],[36.085,-89.679],[36.001,-89.707],[35.996,-90.378],[36.303,-90.064],[36.382,-90.065],[36.414,-90.139],[36.498,-90.152],[36.499,-94.618],[39.155,-94.592],[39.21,-94.824],[39.312,-94.905],[39.39,-94.885],[39.389,-94.942],[39.542,-95.109],[39.739,-94.965],[39.743,-94.863],[39.776,-94.935],[39.813,-94.876],[39.889,-94.93],[39.874,-95.128],[40.033,-95.407],[40.119,-95.393],[40.186,-95.479],[40.243,-95.478],[40.311,-95.657],[40.347,-95.624],[40.505,-95.7],[40.547,-95.656],[40.526,-95.757],[40.578,-95.774],[40.614,-91.729],[40.458,-91.525],[40.411,-91.525],[40.378,-91.419],[40.278,-91.493],[40.128,-91.51],[39.733,-91.37],[39.256,-90.73],[38.92,-90.657],[38.871,-90.556],[38.967,-90.44],[38.844,-90.109],[38.726,-90.21],[38.612,-90.185],[38.34,-90.368],[38.214,-90.354],[38.027,-90.111],[37.96,-89.925],[37.927,-89.975],[37.882,-89.951],[37.905,-89.843],[37.8,-89.67],[37.75,-89.663],[37.693,-89.517],[37.593,-89.476],[37.537,-89.517],[37.388,-89.421],[37.285,-89.518],[37.249,-89.459],[37.046,-89.384],[36.989,-89.279],[37.068,-89.308],[37.072,-89.255],[36.974,-89.185],[36.965,-89.1],[36.831,-89.179],[36.768,-89.117],[36.739,-89.198],[36.666,-89.159],[36.58,-89.214],[36.628,-89.357],[36.464,-89.448],[36.47,-89.493],[36.572,-89.485],[36.564,-89.567],[36.498,-89.539]]],"Nebraska":[[[40.585,-95.766],[40.526,-95.757],[40.542,-95.653],[40.505,-95.7],[40.347,-95.624],[40.311,-95.657],[40.243,-95.478],[40.186,-95.479],[40.119,-95.393],[40.038,-95.414],[40.0,-95.308],[40.003,-102.052],[41.002,-102.052],[41.001,-104.053],[43.001,-104.053],[42.999,-98.499],[42.929,-98.444],[42.764,-98.035],[42.776,-97.937],[42.868,-97.845],[42.853,-97.238],[42.772,-97.131],[42.656,-96.691],[42.604,-96.709],[42.506,-96.611],[42.474,-96.386],[42.351,-96.418],[42.255,-96.329],[42.167,-96.348],[42.114,-96.269],[41.999,-96.241],[41.972,-96.13],[41.902,-96.162],[41.796,-96.065],[41.738,-96.106],[41.705,-96.073],[41.689,-96.121],[41.539,-96.094],[41.507,-96.041],[41.544,-96.005],[41.476,-96.012],[41.452,-95.92],[41.345,-95.957],[41.307,-95.875],[41.298,-95.927],[41.202,-95.927],[41.175,-95.841],[41.155,-95.883],[41.06,-95.882],[40.891,-95.809],[40.732,-95.889],[40.647,-95.776],[40.585,-95.766]]],"New Hampshire":[[[42.727,-72.459],[42.867,-72.556],[42.955,-72.532],[43.006,-72.444],[43.524,-72.396],[44.076,-72.032],[44.277,-72.065],[44.337,-71.981],[44.355,-71.814],[44.503,-71.578],[44.561,-71.596],[44.588,-71.536],[44.752,-71.632],[44.905,-71.496],[44.988,-71.539],[45.014,-71.465],[45.051,-71.505],[45.204,-71.398],[45.238,-71.443],[45.302,-71.284],[45.243,-71.139],[45.305,-71.084],[43.551,-70.951],[43.39,-70.988],[43.225,-70.81],[43.127,-70.827],[43.06,-70.704],[42.872,-70.817],[42.859,-71.031],[42.697,-71.294],[42.727,-72.459]]],"New Mexico":[[[31.333,-109.05],[36.999,-109.045],[37.0,-103.002],[36.5,-103.002],[36.5,-103.042],[32.001,-103.064],[32.0,-106.618],[31.866,-106.636],[31.784,-106.529],[31.784,-108.208],[31.333,-108.209],[31.333,-109.05]]],"North Dakota":[[[45.935,-96.563],[45.945,-104.045],[49.0,-104.049],[49.001,-97.229],[48.685,-97.097],[48.544,-97.163],[48.28,-97.117],[48.145,-97.142],[47.609,-96.855],[47.008,-96.835],[46.926,-96.76],[46.658,-96.799],[46.438,-96.718],[46.33,-96.6],[45.935,-96.563]]],"Oklahoma":[[[36.499,-94.618],[35.394,-94.431],[33.629,-94.488],[33.687,-94.708],[33.754,-94.771],[33.746,-94.869],[33.861,-94.969],[33.962,-95.226],[33.875,-95.288],[33.88,-95.545],[33.934,-95.6],[33.893,-95.756],[33.844,-95.772],[33.887,-95.935],[33.838,-96.148],[33.761,-96.178],[33.766,-96.292],[33.686,-96.348],[33.776,-96.423],[33.845,-96.629],[33.895,-96.588],[33.917,-96.667],[33.839,-96.7],[33.824,-96.762],[33.869,-96.794],[33.861,-96.875],[33.958,-96.916],[33.956,-96.981],[33.887,-96.986],[33.717,-97.126],[33.801,-97.205],[33.847,-97.167],[33.916,-97.211],[33.819,-97.426],[33.904,-97.46],[33.902,-97.587],[33.954,-97.59],[33.991,-97.672],[33.85,-97.877],[33.897,-97.984],[33.991,-97.946],[34.005,-98.088],[34.154,-98.109],[34.114,-98.169],[34.157,-98.364],[34.063,-98.486],[34.161,-98.6],[34.125,-98.757],[34.221,-98.987],[34.214,-99.19],[34.34,-99.213],[34.456,-99.359],[34.373,-99.403],[34.418,-99.57],[34.374,-99.666],[34.575,-99.923],[34.561,-100.0],[36.5,-100.0],[36.5,-103.002],[37.0,-103.002],[36.999,-94.625],[36.499,-94.618]]],"Oregon":[[[44.301,-117.22],[44.259,-117.17],[44.28,-117.104],[44.229,-117.053],[44.249,-117.032],[44.243,-116.976],[44.197,-116.972],[44.192,-116.925],[44.16,-116.894],[44.1,-116.934],[44.085,-116.977],[44.049,-116.973],[44.021,-116.934],[43.965,-116.971],[43.928,-116.962],[43.869,-116.982],[43.862,-117.011],[43.832,-117.027],[42.0,-117.026],[41.998,-124.212],[42.052,-124.3],[42.115,-124.356],[42.181,-124.361],[42.251,-124.411],[42.307,-124.411],[42.324,-124.433],[42.44,-124.435],[42.567,-124.391],[42.627,-124.401],[42.662,-124.417],[42.676,-124.451],[42.733,-124.474],[42.735,-124.513],[42.814,-124.536],[42.835,-124.566],[43.0,-124.457],[43.27,-124.382],[43.306,-124.403],[43.388,-124.315],[43.557,-124.234],[43.911,-124.15],[44.286,-124.115],[44.429,-124.068],[44.487,-124.084],[44.608,-124.067],[44.611,-124.084],[44.659,-124.058],[44.798,-124.074],[44.928,-124.025],[45.046,-124.004],[45.065,-124.016],[45.145,-123.975],[45.317,-123.964],[45.337,-123.973],[45.337,-124.008],[45.355,-123.973],[45.386,-123.966],[45.49,-123.977],[45.51,-123.958],[45.662,-123.939],[45.727,-123.943],[45.762,-123.983],[45.87,-123.963],[45.946,-123.994],[45.977,-123.937],[46.042,-123.929],[46.142,-123.959],[46.229,-124.024],[46.236,-124.011],[46.157,-123.855],[46.17,-123.842],[46.19,-123.864],[46.214,-123.636],[46.237,-123.623],[46.229,-123.586],[46.271,-123.501],[46.25,-123.448],[46.229,-123.428],[46.182,-123.431],[46.146,-123.371],[46.145,-123.28],[46.189,-123.166],[46.185,-123.116],[46.084,-122.904],[45.961,-122.814],[45.868,-122.785],[45.81,-122.796],[45.759,-122.761],[45.657,-122.764],[45.61,-122.644],[45.564,-122.439],[45.576,-122.38],[45.544,-122.295],[45.623,-121.983],[45.693,-121.867],[45.707,-121.811],[45.695,-121.707],[45.727,-121.533],[45.694,-121.424],[45.705,-121.338],[45.671,-121.216],[45.617,-121.197],[45.606,-121.168],[45.653,-121.064],[45.643,-120.896],[45.746,-120.635],[45.738,-120.559],[45.694,-120.482],[45.699,-120.404],[45.726,-120.211],[45.762,-120.17],[45.824,-119.966],[45.857,-119.67],[45.92,-119.601],[45.906,-119.488],[45.94,-119.257],[45.933,-119.126],[46.0,-118.987],[45.995,-116.916],[45.825,-116.783],[45.826,-116.712],[45.782,-116.665],[45.779,-116.593],[45.751,-116.547],[45.692,-116.535],[45.603,-116.464],[45.547,-116.524],[45.463,-116.555],[45.443,-116.588],[45.322,-116.674],[45.276,-116.674],[45.24,-116.704],[45.142,-116.73],[45.023,-116.848],[44.979,-116.858],[44.933,-116.832],[44.881,-116.857],[44.784,-116.935],[44.727,-117.062],[44.536,-117.149],[44.482,-117.225],[44.427,-117.215],[44.391,-117.243],[44.337,-117.19],[44.301,-117.22]]],"South Carolina":[[[33.851,-78.541],[33.8,-78.714],[33.64,-78.938],[33.484,-79.085],[33.404,-79.135],[33.174,-79.188],[33.125,-79.246],[33.09,-79.33],[33.007,-79.36],[33.001,-79.483],[33.035,-79.522],[33.021,-79.558],[32.953,-79.618],[32.926,-79.606],[32.934,-79.573],[32.906,-79.576],[32.85,-79.695],[32.806,-79.726],[32.757,-79.867],[32.684,-79.885],[32.612,-79.999],[32.591,-80.121],[32.539,-80.169],[32.556,-80.205],[32.478,-80.332],[32.496,-80.364],[32.471,-80.413],[32.498,-80.423],[32.497,-80.472],[32.447,-80.48],[32.402,-80.43],[32.326,-80.455],[32.256,-80.639],[32.307,-80.65],[32.294,-80.67],[32.326,-80.715],[32.319,-80.734],[32.28,-80.755],[32.246,-80.685],[32.217,-80.669],[32.14,-80.749],[32.1,-80.859],[32.052,-80.905],[32.035,-80.886],[32.038,-80.918],[32.1,-81.002],[32.085,-81.05],[32.118,-81.117],[32.189,-81.118],[32.244,-81.157],[32.305,-81.122],[32.424,-81.205],[32.464,-81.187],[32.535,-81.277],[32.556,-81.281],[32.577,-81.367],[32.629,-81.419],[32.652,-81.393],[32.702,-81.428],[32.745,-81.41],[32.786,-81.429],[32.818,-81.418],[32.85,-81.454],[32.874,-81.454],[32.881,-81.479],[32.898,-81.464],[32.935,-81.502],[33.009,-81.492],[33.094,-81.613],[33.141,-81.744],[33.18,-81.772],[33.198,-81.757],[33.217,-81.769],[33.211,-81.805],[33.248,-81.852],[33.273,-81.838],[33.289,-81.863],[33.307,-81.847],[33.345,-81.94],[33.371,-81.946],[33.374,-81.925],[33.404,-81.937],[33.437,-81.913],[33.463,-81.926],[33.487,-81.986],[33.564,-82.046],[33.621,-82.186],[33.753,-82.247],[33.82,-82.324],[33.882,-82.455],[33.943,-82.525],[33.945,-82.557],[34.029,-82.595],[34.072,-82.644],[34.092,-82.642],[34.151,-82.718],[34.266,-82.747],[34.34,-82.794],[34.366,-82.835],[34.475,-82.877],[34.483,-83.035],[34.605,-83.17],[34.611,-83.232],[34.682,-83.339],[34.729,-83.353],[34.76,-83.32],[34.79,-83.324],[34.824,-83.29],[34.821,-83.268],[34.876,-83.239],[34.939,-83.121],[35.001,-83.109],[35.085,-82.788],[35.064,-82.777],[35.068,-82.758],[35.098,-82.695],[35.126,-82.684],[35.118,-82.662],[35.178,-82.46],[35.166,-82.44],[35.215,-82.393],[35.181,-82.371],[35.2,-82.275],[35.15,-81.044],[35.108,-81.033],[35.073,-81.058],[35.045,-81.041],[35.107,-80.935],[34.936,-80.782],[34.82,-80.798],[34.805,-79.675],[33.851,-78.541]]],"South Dakota":[[[42.489,-96.443],[42.506,-96.611],[42.604,-96.709],[42.656,-96.691],[42.772,-97.131],[42.853,-97.238],[42.868,-97.845],[42.776,-97.937],[42.764,-98.035],[42.929,-98.444],[42.999,-98.499],[43.001,-104.053],[45.945,-104.045],[45.935,-96.563],[45.82,-96.583],[45.606,-96.858],[45.417,-96.693],[45.376,-96.522],[45.298,-96.453],[43.5,-96.453],[43.5,-96.599],[43.451,-96.603],[43.386,-96.522],[43.3,-96.53],[43.297,-96.581],[43.232,-96.569],[43.222,-96.477],[43.121,-96.437],[43.042,-96.518],[42.892,-96.526],[42.737,-96.64],[42.63,-96.516],[42.517,-96.493],[42.489,-96.443]]],"Vermont":[[[44.156,-72.04],[44.076,-72.032],[43.994,-72.117],[43.965,-72.09],[43.524,-72.396],[43.006,-72.444],[42.955,-72.532],[42.867,-72.556],[42.727,-72.459],[42.746,-73.276],[43.535,-73.242],[43.628,-73.306],[43.588,-73.431],[43.772,-73.351],[44.045,-73.438],[44.191,-73.391],[44.265,-73.313],[44.364,-73.335],[44.441,-73.294],[44.618,-73.39],[44.789,-73.333],[44.845,-73.381],[45.011,-73.343],[45.014,-71.465],[44.994,-71.537],[44.905,-71.496],[44.752,-71.632],[44.588,-71.536],[44.561,-71.596],[44.503,-71.578],[44.355,-71.814],[44.32,-72.033],[44.271,-72.068],[44.156,-72.04]]],"Virginia":[[[37.196,-82.565],[37.267,-82.351],[37.538,-81.968],[37.513,-81.927],[37.47,-81.996],[37.438,-81.936],[37.357,-81.926],[37.201,-81.678],[37.208,-81.554],[37.338,-81.362],[37.235,-81.225],[37.315,-80.901],[37.347,-80.849],[37.43,-80.86],[37.372,-80.77],[37.474,-80.552],[37.423,-80.476],[37.503,-80.309],[37.534,-80.282],[37.564,-80.329],[37.628,-80.221],[37.692,-80.296],[37.756,-80.257],[37.996,-79.999],[38.188,-79.914],[38.269,-79.789],[38.307,-79.81],[38.364,-79.726],[38.592,-79.649],[38.551,-79.537],[38.457,-79.477],[38.418,-79.283],[38.847,-78.998],[38.763,-78.869],[38.887,-78.786],[38.965,-78.602],[39.167,-78.404],[39.198,-78.439],[39.349,-78.339],[39.466,-78.347],[39.132,-77.828],[39.316,-77.73],[39.306,-77.567],[39.225,-77.458],[39.121,-77.52],[39.027,-77.248],[38.986,-77.25],[38.964,-77.147],[38.871,-77.041],[38.719,-77.042],[38.686,-77.122],[38.635,-77.13],[38.635,-77.247],[38.384,-77.317],[38.332,-77.24],[38.401,-77.044],[38.214,-76.962],[38.138,-76.722],[38.149,-76.614],[38.027,-76.517],[37.889,-76.237],[37.812,-76.307],[37.695,-76.3],[37.656,-76.34],[37.614,-76.28],[37.61,-76.362],[37.666,-76.472],[37.642,-76.51],[37.769,-76.584],[37.87,-76.785],[37.745,-76.62],[37.617,-76.543],[37.562,-76.3],[37.519,-76.36],[37.481,-76.265],[37.31,-76.276],[37.402,-76.415],[37.366,-76.445],[37.274,-76.349],[37.234,-76.504],[37.223,-76.39],[37.16,-76.4],[37.127,-76.292],[37.001,-76.304],[36.97,-76.429],[37.119,-76.618],[37.221,-76.65],[37.19,-76.75],[37.252,-76.884],[37.216,-76.924],[37.206,-76.801],[37.145,-76.73],[37.199,-76.686],[37.046,-76.663],[36.965,-76.5],[36.883,-76.47],[36.918,-76.329],[36.968,-76.298],[36.922,-75.996],[36.551,-75.867],[36.543,-80.122],[36.588,-81.678],[36.612,-81.647],[36.601,-83.675],[36.743,-83.136],[36.855,-83.073],[36.89,-82.879],[36.978,-82.868],[37.045,-82.722],[37.12,-82.722],[37.196,-82.565]],[[38.027,-75.242],[37.864,-75.359],[37.872,-75.438],[37.799,-75.515],[37.447,-75.656],[37.296,-75.798],[37.197,-75.801],[37.086,-75.976],[37.318,-76.019],[37.792,-75.818],[37.862,-75.69],[37.904,-75.758],[37.994,-75.624],[38.027,-75.242]]],"West Virginia":[[[37.538,-81.968],[37.553,-82.133],[37.648,-82.175],[37.625,-82.213],[37.676,-82.304],[37.764,-82.312],[37.933,-82.502],[37.983,-82.464],[38.165,-82.645],[38.264,-82.575],[38.418,-82.596],[38.444,-82.33],[38.579,-82.291],[38.604,-82.177],[38.787,-82.222],[39.025,-82.036],[38.988,-81.933],[38.875,-81.899],[38.946,-81.827],[38.924,-81.763],[39.079,-81.814],[39.095,-81.747],[39.181,-81.756],[39.271,-81.684],[39.268,-81.57],[39.339,-81.558],[39.409,-81.456],[39.342,-81.376],[39.388,-81.217],[39.621,-80.88],[39.712,-80.83],[39.766,-80.869],[39.867,-80.791],[39.917,-80.806],[39.914,-80.756],[40.076,-80.739],[40.318,-80.6],[40.39,-80.634],[40.475,-80.595],[40.578,-80.668],[40.62,-80.627],[40.639,-80.519],[39.721,-80.519],[39.721,-79.477],[39.206,-79.487],[39.299,-79.29],[39.473,-79.097],[39.44,-78.957],[39.648,-78.766],[39.614,-78.734],[39.601,-78.778],[39.546,-78.689],[39.516,-78.471],[39.549,-78.419],[39.587,-78.457],[39.584,-78.395],[39.623,-78.43],[39.619,-78.265],[39.696,-78.171],[39.585,-77.946],[39.619,-77.942],[39.606,-77.838],[39.558,-77.889],[39.518,-77.866],[39.496,-77.766],[39.437,-77.803],[39.423,-77.753],[39.34,-77.761],[39.321,-77.719],[39.132,-77.828],[39.466,-78.347],[39.349,-78.339],[39.198,-78.439],[39.167,-78.404],[38.965,-78.602],[38.887,-78.786],[38.763,-78.869],[38.847,-78.998],[38.418,-79.283],[38.457,-79.477],[38.551,-79.537],[38.592,-79.649],[38.364,-79.726],[38.307,-79.81],[38.269,-79.789],[38.186,-79.916],[37.996,-79.999],[37.875,-80.162],[37.692,-80.296],[37.628,-80.221],[37.564,-80.329],[37.508,-80.3],[37.426,-80.465],[37.482,-80.511],[37.372,-80.77],[37.43,-80.86],[37.347,-80.849],[37.315,-80.901],[37.235,-81.225],[37.338,-81.362],[37.208,-81.554],[37.201,-81.678],[37.357,-81.926],[37.438,-81.936],[37.47,-81.996],[37.513,-81.927],[37.538,-81.968]]],"Wyoming":[[[41.001,-109.05],[40.998,-111.047],[45.001,-111.055],[44.997,-104.058],[41.001,-104.053],[41.001,-109.05]]]};
+const PLAYED_STATES=["Oregon","Wisconsin","Michigan","North Carolina","South Carolina","Florida"];
+
+/* geography traced in lat/lng and projected with the pins */
+const GEO={
+2020:{roads:[["US 1",[[35.72,-78.85],[35.48,-79.18],[35.30,-79.31],[35.17,-79.40],[35.07,-79.44]]],
+             ["US 15-501",[[35.62,-79.10],[35.40,-79.30],[35.22,-79.44],[35.10,-79.48]]],
+             ["NC 211",[[35.21,-79.63],[35.17,-79.47],[35.13,-79.43],[35.08,-79.28]]]],
+      places:[["Pinehurst",35.195,-79.469],["Southern Pines",35.174,-79.394],["Aberdeen",35.131,-79.429],
+              ["Sanford",35.479,-79.180],["Raleigh",35.780,-78.639]],
+      region:"THE SANDHILLS"},
+2022:{bounds:[44.35,45.42,-86.15,-84.30],
+      water:[["Lake Michigan",[[45.42,-86.15],[45.36,-85.40],[45.22,-85.56],[45.05,-85.62],[44.95,-85.78],
+              [44.80,-86.05],[44.60,-86.24],[44.42,-86.38],[44.35,-86.45],[44.35,-86.15]]],
+             ["Grand Traverse Bay",[[45.06,-85.62],[44.98,-85.60],[44.86,-85.61],[44.76,-85.62],[44.75,-85.57],
+              [44.88,-85.56],[44.99,-85.53],[45.06,-85.50]]],
+             ["Lake Charlevoix",[[45.31,-85.26],[45.25,-85.14],[45.19,-85.03],[45.22,-84.99],[45.28,-85.11],[45.34,-85.23]]],
+             ["Houghton Lake",[[44.36,-84.82],[44.36,-84.66],[44.28,-84.66],[44.28,-84.82]]]],
+      roads:[["US 131",[[45.40,-85.02],[45.00,-85.12],[44.70,-85.27],[44.40,-85.32]]],
+             ["I-75",[[45.42,-84.45],[45.00,-84.45],[44.60,-84.46],[44.35,-84.52]]],
+             ["M-72",[[44.76,-85.62],[44.70,-85.20],[44.66,-84.78],[44.66,-84.35]]]],
+      places:[["Traverse City",44.763,-85.620],["Charlevoix",45.318,-85.258],
+              ["Grayling",44.661,-84.715],["Roscommon",44.499,-84.591]],
+      region:"NORTHERN MICHIGAN"},
+2023:{water:[["Lake Michigan",[[44.05,-87.62],[43.86,-87.68],[43.75,-87.70],[43.64,-87.70],[43.54,-87.77],
+              [43.40,-87.80],[43.24,-87.85],[43.10,-87.86],[42.94,-87.84],[42.82,-87.81],[42.82,-86.90],[44.05,-86.90]]],
+             ["Lake Winnebago",[[44.20,-88.47],[44.20,-88.33],[43.88,-88.34],[43.88,-88.49]]]],
+      roads:[["I-43",[[44.05,-87.72],[43.75,-87.76],[43.50,-87.86],[43.25,-87.91],[43.04,-87.91]]],
+             ["I-94",[[43.04,-87.91],[43.02,-88.22],[43.03,-88.52],[43.05,-88.85]]],
+             ["US 41",[[44.20,-88.42],[43.80,-88.46],[43.40,-88.41],[43.10,-88.11]]]],
+      places:[["Milwaukee",43.038,-87.906],["Sheboygan",43.750,-87.714],["Kohler",43.740,-87.782],
+              ["Oconomowoc",43.109,-88.500],["Fond du Lac",43.775,-88.447]],
+      region:"EAST WISCONSIN"},
+2024:{bounds:[43.150,43.240,-124.435,-124.360],
+      water:[["Pacific Ocean",[[43.240,-124.398],[43.220,-124.401],[43.200,-124.406],[43.180,-124.410],
+              [43.160,-124.416],[43.150,-124.420],[43.150,-124.435],[43.240,-124.435]]]],
+      roads:[["US 101",[[43.240,-124.300],[43.200,-124.302],[43.170,-124.315],[43.150,-124.330]]],
+             ["Round Lake Dr",[[43.221,-124.386],[43.205,-124.388],[43.190,-124.392],[43.178,-124.394]]]],
+      places:[["Whiskey Run",43.208,-124.372],["Bandon",43.119,-124.408]],
+      region:"BANDON DUNES RESORT"}};
+GEO[2021]=GEO[2020];
+
+/* ============ US MAP ============ */
+function renderUSMap(){
+ const W=680,H=430,X0=8,Y0=6,PW=664,PH=418;
+ const lat0=24.4,lat1=49.4,lng0=-125,lng1=-66.9, k=Math.cos(38*Math.PI/180);
+ const scale=Math.min(PW/((lng1-lng0)*k),PH/(lat1-lat0));
+ const offX=X0+(PW-(lng1-lng0)*k*scale)/2, offY=Y0+(PH-(lat1-lat0)*scale)/2;
+ const PX=(la,lo)=>[offX+(lo-lng0)*k*scale, offY+(lat1-la)*scale];
+ const path=r=>r.map(([la,lo])=>PX(la,lo).map(v=>v.toFixed(1)).join(",")).join(" ");
+ let base="",hi="";
+ for(const nm2 in US_STATE_GEO){
+  const on=PLAYED_STATES.indexOf(nm2)>=0;
+  const shapes=US_STATE_GEO[nm2].map(r=>`<polygon points="${path(r)}"/>`).join("");
+  if(on) hi+=`<g fill="#5E9A5B" stroke="#8FC48C" stroke-width=".9">${shapes}</g>`;
+  else base+=`<g fill="#1B4335" stroke="#2C5A48" stroke-width=".5">${shapes}</g>`;
+ }
+ const pins=COURSES.map(c=>{
+  const[x,y]=PX(c[1],c[2]); const up=c[3]==="2026";
+  const R=c[6]==="r"?1:-1, B=(c[7]||c[6])==="r"?1:-1;
+  const lx=x+R*20, anch=c[6]==="r"?"start":"end";
+  return `<g>
+   <line x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${x.toFixed(1)}" y2="${(y-18).toFixed(1)}" stroke="#F5F2E9" stroke-width="1.5"/>
+   <polygon points="${x.toFixed(1)},${(y-18).toFixed(1)} ${(x+12).toFixed(1)},${(y-14).toFixed(1)} ${x.toFixed(1)},${(y-10).toFixed(1)}"
+     fill="${up?"#C9A227":"#E0503F"}" stroke="#F5F2E9" stroke-width=".6"/>
+   <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3" fill="#F5F2E9"/>
+   <circle cx="${(x+B*13).toFixed(1)}" cy="${(y+9).toFixed(1)}" r="9.5" fill="#0A241C" stroke="#C9A227" stroke-width="1.2"/>
+   <text x="${(x+B*13).toFixed(1)}" y="${(y+9).toFixed(1)}" text-anchor="middle" dominant-baseline="central"
+     font-family="Barlow Condensed" font-size="12" font-weight="700" fill="#C9A227">${c[4]}</text>
+   <text x="${lx.toFixed(1)}" y="${(y-16).toFixed(1)}" text-anchor="${anch}" font-family="Barlow Condensed"
+     font-size="15" font-weight="700" fill="#F5F2E9">${c[0]}</text>
+   <text x="${lx.toFixed(1)}" y="${(y-4).toFixed(1)}" text-anchor="${anch}" font-family="JetBrains Mono"
+     font-size="9" fill="rgba(245,242,233,.55)">${c[3]} \u00b7 ${c[4]} courses</text>
+   <title>${c[5].replace(/&amp;/g,"&")}</title></g>`;}).join("");
+ $("#usMap").innerHTML=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Every course the trip has played</title>
+  <desc>Map of the continental United States. The six states visited are shaded dark green, with a flag and course count at each destination.</desc>
+  ${base}${hi}${pins}
+ </svg>`;
+}
+
+/* ============ AUTO MAP ============ */
+function renderAutoMap(pts,geo){
+ const col={air:"#6EA8C4",house:"#C9A227",golf:"#7FA97C",fnb:"#D08FA0"};
+ const W=680,H=500,X0=34,Y0=52,PW=376,PH=418;
+ let lat0,lat1,lng0,lng1;
+ if(geo&&geo.bounds){[lat0,lat1,lng0,lng1]=geo.bounds;}
+ else{const la=pts.map(p=>p[2]),lo=pts.map(p=>p[3]);
+  lat0=Math.min(...la);lat1=Math.max(...la);lng0=Math.min(...lo);lng1=Math.max(...lo);
+  const dLa=Math.max(lat1-lat0,1e-4),dLo=Math.max(lng1-lng0,1e-4),pad=.16;
+  lat0-=dLa*pad;lat1+=dLa*pad;lng0-=dLo*pad;lng1+=dLo*pad;}
+ const k=Math.cos(((lat0+lat1)/2)*Math.PI/180);
+ const dLat=lat1-lat0,dLng=lng1-lng0;
+ const scale=Math.min(PW/(dLng*k),PH/dLat);
+ const offX=X0+(PW-dLng*k*scale)/2, offY=Y0+(PH-dLat*scale)/2;
+ const PX=(la,lo)=>[(offX+(lo-lng0)*k*scale),(offY+(lat1-la)*scale)];
+ const path=arr=>arr.map(([la,lo])=>PX(la,lo).map(v=>v.toFixed(1)).join(",")).join(" ");
+ let bg="";
+ if(geo){
+  (geo.water||[]).forEach(([nm,poly])=>{bg+=`<polygon points="${path(poly)}" fill="#D3E3EC" stroke="#8FBBD1" stroke-width="1"/>`;});
+  (geo.roads||[]).forEach(([nm,line])=>{
+   bg+=`<polyline points="${path(line)}" fill="none" stroke="#E2D6B4" stroke-width="3.4" stroke-linecap="round"/>`+
+       `<polyline points="${path(line)}" fill="none" stroke="#B29A5E" stroke-width=".8" stroke-dasharray="7 6"/>`;});
+  (geo.places||[]).forEach(([nm,la,lo])=>{const[x,y]=PX(la,lo);
+   bg+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.6" fill="#8A8378"/>`+
+       `<text x="${(x+6).toFixed(1)}" y="${(y+3).toFixed(1)}" font-family="JetBrains Mono" font-size="8.5" fill="#6B7B84">${nm.toUpperCase()}</text>`;});
+ }
+ const nodes=pts.map(p=>{const[x,y]=PX(p[2],p[3]);return{label:p[0],name:p[1],x,y,kind:p[4],note:p[5]};});
+ for(let it=0;it<240;it++){let moved=false;
+  for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){
+   const a=nodes[i],b=nodes[j];let dx=b.x-a.x,dy=b.y-a.y;let d=Math.hypot(dx,dy)||0.01;
+   if(d<30){const push=(30-d)/2;dx/=d;dy/=d;a.x-=dx*push;a.y-=dy*push;b.x+=dx*push;b.y+=dy*push;moved=true;}}
+  if(!moved)break;}
+ nodes.forEach(n=>{n.x=Math.max(X0+16,Math.min(X0+PW-16,n.x));n.y=Math.max(Y0+16,Math.min(Y0+PH-16,n.y));});
+ const pxPerMile=scale/69.0;
+ const barMiles=[0.5,1,2,5,10,25,50,100].find(m=>m*pxPerMile>62)||100;
+ const barPx=barMiles*pxPerMile;
+ const pins=nodes.map(n=>`<g><circle cx="${n.x.toFixed(1)}" cy="${n.y.toFixed(1)}" r="13" fill="${col[n.kind]}" stroke="#10352A" stroke-width="1.6"/>
+   <text x="${n.x.toFixed(1)}" y="${n.y.toFixed(1)}" text-anchor="middle" dominant-baseline="central"
+   font-family="Barlow Condensed" font-size="${n.label.length>1?11:13}" font-weight="700" fill="#10352A">${n.label}</text></g>`).join("");
+ const step=nodes.length>7?40:44;
+ const legend=nodes.map((n,i)=>{const y=88+i*step;
+  return `<g><circle cx="446" cy="${y}" r="11" fill="${col[n.kind]}" stroke="#10352A" stroke-width="1.3"/>
+   <text x="446" y="${y}" text-anchor="middle" dominant-baseline="central" font-family="Barlow Condensed"
+   font-size="${n.label.length>1?10:12}" font-weight="700" fill="#10352A">${n.label}</text>
+   <text x="468" y="${y-3}" font-family="Barlow Condensed" font-size="15" font-weight="600" fill="#17201C">${n.name}</text>
+   <text x="468" y="${y+12}" font-family="JetBrains Mono" font-size="9.5" fill="#55605A">${n.note||""}</text></g>`;}).join("");
+ $("#mapSvg").innerHTML=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Trip map</title>
+  <clipPath id="autoclip"><rect x="${X0}" y="${Y0}" width="${PW}" height="${PH}"/></clipPath>
+  <rect x="${X0}" y="${Y0}" width="${PW}" height="${PH}" fill="#ECEEE2" stroke="#DFD5BF"/>
+  <g clip-path="url(#autoclip)">${bg}</g>
+  ${geo&&geo.region?`<text x="${X0+PW-10}" y="${Y0+PH-10}" text-anchor="end" font-family="Barlow Condensed"
+    font-size="13" letter-spacing="3" fill="#A8A99A">${geo.region}</text>`:""}
+  <g stroke="#8A8378" fill="#8A8378">
+   <line x1="${X0+14}" y1="${Y0+52}" x2="${X0+14}" y2="${Y0+28}" stroke-width="1.2"/>
+   <polygon points="${X0+14},${Y0+22} ${X0+10},${Y0+32} ${X0+18},${Y0+32}" stroke="none"/>
+   <text x="${X0+24}" y="${Y0+34}" font-family="Barlow Condensed" font-size="12" font-weight="600" stroke="none">N</text>
+   <line x1="${X0+14}" y1="${Y0+PH-20}" x2="${X0+14+barPx}" y2="${Y0+PH-20}" stroke-width="1.2"/>
+   <line x1="${X0+14}" y1="${Y0+PH-25}" x2="${X0+14}" y2="${Y0+PH-15}" stroke-width="1.2"/>
+   <line x1="${(X0+14+barPx).toFixed(1)}" y1="${Y0+PH-25}" x2="${(X0+14+barPx).toFixed(1)}" y2="${Y0+PH-15}" stroke-width="1.2"/>
+   <text x="${(X0+14+barPx/2).toFixed(1)}" y="${Y0+PH-5}" font-family="JetBrains Mono" font-size="9" text-anchor="middle" stroke="none">${barMiles} mi</text></g>
+  ${pins}
+  <text x="446" y="62" font-family="Barlow Condensed" font-size="13" font-weight="600" letter-spacing="2" fill="#55605A">KEY</text>
+  ${legend}</svg>`;
+}
+
+/* ============ ITINERARY ============ */
+function mins(t){const[h,m]=t.split(":").map(Number);return h*60+m;}
+function renderItin(t){
+ const SLOT=30,START=mins(t.start),END=mins(t.end),SLOTS=Math.round((END-START)/30);
+ let h=`<div class="ihd">Time</div>`+t.days.map(d=>`<div class="ihd">${d}</div>`).join("");
+ let ticks="";
+ for(let i=0;i<SLOTS;i++){const tot=START+i*30,hh=Math.floor(tot/60);
+  ticks+=`<div class="tk${tot%60===0?" hr":""}">${((hh%12)||12)+":"+String(tot%60).padStart(2,"0")+(hh<12?"am":"pm")}</div>`;}
+ h+=`<div class="tcolm">${ticks}</div>`;
+ for(let d=0;d<t.days.length;d++){
+  const items=t.blocks.filter(b=>b[0]===d)
+   .map(b=>({s:mins(b[1]),e:mins(b[2]),label:b[3],sub:b[4],type:b[5]})).sort((x,y)=>x.s-y.s||x.e-y.e);
+  const laneEnd=[];
+  items.forEach(it=>{let ln=laneEnd.findIndex(e=>e<=it.s);if(ln===-1)ln=laneEnd.length;laneEnd[ln]=it.e;it.lane=ln;});
+  const lanes=Math.max(1,laneEnd.length);
+  items.forEach(it=>{let sp=1;
+   for(let L=it.lane+1;L<lanes;L++){if(items.some(o=>o!==it&&o.lane===L&&o.s<it.e&&o.e>it.s))break;sp++;}it.span=sp;});
+  h+=`<div class="daycol" style="height:${SLOTS*SLOT}px">`+items.map(it=>{
+   const dur=it.e-it.s,top=(it.s-START)/30*SLOT,hgt=dur/30*SLOT-2;
+   const w=100/lanes*it.span,left=100/lanes*it.lane;
+   const cls=dur<=30?" sm":dur<=60?" md":"";
+   const inner=`<b>${it.label}</b>${it.sub?`<span>${it.sub}</span>`:""}`;
+   return `<div class="blk b-${it.type}${cls}" style="top:${top}px;height:${hgt}px;
+    left:calc(${left}% + 3px);width:calc(${w}% - 6px)">${inner}</div>`;}).join("")+`</div>`;
+ }
+ $("#itin").innerHTML=h;
+}
+
+/* ============ OTHER TABS ============ */
+function renderRelief(){
+ const hole=(x,label,sub)=>`
+  <g transform="translate(${x},0)">
+   <path d="M18,300 C10,220 30,150 48,90 C58,58 78,34 100,26 C122,34 142,58 152,90 C170,150 190,220 182,300 Z"
+     fill="#CFE3CD" stroke="#7FA97C" stroke-width="1.2"/>
+   <path d="M52,300 C46,225 60,160 76,104 C84,76 92,58 100,50 C108,58 116,76 124,104 C140,160 154,225 148,300 Z"
+     fill="#DCEBD9"/>
+   <ellipse cx="100" cy="62" rx="30" ry="19" fill="#EAF3E6" stroke="#7FA97C" stroke-width="1"/>
+   <circle cx="100" cy="62" r="2.6" fill="#17201C"/>
+   <line x1="100" y1="62" x2="100" y2="42" stroke="#17201C" stroke-width="1.2"/>
+   <polygon points="100,42 114,47 100,52" fill="#C2342A"/>
+   <text x="100" y="322" text-anchor="middle" font-family="Barlow Condensed" font-size="15"
+     font-weight="700" letter-spacing="1" fill="#17201C">${label}</text>
+   <text x="100" y="338" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#55605A">${sub}</text>
+   ${sub==="WHITE STAKED"
+     ? `<line x1="24" y1="286" x2="34" y2="96" stroke="#17201C" stroke-width="1" stroke-dasharray="5 4"/>
+        <text x="14" y="200" font-family="JetBrains Mono" font-size="8" fill="#55605A" transform="rotate(-84,14,200)">OUT OF BOUNDS</text>`
+     : `<path d="M150,290 C176,230 192,160 186,96 L200,96 L200,300 Z" fill="#D9E7EF" opacity=".65"/>`}
+   <g>
+    <circle cx="${sub==="WHITE STAKED"?46:158}" cy="188" r="11" fill="#C9A227" stroke="#10352A" stroke-width="1.2"/>
+    <text x="${sub==="WHITE STAKED"?46:158}" y="188" text-anchor="middle" dominant-baseline="central"
+      font-family="Barlow Condensed" font-size="12" font-weight="700" fill="#10352A">A</text>
+    <text x="${sub==="WHITE STAKED"?46:158}" y="212" text-anchor="middle" font-family="JetBrains Mono"
+      font-size="7.5" fill="#55605A">WHERE IT WENT</text>
+   </g>
+   <g>
+    <circle cx="${sub==="WHITE STAKED"?80:124}" cy="188" r="11" fill="#C2342A" stroke="#10352A" stroke-width="1.2"/>
+    <text x="${sub==="WHITE STAKED"?80:124}" y="188" text-anchor="middle" dominant-baseline="central"
+      font-family="Barlow Condensed" font-size="12" font-weight="700" fill="#F5F2E9">B</text>
+    <text x="${sub==="WHITE STAKED"?80:124}" y="212" text-anchor="middle" font-family="JetBrains Mono"
+      font-size="7.5" fill="#55605A">FAIRWAY EDGE</text>
+   </g>
+   <path d="M${sub==="WHITE STAKED"?"46,178 L80,178":"158,178 L124,178"}" stroke="#17201C" stroke-width="1" stroke-dasharray="4 3"/>
+   <rect x="${sub==="WHITE STAKED"?40:96}" y="150" width="64" height="18" fill="#C9A227" opacity=".28"/>
+   <circle cx="${sub==="WHITE STAKED"?72:128}" cy="159" r="10" fill="#10352A"/>
+   <text x="${sub==="WHITE STAKED"?72:128}" y="159" text-anchor="middle" dominant-baseline="central"
+     font-family="Barlow Condensed" font-size="12" font-weight="700" fill="#C9A227">C</text>
+  </g>`;
+ $("#reliefDiagram").innerHTML=`<svg viewBox="0 0 680 400" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Local rule relief for out of bounds and lost balls</title>
+  <desc>Two holes side by side showing the drop procedure: point A where the ball went out, point B the nearest fairway edge, and shaded area C where the ball may be dropped.</desc>
+  ${hole(70,"BALL OUT OF BOUNDS","WHITE STAKED")}
+  ${hole(390,"LOST BALL","IN THE ROUGH")}
+  <g transform="translate(0,352)">
+   <text x="20" y="12" font-family="JetBrains Mono" font-size="10" fill="#17201C">
+    <tspan font-weight="700">A</tspan> where the ball went out or was lost \u00b7 <tspan font-weight="700">B</tspan> nearest fairway edge, no closer to the hole \u00b7 <tspan font-weight="700">C</tspan> drop zone between them, two club-lengths either side</text>
+   <text x="20" y="28" font-family="JetBrains Mono" font-size="10" fill="#55605A">
+    Taking this option costs two strokes \u2014 you drop and play your 4th rather than re-teeing for your 3rd.</text>
+  </g>
+ </svg>`;
+}
+function renderRules(){
+ $("#formats").innerHTML=FORMATS.map(f=>`<div class="fmtcard"><h4>${f.t}</h4><div class="rd">${f.r}</div><p>${f.d}</p></div>`).join("");
+ $("#standing").innerHTML=STANDING.map(s=>`<div class="fmtcard"><h4>${s.t}</h4>
+  <ul style="margin-top:8px">${s.items.map(i=>`<li>${i}</li>`).join("")}</ul></div>`).join("");
+ renderRelief();
+}
+const FMT_BUCKET={"Fourball":"Fourball","Modified Fourball":"Fourball","Mod. Fourball 9/18":"Fourball",
+ "Greensomes":"Alt shot","Modified Alt Shot":"Alt shot","Quota":"Quota","Team Quota":"Quota",
+ "Singles":"Singles","Score by Par":"Other","2-Man Scramble":"Other"};
+const FMT_ORDER=["Fourball","Alt shot","Quota","Singles","Other"];
+
+function dgStats(){
+ const h2h={},pard={},fmt={},yrs=YEARS.filter(y=>!Y[y].upcoming);
+ Object.keys(REC).forEach(k=>{h2h[k]={};fmt[k]={};});
+ const add=(o,k,r)=>{o[k]=o[k]||[0,0,0];o[k][r]++;};
+ yrs.forEach(y=>{const t=Y[y];
+  t.rounds.forEach(rd=>{ if(!rd.pairs||!rd.results) return;
+   const step=rd.singles?1:2, bucket=FMT_BUCKET[rd.fmt]||"Other";
+   for(let i=0;i<rd.pairs.length;i+=step){
+    const mi=rd.singles?i:i/2, r=rd.results[mi]; if(r==null) continue;
+    const A=rd.singles?[rd.pairs[i][0]]:[rd.pairs[i][0],rd.pairs[i+1][0]];
+    const B=rd.singles?[rd.pairs[i][1]]:[rd.pairs[i][1],rd.pairs[i+1][1]];
+    const oa=r===1?0:r===2?1:2, ob=r===2?0:r===1?1:2;
+    A.forEach(x=>{add(fmt[x],bucket,oa); B.forEach(z=>add(h2h[x],z,oa));});
+    B.forEach(x=>{add(fmt[x],bucket,ob); A.forEach(z=>add(h2h[x],z,ob));});
+    [[A,oa],[B,ob]].forEach(([side,o])=>{ if(side.length===2){
+      const key=side.slice().sort().join("|"); add(pard,key,o); }});
+   }});});
+ return {h2h,pard,fmt};
+}
+const rec=v=>v[0]+"\u2013"+v[1]+"\u2013"+v[2];
+const pts=v=>v[0]+v[2]/2;
+const played=v=>v[0]+v[1]+v[2];
+
+function renderData(){
+ const {h2h,pard,fmt}=dgStats();
+ const order=Object.keys(REC).map(k=>({k,...career(k)})).filter(p=>p.games>0)
+   .sort((a,b)=>b.pct-a.pct||b.pts-a.pts).map(p=>p.k);
+ const ini=k=>k.split(". ")[0]+k.split(". ")[1][0];
+
+ /* -- head to head grid -- */
+ let grid=`<table class="h2h"><thead><tr><th class="nm">Player</th>`+
+  order.map(k=>`<th title="${nm(k)}">${ini(k)}</th>`).join("")+`</tr></thead><tbody>`;
+ order.forEach(a=>{
+  grid+=`<tr><td class="nm">${nm(a)}</td>`+order.map(b=>{
+   if(a===b) return `<td class="self"></td>`;
+   const v=h2h[a][b];
+   if(!v) return `<td class="none">\u00b7</td>`;
+   const cls=v[0]>v[1]?"up":v[1]>v[0]?"dn":"";
+   return `<td class="${cls}" title="${nm(a)} v ${nm(b)}">${rec(v)}</td>`;
+  }).join("")+`</tr>`;
+ });
+ grid+=`</tbody></table>`;
+
+ /* -- partnerships -- */
+ const pl=Object.entries(pard).filter(([,v])=>played(v)>=3)
+   .map(([k,v])=>({k,v,p:pts(v)/played(v),n:played(v)}));
+ const best=pl.slice().sort((a,b)=>b.p-a.p||b.n-a.n).slice(0,8);
+ const worst=pl.slice().sort((a,b)=>a.p-b.p||b.n-a.n).slice(0,8);
+ const ptab=list=>`<table><tr><th>Pairing</th><th class="num">Rec</th><th class="num">Pts %</th></tr>`+
+  list.map(x=>{const[a,b]=x.k.split("|");
+   return `<tr><td>${nm(a)} + ${nm(b)}</td><td class="num">${rec(x.v)}</td>
+    <td class="num">${Math.round(x.p*100)}</td></tr>`;}).join("")+`</table>`;
+
+ /* -- format leaderboard -- */
+ const ftab=FMT_ORDER.filter(F=>order.some(k=>fmt[k][F])).map(F=>{
+  const rows=order.filter(k=>fmt[k][F]&&played(fmt[k][F])>=3)
+   .map(k=>({k,v:fmt[k][F],p:pts(fmt[k][F])/played(fmt[k][F])}))
+   .sort((a,b)=>b.p-a.p).slice(0,5);
+  return `<div class="card"><h3>${F}</h3><table><tr><th>Player</th><th class="num">Rec</th><th class="num">Pts %</th></tr>`+
+   rows.map(r=>`<tr><td>${nm(r.k)}</td><td class="num">${rec(r.v)}</td>
+    <td class="num">${Math.round(r.p*100)}</td></tr>`).join("")+`</table></div>`;}).join("");
+
+ $("#dataGolf").innerHTML=`
+  <h3>Head to head</h3>
+  <div class="dg-scroll">${grid}</div>
+  <p class="dg-note">Read across: each row is that man\u2019s record against the player in the column.
+   Green means he is ahead, red behind. Ranked by career win percentage.</p>
+
+  <h3 style="margin-top:34px">Partnerships</h3>
+  <div class="grid2">
+   <div class="card"><h3>Best pairings</h3>${ptab(best)}</div>
+   <div class="card"><h3>Worst pairings</h3>${ptab(worst)}</div>
+  </div>
+  <p class="dg-note">Three matches together minimum. ${Object.keys(pard).length} distinct pairings have played.</p>
+
+  <h3 style="margin-top:34px">By format</h3>
+  <div class="grid2">${ftab}</div>
+  <p class="dg-note">Top five in each format, minimum three matches. Fourball groups the modified variants;
+   alt shot covers greensomes.</p>
+
+  <h3 style="margin-top:34px">Player lookup</h3>
+  <div class="pick"><label for="dgPlayer">Player</label>
+   <select id="dgPlayer">${order.map(k=>`<option value="${k}">${nm(k)}</option>`).join("")}</select></div>
+  <div id="dgPanel"></div>`;
+
+ const sel=$("#dgPlayer");
+ const draw=()=>{
+  const k=sel.value, c=career(k);
+  const opp=Object.entries(h2h[k]).map(([o,v])=>({o,v,n:played(v),p:pts(v)/played(v)}))
+    .sort((a,b)=>b.n-a.n||b.p-a.p);
+  const par=Object.entries(pard).filter(([key])=>key.split("|").indexOf(k)>=0)
+    .map(([key,v])=>({o:key.split("|").find(x=>x!==k),v,n:played(v)}))
+    .sort((a,b)=>b.n-a.n||pts(b.v)/b.n-pts(a.v)/a.n);
+  $("#dgPanel").innerHTML=`
+   <div class="grid2">
+    <div class="card"><h3>Against</h3>
+     <table><tr><th>Opponent</th><th class="num">Met</th><th class="num">Rec</th><th class="num">Pts %</th></tr>`+
+     opp.map(x=>`<tr><td>${nm(x.o)}</td><td class="num">${x.n}</td><td class="num">${rec(x.v)}</td>
+      <td class="num">${Math.round(x.p*100)}</td></tr>`).join("")+
+    `</table></div>
+    <div class="card"><h3>Alongside</h3>
+     <table><tr><th>Partner</th><th class="num">Together</th><th class="num">Rec</th></tr>`+
+     par.map(x=>`<tr><td>${nm(x.o)}</td><td class="num">${x.n}</td><td class="num">${rec(x.v)}</td></tr>`).join("")+
+    `</table></div>
+   </div>
+   <p class="dg-note">Career record, handicaps and format splits live on The Board \u2014
+    <a href="#" id="dgToBoard" style="color:var(--board);font-weight:700">open ${nm(k)}\u2019s profile</a>.</p>`;
+  const lnk=$("#dgToBoard");
+  if(lnk) lnk.onclick=e=>{e.preventDefault();selectTab("board");openPlayer(k);};
+ };
+ sel.onchange=draw; draw();
+}
+const TABS=[["board","The Board"],["data","Data Golf"],["years","History"],["rules","Rules"]];
+function selectTab(id){
+ document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected",b.dataset.id===id));
+ document.querySelectorAll(".panel").forEach(p=>p.classList.remove("on"));
+ $("#p-"+id).classList.add("on");window.scrollTo({top:0,behavior:"smooth"});
+}
+function renderTabs(){const n=$("#tabs");
+ TABS.forEach(([id,label],i)=>{const b=el("button","tab",label);
+  b.dataset.id=id;b.setAttribute("role","tab");b.setAttribute("aria-selected",i===0);
+  b.onclick=()=>selectTab(id);n.appendChild(b);});}
+
+$("#pmClose").onclick=closePlayer;
+$("#pModal").onclick=e=>{ if(e.target.id==="pModal") closePlayer(); };
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") closePlayer(); });
+renderTabs();renderRibbon();renderBoard();renderYearBar();renderYear();
+renderRules();renderData();
+</script>
+</body>
+</html>
